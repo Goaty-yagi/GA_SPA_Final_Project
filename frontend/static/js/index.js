@@ -45,10 +45,10 @@ const router = async () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
-        const allReset = new Quiz()
-        allReset.allReset()
         console.log("E_TEST",e.target, e.target.matches("[data-link]"))
         if(e.target.matches("[data-link]")) { //check if element has argument
+            const allReset = new Quiz()
+            allReset.allReset()
             e.preventDefault() // prevent reload but stop routing
             navigateTo(e.target.href)
             console.log('E',e.target,e)

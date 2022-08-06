@@ -7,7 +7,6 @@ let intervalId
 let apiData
 let timer
 let allQuestion = []
-// const intervalAndTimeOutIds = []
 let allTerm = []
 
 
@@ -226,7 +225,6 @@ export default class extends AbstractView {
         timer
         allQuestion = []
         allTerm = []
-        // intervalAndTimeOutIds = []
         clearInterval(intervalId)
         intervalId = ''
         console.log("ALLRESET")
