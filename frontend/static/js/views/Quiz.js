@@ -1,16 +1,14 @@
 import AbstractView from "./AbstractView.js";
 
 const app = document.querySelector("#app")
-// const main = document.querySelector("#main")
-// const initialMainHTML = main.innerHTML
-// const stertButton = document.querySelector(".start-button")
 let progress = 0
 let correctNum = 0
 let intervalId
 let apiData
 let timer
 let allQuestion = []
-const allTerm = []
+// const intervalAndTimeOutIds = []
+let allTerm = []
 
 
 fetch('http://localhost:5200/api/javascript')
@@ -102,7 +100,7 @@ function quizProgress() {
                     stop()
                 } else {
                     clearInterval(intervalId)
-                    setTimeout(() => {
+                    intervalId = setTimeout(() => {
                         quizProgress(),
                         countdown()
                     },2000)
@@ -126,7 +124,7 @@ function stop() {
         </div>
     `
     new Promise((resolve, reject) => { 
-        setTimeout(() => {
+        intervalId = setTimeout(() => {
             timer.innerHTML = ''
             app.innerHTML = resultHTML
             const score = document.querySelector(".score-num")
@@ -134,14 +132,14 @@ function stop() {
         },2000)
     }).then((score) => {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
+            intervalId = setTimeout(() => {
                 score.innerHTML = `${correctNum}` 
                 resolve()
             },1000)
         })
     }).then(() => {
         // will be added some functionalities
-        setTimeout(() => {
+        intervalId = setTimeout(() => {
             const resultContainer = document.querySelector(".relust-container")
             console.log(resultContainer)
             const tweetHTML = `
@@ -173,37 +171,17 @@ function shaffleArray(array) {
     return array
 }
 
-// window.addEventListener('load', function(){
-//     console.log('check',stertButton,app,main,apiData)
-// })
-// stertButton.addEventListener('click',quizStart)
-
-
-// //nav start
-
-// // let clickedTheme = false
-// // document.querySelector(".circle").addEventListener('click',theme)
-
-// // function theme() {
-// //     console.log('clicked')
-// //     clickedTheme = !clickedTheme
-// //     let body = document.querySelector("body")
-// //     let theme = document.querySelector(".theme")
-// //     let circle = document.querySelector(".circle-in-circle")
-// //     if(clickedTheme) {
-// //         document.querySelector(".circle").classList.add('clicked-circle')
-// //         body.classList.add('body-theme')
-// //         body.style.backgroundImage =  'url("./images/background-dark.png")';
-// //         theme.classList.add('theme-theme')
-// //         circle.classList.add('circle-theme')
-// //     } else {
-// //         document.querySelector(".circle").classList.remove('clicked-circle')
-// //         body.classList.remove('body-theme')
-// //         body.style.backgroundImage =  'url("./images/background-light.png")';
-// //         theme.classList.remove('theme-theme')
-// //         circle.classList.remove('circle-theme')
-// //     }
-// // }
+function allReset() {
+    progress = 0
+    correctNum = 0
+    intervalId
+    apiData
+    timer
+    allQuestion = []
+    allTerm = []
+    // intervalAndTimeOutIds = []
+    clearInterval()
+}
 
 export default class extends AbstractView {
     constructor() {
@@ -224,7 +202,7 @@ export default class extends AbstractView {
         console.log("EVENT_CLICKED")
         let startSecond = 3
         await new Promise(() => {
-            const Id = setInterval(()=> {
+            intervalId = setInterval(()=> {
                 if(startSecond > 1) {
                     startSecond -= 1
                     app.innerHTML = `<div class="start-countdown">${startSecond}</div>`
@@ -232,7 +210,7 @@ export default class extends AbstractView {
                     app.innerHTML = `<div class="start-countdown-start">START!</div>`
                     startSecond -= 1
                 } else {
-                    clearInterval(Id)
+                    clearInterval(intervalId)
                     setQuiz()
                     quizProgress()
                     countdown()
@@ -240,5 +218,17 @@ export default class extends AbstractView {
                 }
             },1000)
         })
+    }
+    allReset(){
+        progress = 0
+        correctNum = 0
+        apiData
+        timer
+        allQuestion = []
+        allTerm = []
+        // intervalAndTimeOutIds = []
+        clearInterval(intervalId)
+        intervalId = ''
+        console.log("ALLRESET")
     }
 }

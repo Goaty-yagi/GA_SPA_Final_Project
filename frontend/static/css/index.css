@@ -9,6 +9,8 @@ body{
 .body-theme {
     color: white
 }
+
+/* header start */
 header{
     position: relative;
     display: flex;
@@ -20,13 +22,15 @@ header{
 }
 img{
     position: absolute;
-    left: 1rem;
+    left: 0;
+    width: 70px;
 }
 nav{
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
+/* theme start */
 .theme-group{
     margin-right: 1rem;
     display: flex;
@@ -73,6 +77,10 @@ nav{
 .circle-theme{
     background: white;
 }
+
+/* nav and theme end */
+
+/* #app start */
 #main{
     display: flex;
     flex-direction: column;

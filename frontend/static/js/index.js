@@ -1,7 +1,9 @@
 import Home from "./views/Home.js"
+import Nav from "./views/Nav.js";
 import Quiz from "./views/Quiz.js";
 
-
+const nav = new Nav()
+nav.addEvent()
 const navigateTo = (url) => {
     // DOM won't change.
     // this is like set currentURL as histry then 
@@ -43,6 +45,9 @@ const router = async () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
+        const allReset = new Quiz()
+        allReset.allReset()
+        console.log("E_TEST",e.target, e.target.matches("[data-link]"))
         if(e.target.matches("[data-link]")) { //check if element has argument
             e.preventDefault() // prevent reload but stop routing
             navigateTo(e.target.href)
