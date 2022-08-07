@@ -45,6 +45,7 @@ export default class extends AbstractView {
               </div>
             </div>
           </div>
+          <div class="quiz-create" data-link>CREATE</div>
           <div class="login">LOGIN</div>
           <div class="signup">SIGNUP</div>
         </nav>
@@ -58,7 +59,10 @@ export default class extends AbstractView {
             console.log("clicked")
             history.replaceState(null, null, "/")
         })
-
+        document.querySelector(".quiz-create").addEventListener('click',() => {
+          console.log("clicked")
+          history.replaceState(null, null, "/create")
+        })
     }
     event() {
         

@@ -1,6 +1,7 @@
 import Home from "./views/Home.js"
 import Nav from "./views/Nav.js";
 import Quiz from "./views/Quiz.js";
+import QuizCreate from "./views/QuizCreate.js";
 
 const nav = new Nav()
 nav.addEvent()
@@ -18,6 +19,7 @@ const router = async () => {
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
+        { path: "/create", view: QuizCreate},
         // { path: "/register", view: () => console.log("view register")}
     ];
     // Test each route for potential match

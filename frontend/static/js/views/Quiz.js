@@ -10,7 +10,9 @@ let allQuestion = []
 let allTerm = []
 
 
-fetch('http://localhost:5200/api/javascript')
+fetch('http://localhost:5000/api',{
+    methods:"GET"
+})
 .then(turnResponseIntoJS).then(handleData)
 
 function turnResponseIntoJS(res) {
