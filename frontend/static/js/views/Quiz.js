@@ -1,6 +1,7 @@
 import AbstractView from "./AbstractView.js";
 
 const app = document.querySelector("#app")
+const domein = "http://localhost:5000"
 let progress = 0
 let correctNum = 0
 let intervalId
@@ -11,7 +12,7 @@ let allTerm = []
 
 
 fetch('http://localhost:5000/api',{
-    methods:"GET"
+    method:"GET"
 })
 .then(turnResponseIntoJS).then(handleData)
 
@@ -145,13 +146,25 @@ function stop() {
             const resultContainer = document.querySelector(".relust-container")
             console.log(resultContainer)
             const tweetHTML = `
-                <div>will be added</div>
-                `
+            <div class="result-footer">
+                <div class="footer-section">
+                    <div>Tweet your score</div>
+                    <img class="social-img" src="./static/images/twitter.png">
+                </div>
+                <div class="footer-section">
+                    <div>Register? your score sould be in the Rabking!</div>
+                    <div class="register-button">Register</div>
+                </div>
+            </div>
+            `
             const registerHTML = `
                 <div>will be added</div>
                 `
             resultContainer.innerHTML += `${tweetHTML}` 
-            resultContainer.innerHTML += `${registerHTML}`
+            document.querySelector(".social-img").addEventListener("click", () => {
+                const shareURL = "https://twitter.com/intent/tweet?text=" + "%23" + "RANKINQUIZ" + "%20%0a" + "Your score is "+ correctNum + "%0a" + "&url=" + "%0a" + domein;  
+                window.open(shareURL)
+            })
         },1000)
     })
 }

@@ -154,6 +154,7 @@ nav{
     font-size: 10rem;
     text-shadow: 5px 5px 0 #000,5px -5px 0 #000,-5px 5px 0 #000,-5px -5px 0 #000;
     color: red;
+    flex-direction: column;
 }
 .question-wrapper{
     display: flex;
@@ -188,6 +189,13 @@ label{
     width: 70%;
     height: 60px;
     margin-top: 1.5rem;
+    transition: .5s;
+}
+.each-choice:hover{
+    background: gray;
+    color: white;
+    border: solid orange;
+
 }
 .order{
     font-family: initial;
@@ -250,7 +258,30 @@ label{
     font-size: 3rem;;
     color: rgb(2, 149, 78);
 }
+.result-footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.footer-section{
+    display: flex;
+    flex-basis:50%;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.social-img{
+    position:initial;
+}
+.register-button{
+    border: solid gray;
+    padding: 0.2rem 1rem;
+    background: rgb(213, 255, 213);
+    border: solid green;
+    font-weight: bold;
+    margin-top: 1rem;
 
+}
 /* quiz-end */
 
 /* create-quiz start */
