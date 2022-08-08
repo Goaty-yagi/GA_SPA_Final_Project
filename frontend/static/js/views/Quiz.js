@@ -70,6 +70,7 @@ function setQuiz() {
 
 
 function quizProgress() {
+    console.log("PRGRS",allQuestion[progress],allQuestion[progress].description)
     let lebal = allQuestion[progress].label
     let choiceOne = allQuestion[progress].choices[0]
     let choiceTwo = allQuestion[progress].choices[1]
