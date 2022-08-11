@@ -50,7 +50,7 @@ export default class extends AbstractView {
     async createEvent() {
         const inputValues = document.querySelectorAll(".text-input")
         console.log(inputValues,inputValues[1].value)
-        await fetch('http://localhost:5000/api/',{
+        const user = await fetch('http://localhost:5000/api/',{
             method:"POST",
             body: JSON.stringify({
                 term: inputValues[0].value,
@@ -60,6 +60,7 @@ export default class extends AbstractView {
                 'Content-Type': 'application/json'
             }
         })
+        console.log("user",user)
     }
     async allQuestion() {
         await 

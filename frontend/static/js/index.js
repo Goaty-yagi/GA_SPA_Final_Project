@@ -1,10 +1,19 @@
+// import authentication, { userIsReady } from "../../../firebase/authentication.js";
+import initialization from "./store/index.js";
 import Home from "./views/Home.js"
+import Login from "./views/Login.js";
 import Nav from "./views/Nav.js";
 import Quiz from "./views/Quiz.js";
 import QuizCreate from "./views/QuizCreate.js";
+import Signup from "./views/Signup.js";
 
-const nav = new Nav()
-nav.addEvent()
+initialization()
+
+// authentication()
+// const nav = new Nav()
+// if(userIsReady) {
+//     nav.addEvent()
+// }
 const navigateTo = (url) => {
     // DOM won't change.
     // this is like set currentURL as histry then 
@@ -14,13 +23,14 @@ const navigateTo = (url) => {
 }
 
 
-// why async?? will be render page so tikes time
+// why async?? will be render page so takes time
 const router = async () => {
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
         { path: "/create", view: QuizCreate},
-        // { path: "/register", view: () => console.log("view register")}
+        { path: "/signup", view: Signup},
+        { path: "/login", view: Login}
     ];
     // Test each route for potential match
     const potentialMatches = routes.map(route => {

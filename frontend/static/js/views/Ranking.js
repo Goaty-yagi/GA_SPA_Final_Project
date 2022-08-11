@@ -1,10 +1,9 @@
-
 import AbstractView from "./AbstractView.js";
 
 export default class extends AbstractView {
     constructor() {
         super()
-        this.setTitle("Home")
+        // this.setTitle(" Ranking")
     }
     async getHtml() {
         //async return HTML might be asynchronous
@@ -13,7 +12,7 @@ export default class extends AbstractView {
             <div class="main-container">
                 <h1 class="title">Quiz Ranking</h1>
                 <h2 class="quiz-type">Java script</h2>
-                <button class="start-button"  data-link>START</button>
+                <button class="start-button">START</button>
             </div>
         </main>
         `

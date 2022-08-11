@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors")
 const {
   createTable,
   insertDataIntoTable,
@@ -7,15 +8,20 @@ const {
   patchData,
   deleteData,
 } = require("./database/database");
-const port = process.env.PORT || 5000;
+// const { createUser, login } = require("./firebase/authentication");
+// const auth = require("./firebase/config");
 
+const port = process.env.PORT || 5000;
 const app = express();
 
-// middleware to read static file
+// middleware 
 app.use(express.json());
+
+// read static file
+app.use(cors())
 app.use(
   "/static",
-  express.static(path.resolve(__dirname, "frontend", "static"))
+  express.static(path.resolve(__dirname, "frontend", "static")),
 );
 
 // API
@@ -37,6 +43,17 @@ app.delete("/api/:id", (req, res) => {
   console.log("delete");
   deleteData(req, res);
 });
+
+// firebase
+// app.post("/firebase", async (req, res) => {
+//   createUser(req, res);
+// });
+
+// app.post("/login", async (req, res) => {
+//   console.log("login")
+//   login(req, res)
+// });
+
 
 // HTTP render
 app.get("/*", (req, res) => {
