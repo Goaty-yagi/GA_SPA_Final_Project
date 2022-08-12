@@ -17,6 +17,7 @@ async function createScoreTable(req, res) {
   }
   
   function createScore(req, res, db) {
+    console.log("CERATE_SCORE")
       const sql = `INSERT INTO ${tableName}(UUID, username, quiz_type, score) ${VALUES}`;
       const tableValues = Object.values(req.body)
       db.run(sql, tableValues, (err, result) => {
@@ -27,17 +28,16 @@ async function createScoreTable(req, res) {
   }
   
   async function patchScoreData(req, res) {
-    // need to receive each column data
+    // receive only UUID and score in the body
     const id = req.body.UUID
     delete req.body.UUID
     const tableValues = Object.values(req.body)//order must be the same as SET below user, mail, UUID
     tableValues.push(id)
+    console.log(tableValues)
     await openDB();
-    const sql = `UPDATE ${tableName} SET user = ?, mail = ? WHERE UUID = ?`;
+    const sql = `UPDATE ${tableName} SET score = ? WHERE UUID = ?`;
     db.run(sql, tableValues, (err,result) => {
       if (err) {
-        //** even if the order is not correct, error will not occur.
-        //so need to add some functionality for this.
         res.status(400).json({
           status: "error",
           message: err.message,

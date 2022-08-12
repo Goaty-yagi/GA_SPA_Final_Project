@@ -7,6 +7,12 @@ export default class extends AbstractView {
         super()
         this.setTitle("Signup")
         this.score = document.location.search.substring(1).split("=")[1]
+        this.app = document.querySelector("#app");
+        this.url = "http://localhost:5000";
+        this.userPath = "/api/user";
+        this.scorePath = "/api/score";
+        this.userEndpoint = this.url + this.userPath;
+        this.scoreEndpoint = this.url + this.scorePath
     }
     async getHtml() {
         //async return HTML might be asynchronous
@@ -25,23 +31,52 @@ export default class extends AbstractView {
         `
     }
     addEvent() {
-        document.querySelector(".submit-button").addEventListener("click",this.signupUser)
+        document.querySelector(".submit-button").addEventListener("click",() => this.signupUser(this.userEndpoint, this.scoreEndpoint))
     }
     event() {
         console.log("EVENT_CLICKED")
         // history.replaceState(null, null, "quiz")
     }
-    async signupUser() {
+    async signupUser(userEndpoint, scoreEndpoint) {
+        console.log("ENTER",this.userEndpoint)
         const inputValues = document.querySelectorAll(".text-input")
         const user = {
             username :inputValues[0].value,
             email: inputValues[1].value,
             password: inputValues[2].value,
         }
-        await createUser(user)
-        .then(() => {
+        createUser(user)
+        .then((e) => {
+            console.log("CR",e)
             const userData = getUserData()
-            console.log(userData)
+            const uid = userData.uid
+            console.log("ENDPOINT_CHECK",this.userEndpoint)
+            fetch(scoreEndpoint, {
+                method:"POST",
+                body: JSON.stringify({
+                    UUID: uid,
+                    username: user.username,
+                    quiz_type: "js",
+                    score: this.score
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            fetch(this.userEndpoint, {
+                method:"POST",
+                body: JSON.stringify({
+                    UUID: uid,
+                    user: user.username,
+                    mail: user.email
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        }).catch((e) => {
+            console.log("CATCH", e)
         })
+        console.log(a)
     }
 }

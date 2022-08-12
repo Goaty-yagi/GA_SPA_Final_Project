@@ -31,7 +31,7 @@ async function createUser(user) {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("error-create", error);
-      return "ERROR_AT_ AUTH" + error;
+      return "ERROR_AT_ AUTH" + error.message;
     });
 }
 
