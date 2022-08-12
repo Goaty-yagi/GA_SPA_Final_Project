@@ -51,7 +51,6 @@ export default class extends AbstractView {
         </div>
       </nav>
       `
-      console.log(userLogin)
       if(userLogin) {
         console.log("LOGEDIN", userLogin)
         headerElement.children[1].innerHTML += `

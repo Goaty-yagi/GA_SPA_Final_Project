@@ -1,6 +1,6 @@
-import { createUser } from "../../../../firebase/authentication.js";
+import { createUser, getUserData } from "../../../../firebase/authentication.js";
 import AbstractView from "./AbstractView.js";
-import { correctNum } from "./quiz.js";
+// import { correctNum } from "./quiz.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -32,19 +32,16 @@ export default class extends AbstractView {
         // history.replaceState(null, null, "quiz")
     }
     async signupUser() {
-        if(correctNum) {
-            score = correctNum
-        } else {
-            score = 0
-        }
-        console.log("score_check",score)
         const inputValues = document.querySelectorAll(".text-input")
         const user = {
             username :inputValues[0].value,
             email: inputValues[1].value,
             password: inputValues[2].value,
-            score : score
         }
-        createUser(user)
+        await createUser(user)
+        .then(() => {
+            const userData = getUserData()
+            console.log(userData)
+        })
     }
 }

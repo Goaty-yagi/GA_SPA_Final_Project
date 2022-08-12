@@ -19,15 +19,13 @@ let userData = "";
 let userLogin = false;
 let userIsReady = false
 
-function createUser(user) {
+async function createUser(user) {
   const { username, email, password, score} = user;
-  createUserWithEmailAndPassword(auth, email, password)
+  await createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
-      console.log("CREATED");
       updateProfile(auth.currentUser, {
         displayName: username,
-        photoURL: score,
-      });
+      }).then(() => authChange())
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -73,7 +71,6 @@ function setUser(user) {
     userData = {
       uid: user.uid,
       name: user.displayName,
-      score: Number(user.photoURL),
     };
     userLogin = true;
     console.log("LOGIN", userData, userLogin);
@@ -84,27 +81,31 @@ function setUser(user) {
     console.log("LOGOUT");
   }
 }
-function getAllUsers() {
-  const listAllUsers = (nextPageToken) => {
-    // List batch of users, 1000 at a time.
-    auth
-      .listUsers(1000, nextPageToken)
-      .then((listUsersResult) => {
-        listUsersResult.users.forEach((userRecord) => {
-          console.log('user', userRecord.toJSON());
-        });
-        if (listUsersResult.pageToken) {
-          // List next batch of users.
-          listAllUsers(listUsersResult.pageToken);
-        }
-      })
-      .catch((error) => {
-        console.log('Error listing users:', error);
-      });
-  };
-  // Start listing users from the beginning, 1000 at a time.
-  listAllUsers();
+function getUserData() {
+  console.log("IN_USERDATA")
+  return userData
 }
+// function getAllUsers() {
+//   const listAllUsers = (nextPageToken) => {
+//     // List batch of users, 1000 at a time.
+//     auth
+//       .listUsers(1000, nextPageToken)
+//       .then((listUsersResult) => {
+//         listUsersResult.users.forEach((userRecord) => {
+//           console.log('user', userRecord.toJSON());
+//         });
+//         if (listUsersResult.pageToken) {
+//           // List next batch of users.
+//           listAllUsers(listUsersResult.pageToken);
+//         }
+//       })
+//       .catch((error) => {
+//         console.log('Error listing users:', error);
+//       });
+//   };
+//   // Start listing users from the beginning, 1000 at a time.
+//   listAllUsers();
+// }
 
 async function logout() {
   await signOut(auth);
@@ -112,18 +113,22 @@ async function logout() {
   console.log("signout");
 }
 
-onAuthStateChanged(auth, (user) => {
+function authChange() {
+  onAuthStateChanged(auth, (user) => {
     console.log("IN_UNSUB");
     setUser(user);
     userIsReady = true
     console.log("ready",userIsReady)
     initialization(userLogin)
     });
+}
+authChange()
 
 export { 
   login, 
   logout, 
-  createUser, 
+  createUser,
+  getUserData,
   getAllUsers,
   userData, 
   userLogin, 

@@ -7,13 +7,25 @@ const {
   getALLData,
   patchData,
   deleteData,
+  deleteTable
 } = require("./database/database");
+const { 
+  createUserTable, 
+  getUserList, 
+  patchUserData, 
+  deleteUser
+} = require("./database/apis/user");
+const { createJsQuizTable, getJsQuizList, deleteJsQuiz, patchJsQuizData } = require("./database/apis/quizzes/js");
 // const { createUser, login } = require("./firebase/authentication");
 // const auth = require("./firebase/config");
 
 const port = process.env.PORT || 5000;
 const app = express();
 
+
+// app.use((req, res, next) => {
+//   console.log("middle", req.params, req.path, req)
+// })
 // middleware 
 app.use(express.json());
 
@@ -25,24 +37,77 @@ app.use(
 );
 
 // API
-app.get("/api", (req, res) => {
-  console.log("API2", req.url);
-  getALLData(req, res);
+// app.get("/api", (req, res) => {
+//   console.log("API2", req.url);
+//   getALLData(req, res);
+// });
+
+// app.post("/api", async (req, res) => {
+//   createTable(req, res)
+//   // insertDataIntoTable(req.body, res);
+// });
+
+// app.patch("/api/:id", (req, res) => {
+//   console.log("patch");
+//   patchData(req, res);
+// });
+
+// app.delete("/api/:id", (req, res) => {
+//   console.log("delete");
+//   deleteData(req, res);
+// });
+
+
+//@ USER API
+app.get("/api/user", (req, res) => {
+  console.log("API-=user");
+  // deleteTable("users", res)
+  getUserList(req, res)
 });
 
-app.post("/api", async (req, res) => {
-  insertDataIntoTable(req.body, res);
+app.post("/api/user", (req, res) => {
+  console.log("API2-=user");
+  createUserTable(req, res)
 });
 
-app.patch("/api/:id", (req, res) => {
-  console.log("patch");
-  patchData(req, res);
-});
-
-app.delete("/api/:id", (req, res) => {
+app.delete("/api/user", (req, res) => {
   console.log("delete");
-  deleteData(req, res);
+  deleteUser(req, res);
 });
+
+app.patch("/api/user", (req, res) => {
+  console.log("patch for user");
+  // deleteTable("user")
+  patchUserData(req, res)
+});
+
+
+//@js_quiz API
+
+app.get("/api/quiz/js", (req, res) => {
+  console.log("jsquiz");
+  // deleteTable("users", res)
+  // createUserTable(req, res)
+  getJsQuizList(req, res)
+});
+
+app.post("/api/quiz/js", (req, res) => {
+  console.log("jsquiz");
+  // deleteTable("user")
+  createJsQuizTable(req, res)
+});
+
+app.delete("/api/quiz/js", (req, res) => {
+  console.log("delete");
+  deleteJsQuiz(req, res)
+});
+
+app.patch("/api/quiz/js", (req, res) => {
+  // deleteTable("user")
+  patchJsQuizData(req, res)
+});
+
+
 
 // firebase
 // app.post("/firebase", async (req, res) => {
@@ -56,9 +121,9 @@ app.delete("/api/:id", (req, res) => {
 
 
 // HTTP render
-app.get("/*", (req, res) => {
-  res.sendFile(path.resolve("frontend", "index.html")); //like FS
-  console.log("API", req.url);
-});
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.resolve("frontend", "index.html")); //like FS
+//   console.log("API", req.url);
+// });
 
 app.listen(port, () => console.log("server is listenning"));

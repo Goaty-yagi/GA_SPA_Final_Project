@@ -4,11 +4,13 @@ import AbstractView from "./AbstractView.js";
 // let terms = returnVal()
 // console.log(terms[0])
 // terms.forEach(e => {
-//     fetch('http://localhost:5000/api/',{
+//     fetch('http://localhost:5000/api/quiz/js',{
 //             method:"POST",
 //             body: JSON.stringify({
 //                 term: e.term,
-//                 description: e.definition
+//                 class: e.class,
+//                 definition: e.definition,
+//                 tags: e.tags
 //             }),
 //             headers: {
 //                 'Content-Type': 'application/json'
