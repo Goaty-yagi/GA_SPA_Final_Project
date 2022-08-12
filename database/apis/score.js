@@ -73,7 +73,7 @@ async function createScoreTable(req, res) {
   }
   async function getScoreOrderList(req, res) {
     db = await openDB();
-    const quizType = req.body.quiz_type
+    const quizType = req.params.type.split("=")[1]
     const sql_SELECT = `
         SELECT * ,
         RANK()OVER(ORDER BY score DESC) 

@@ -110,7 +110,7 @@ app.patch("/api/quiz/js", (req, res) => {
 
 //@Score API
 
-app.get("/api/score", (req, res) => {
+app.get("/api/score/:type", (req, res) => {
   console.log("SCORE");
   // deleteTable("users", res)
   // getScoreList(req, res)

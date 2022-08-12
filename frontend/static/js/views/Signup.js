@@ -76,7 +76,6 @@ export default class extends AbstractView {
             })
         }).catch((e) => {
             console.log("CATCH", e)
-        })
-        console.log(a)
+        })  
     }
 }
