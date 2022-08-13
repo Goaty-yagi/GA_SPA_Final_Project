@@ -7,23 +7,18 @@ import Quiz from "./views/Quiz.js";
 import QuizCreate from "./views/QuizCreate.js";
 import Signup from "./views/Signup.js";
 
-// authentication()
-// const nav = new Nav()
-// if(userIsReady) {
-//     nav.addEvent()
-// }
+
+// document.querySelector("#app").innerHTML = '<div class="lds-dual-ring"></div>'
 const navigateTo = (url) => {
     // DOM won't change.
     // this is like set currentURL in the history then 
     // go to the url
     history.pushState(null, null, url);
-    console.log("HISTORY IS PUSHED", location.pathname)
     router()
 }
 
 // why async?? will be render page so takes time
 const router = async () => {
-    console.log("HISTORY", history,location.pathname)
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
@@ -55,18 +50,18 @@ const router = async () => {
     view.addEvent()
     // match.route.view()
 }
-
-document.addEventListener("DOMContentLoaded", () => {
+function routingEvent() {
     document.body.addEventListener("click", e => {
-        console.log("E_TEST",e.target.attributes.href,e.target.getAttribute("href"), e.target.matches("[data-link]"))
         if(e.target.matches("[target-url]")) {
             e.preventDefault() // prevent reload but stop routing
             navigateTo(e.target.getAttribute("target-url"))
         }
     })
     router()
-})
+}
 
 window.addEventListener("popstate", router)
 // postate excute histrical data when browser back or forward
 // the data could be the data created with histry.pushState
+
+export {routingEvent, router}

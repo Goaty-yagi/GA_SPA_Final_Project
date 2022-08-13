@@ -8,6 +8,7 @@ import { getAuth } from "firebase/auth"
 
 console.log("IN_FIREBASE")
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyBcHl8FsxGlKZv88X9W7vBajVKkisPGerQ",
   authDomain: "ga-project-98eb1.firebaseapp.com",

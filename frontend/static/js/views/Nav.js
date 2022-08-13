@@ -63,6 +63,7 @@ export default class extends AbstractView {
         document.querySelector(".logout").addEventListener('click',() => {
           console.log("GONNA LOGOUT")
           logout()
+          history.go()
         })
       } else {
         headerElement.children[1].innerHTML += `

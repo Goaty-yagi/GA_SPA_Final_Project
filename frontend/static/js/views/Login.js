@@ -1,4 +1,5 @@
 import {login} from "../../../../firebase/authentication.js";
+import { router } from "../index.js";
 import AbstractView from "./AbstractView.js";
 
 export default class extends AbstractView {
@@ -32,6 +33,13 @@ export default class extends AbstractView {
             email: inputValues[0].value,
             password: inputValues[1].value
         }
-        login(user)
+        login(user).then((result) => {
+            console.log("CCHECK", result)
+            if(result) {
+                // history.pushState(null, null, "/")
+                history.go()
+                // router()
+            }
+        })
     }
 }

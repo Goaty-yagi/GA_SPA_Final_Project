@@ -1,5 +1,6 @@
 import AbstractView from "./AbstractView.js";
 import twitter from "../../images/twitter.png";
+import { userData } from "../../../../firebase/authentication.js";
 
 const frontURL = "localhost:1234";
 const app = document.querySelector("#app");
@@ -227,6 +228,7 @@ export default class extends AbstractView {
   constructor() {
     super();
     this.setTitle("Quiz");
+    console.log("CONST",userData)
   }
   async getHtml() {
     //async return HTML might be asynchronous

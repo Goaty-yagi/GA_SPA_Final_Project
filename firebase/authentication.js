@@ -36,19 +36,19 @@ async function createUser(user) {
 }
 
 function login(user) {
-  const { email, password } = user;
+  return new Promise((resolve, reject) => {
+    const { email, password } = user;
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then((result) => {
       // Signed in
-      const user = userCredential.user;
-      console.log(user);
+      resolve(true)
       // statusChange()
       // ...
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      resolve(false)
     });
+  })
 }
 
 //   setPersistence(auth, browserSessionPersistence)
