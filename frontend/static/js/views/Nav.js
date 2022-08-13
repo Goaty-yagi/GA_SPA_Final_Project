@@ -36,7 +36,7 @@ export default class extends AbstractView {
     }
     async getHtml(userLogin) {
       const headerElement = document.querySelector("#header")
-      headerElement.innerHTML = `<img class="logo" src="${logo}" alt="logo" data-link>`
+      headerElement.innerHTML = `<img target-url="/" class="logo" src="${logo}" alt="logo" data-link>`
       headerElement.innerHTML += `
       <nav>
       <div aria-label="change theme" class="theme-container">
@@ -54,7 +54,7 @@ export default class extends AbstractView {
       if(userLogin) {
         console.log("LOGEDIN", userLogin)
         headerElement.children[1].innerHTML += `
-        <div class="quiz-create" data-link>CREATE</div>
+        <div class="quiz-create" target-url="/create">CREATE</div>
         <div class="logout">LOGOUT</div>`
         document.querySelector(".quiz-create").addEventListener('click',() => {
           console.log("clicked")
@@ -66,16 +66,14 @@ export default class extends AbstractView {
         })
       } else {
         headerElement.children[1].innerHTML += `
-        <div class="login" data-link>LOGIN</div>
-        <div class="signup" data-link>SIGNUP</div>
+        <div class="login" target-url="/login">LOGIN</div>
+        <div class="signup" target-url="/signup">SIGNUP</div>
         `
         document.querySelector(".signup").addEventListener('click',() => {
           console.log("clicked")
-          history.replaceState(null, null, "/signup")
         })
         document.querySelector(".login").addEventListener('click',() => {
           console.log("clicked")
-          history.replaceState(null, null, "/login")
         })
       }
     }
@@ -84,7 +82,6 @@ export default class extends AbstractView {
       document.querySelector(".circle").addEventListener('click',theme)
       document.querySelector(".logo").addEventListener('click',() => {
           console.log("clicked")
-          history.replaceState(null, null, "/")
       })
         
     }

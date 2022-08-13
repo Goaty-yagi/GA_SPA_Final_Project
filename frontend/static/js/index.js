@@ -7,8 +7,6 @@ import Quiz from "./views/Quiz.js";
 import QuizCreate from "./views/QuizCreate.js";
 import Signup from "./views/Signup.js";
 
-initialization()
-
 // authentication()
 // const nav = new Nav()
 // if(userIsReady) {
@@ -16,15 +14,16 @@ initialization()
 // }
 const navigateTo = (url) => {
     // DOM won't change.
-    // this is like set currentURL as histry then 
+    // this is like set currentURL in the history then 
     // go to the url
     history.pushState(null, null, url);
+    console.log("HISTORY IS PUSHED", location.pathname)
     router()
 }
 
-
 // why async?? will be render page so takes time
 const router = async () => {
+    console.log("HISTORY", history,location.pathname)
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
@@ -32,6 +31,8 @@ const router = async () => {
         { path: "/signup", view: Signup},
         { path: "/login", view: Login}
     ];
+    const allReset = new Quiz()
+            allReset.allReset()
     // Test each route for potential match
     const potentialMatches = routes.map(route => {
         return {
@@ -57,13 +58,10 @@ const router = async () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
-        console.log("E_TEST",e.target, e.target.matches("[data-link]"))
-        if(e.target.matches("[data-link]")) { //check if element has argument
-            const allReset = new Quiz()
-            allReset.allReset()
+        console.log("E_TEST",e.target.attributes.href,e.target.getAttribute("href"), e.target.matches("[data-link]"))
+        if(e.target.matches("[target-url]")) {
             e.preventDefault() // prevent reload but stop routing
-            navigateTo(e.target.href)
-            console.log('E',e.target,e)
+            navigateTo(e.target.getAttribute("target-url"))
         }
     })
     router()

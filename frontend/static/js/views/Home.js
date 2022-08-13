@@ -13,7 +13,7 @@ export default class extends AbstractView {
             <div class="main-container">
                 <h1 class="title">Quiz Ranking</h1>
                 <h2 class="quiz-type">Java script</h2>
-                <button class="start-button"  data-link>START</button>
+                <button class="start-button" target-url="/quiz">START</button>
             </div>
         </main>
         `
@@ -23,6 +23,5 @@ export default class extends AbstractView {
     }
     event() {
         console.log("EVENT_CLICKED")
-        history.replaceState(null, null, "quiz")
     }
 }

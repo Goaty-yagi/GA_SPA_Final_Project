@@ -14,6 +14,7 @@ let apiData;
 let timer;
 let allQuestion = [];
 let allTerm = [];
+let intervalStop = false
 
 fetch(endpoint, {
   method: "GET",
@@ -26,7 +27,6 @@ function turnResponseIntoJS(res) {
 }
 
 function handleData(data) {
-  console.log(data);
   apiData = data;
 }
 
@@ -62,13 +62,11 @@ function setQuiz() {
   for (let i = 0; i < apiData.length; i++) {
     new SetQuiz(apiData[i]);
   }
-  console.log(allQuestion, allTerm);
   allQuestion.forEach((obj) => {
     while (obj.choices.length < 4) {
       let term = allTerm[Math.floor(Math.random() * allTerm.length)];
       obj.choices.push(term);
       obj.choices = shaffleArray(Array.from(setLength(obj.choices)));
-      console.log(obj.choices);
     }
   });
   allQuestion = shaffleArray(allQuestion);
@@ -237,13 +235,18 @@ export default class extends AbstractView {
         `;
   }
   addEvent() {
-    this.event();
+    this.event().then(() => {
+      clearInterval(intervalId);
+          setQuiz();
+          quizProgress();
+          countdown();
+    });
     // startCountDown = document.querySelector()
   }
   async event() {
     console.log("EVENT_CLICKED");
     let startSecond = 3;
-    await new Promise(() => {
+    await new Promise((resolve, reject) => {
       intervalId = setInterval(() => {
         if (startSecond > 1) {
           startSecond -= 1;
@@ -252,10 +255,7 @@ export default class extends AbstractView {
           app.innerHTML = `<div class="start-countdown-start">START!</div>`;
           startSecond -= 1;
         } else {
-          clearInterval(intervalId);
-          setQuiz();
-          quizProgress();
-          countdown();
+          resolve()
         }
       }, 1000);
     });
@@ -267,6 +267,7 @@ export default class extends AbstractView {
     timer;
     allQuestion = [];
     allTerm = [];
+    console.log(intervalId)
     clearInterval(intervalId);
     intervalId = "";
     console.log("ALLRESET");

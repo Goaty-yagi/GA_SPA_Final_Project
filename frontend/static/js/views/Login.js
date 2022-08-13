@@ -25,7 +25,6 @@ export default class extends AbstractView {
     }
     event() {
         console.log("EVENT_CLICKED")
-        // history.replaceState(null, null, "quiz")
     }
     async loginUser() {
         const inputValues = document.querySelectorAll(".text-input")
