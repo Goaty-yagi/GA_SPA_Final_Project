@@ -37,7 +37,7 @@ export default class extends AbstractView {
             console.log("CCHECK", result)
             if(result) {
                 // history.pushState(null, null, "/")
-                history.go()
+                // history.go()
                 // router()
             }
         })
