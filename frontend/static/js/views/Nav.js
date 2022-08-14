@@ -36,7 +36,7 @@ export default class extends AbstractView {
     }
     async getHtml(userLogin) {
       const headerElement = document.querySelector("#header")
-      headerElement.innerHTML = `<img target-url="/" class="logo" src="${logo}" alt="logo" data-link>`
+      headerElement.innerHTML = `<img target-url="/" class="logo" src="${logo}" alt="logo">`
       headerElement.innerHTML += `
       <nav>
       <div aria-label="change theme" class="theme-container">

@@ -8,7 +8,7 @@ import QuizCreate from "./views/QuizCreate.js";
 import Signup from "./views/Signup.js";
 
 
-// document.querySelector("#app").innerHTML = '<div class="lds-dual-ring"></div>'
+document.querySelector("#app").innerHTML = '<div class="lds-dual-ring"></div>'
 const navigateTo = (url) => {
     // DOM won't change.
     // this is like set currentURL in the history then 

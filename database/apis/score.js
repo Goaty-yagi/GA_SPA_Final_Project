@@ -5,7 +5,7 @@ const VALUES = 'VALUES(?,?,?,?)'
 
 async function createScoreTable(req, res) {
     db = await openDB();
-      await db.run(`CREATE TABLE IF NOT EXISTS ${tableName}(UUID unique, username, quiz_type, score)`,(err, result) => {
+      await db.run(`CREATE TABLE IF NOT EXISTS ${tableName}(UUID unique, username, quiz_type, score integer)`,(err, result) => {
         if(err) {
           console.log("err")
           res.status(400).json(err.message)
@@ -29,6 +29,7 @@ async function createScoreTable(req, res) {
   
   async function patchScoreData(req, res) {
     // receive only UUID and score in the body
+    console.log("BODY",req.body)
     const id = req.body.UUID
     delete req.body.UUID
     const tableValues = Object.values(req.body)//order must be the same as SET below user, mail, UUID
@@ -86,12 +87,26 @@ async function createScoreTable(req, res) {
     });
     closeDB(db);
   }
+async function getScoreById(req, res) {
+  console.log("PARAMS",req.params.id)
+  const id = req.params.id.split("=")[1]
+  db = await openDB();
+  const sql_SELECT = `
+  SELECT * FROM ${tableName} WHERE UUID = "${id}"
+  `
+  db.get(sql_SELECT, [], (err, rows) => {
+    if (err) return res.status(400).json(err.message);
+      res.status(200).json(rows);
+  });
+  closeDB(db);
+}
 
   module.exports = {
     createScoreTable,
     getScoreList,
     patchScoreData,
     deleteScore,
-    getScoreOrderList
+    getScoreOrderList,
+    getScoreById
   }
    

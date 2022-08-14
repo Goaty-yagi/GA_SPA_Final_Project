@@ -16,7 +16,7 @@ const {
   deleteUser
 } = require("./database/apis/user");
 const { createJsQuizTable, getJsQuizList, deleteJsQuiz, patchJsQuizData } = require("./database/apis/quizzes/js");
-const { getScoreList, createScoreTable, deleteScore, patchScoreData, getScoreOrderList } = require("./database/apis/score");
+const { getScoreList, createScoreTable, deleteScore, patchScoreData, getScoreOrderList, getScoreById } = require("./database/apis/score");
 // const { createUser, login } = require("./firebase/authentication");
 // const auth = require("./firebase/config");
 
@@ -112,7 +112,7 @@ app.patch("/api/quiz/js", (req, res) => {
 
 app.get("/api/score/:type", (req, res) => {
   console.log("SCORE");
-  // deleteTable("users", res)
+  // deleteTable("scores", res)
   // getScoreList(req, res)
   getScoreOrderList(req, res)
 });
@@ -129,10 +129,17 @@ app.delete("/api/score", (req, res) => {
 });
 
 app.patch("/api/score", (req, res) => {
+  console.log("SCORE_PATCH")
   // deleteTable("user")
   patchScoreData(req, res)
 });
 
+app.get("/api/score-id/:id", (req, res) => {
+  console.log("SCORE_ID");
+  // deleteTable("scores", res)
+  // getScoreList(req, res)
+  getScoreById(req, res)
+});
 
 
 // firebase

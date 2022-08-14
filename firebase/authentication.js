@@ -13,11 +13,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import initialization, { setSessionStorage } from "../frontend/static/js/store";
-
-let userData = "";
+import initialization, { removeSessionItem, setSessionStorage } from "../frontend/static/js/store";
+console.log("AUTH_START")
+let userData = {}
 let userLogin = false;
-let userIsReady = false
 
 async function createUser(user) {
   const { username, email, password, score} = user;
@@ -68,15 +67,13 @@ function login(user) {
 
 function setUser(user) {
   if (user) {
-    userData = {
-      uid: user.uid,
-      name: user.displayName,
-    };
+    userData["UID"] = user.uid
+    userData["name"] = user.displayName
     userLogin = true;
-    console.log("LOGIN", userData, userLogin);
+    console.log("LOGIN", userData);
     
   } else {
-    userData = "";
+    userData = {}
     userLogin = false;
     console.log("LOGOUT");
   }
@@ -109,17 +106,20 @@ function getUserData() {
 
 async function logout() {
   await signOut(auth);
+  removeSessionItem("currentScore")
   // statusChange()
   console.log("signout");
 }
 
 function authChange() {
   onAuthStateChanged(auth, (user) => {
-    console.log("IN_UNSUB");
     setUser(user);
-    userIsReady = true
-    console.log("ready",userIsReady)
-    initialization(userLogin)
+    if(user) {
+      console.log("CHECK", user.uid)
+      initialization(userLogin,user.uid)
+    } else {
+      initialization(userLogin)
+    }
     });
 }
 authChange()
@@ -132,4 +132,4 @@ export {
   getAllUsers,
   userData, 
   userLogin, 
-  userIsReady };
+  };

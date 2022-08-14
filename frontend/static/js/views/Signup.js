@@ -1,4 +1,5 @@
 import { createUser, getUserData } from "../../../../firebase/authentication.js";
+import { setSessionStorage } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 // import { correctNum } from "./quiz.js";
 
@@ -45,16 +46,17 @@ export default class extends AbstractView {
             email: inputValues[1].value,
             password: inputValues[2].value,
         }
-        createUser(user)
+        await createUser(user)
         .then((e) => {
-            console.log("CR",e)
+            console.log("CR",this.score,user)
             const userData = getUserData()
-            const uid = userData.uid
+            console.log("USERDATA",userData)
+            user["uid"] = userData.UID
             console.log("ENDPOINT_CHECK",this.userEndpoint)
             fetch(scoreEndpoint, {
                 method:"POST",
                 body: JSON.stringify({
-                    UUID: uid,
+                    UUID: user.uid,
                     username: user.username,
                     quiz_type: "js",
                     score: this.score
@@ -63,10 +65,11 @@ export default class extends AbstractView {
                     'Content-Type': 'application/json'
                 }
             })
+        }).then(() => {
             fetch(this.userEndpoint, {
                 method:"POST",
                 body: JSON.stringify({
-                    UUID: uid,
+                    UUID: user.uid,
                     user: user.username,
                     mail: user.email
                 }),
@@ -74,7 +77,11 @@ export default class extends AbstractView {
                     'Content-Type': 'application/json'
                 }
             })
-        }).catch((e) => {
+            console.log("GONNAGET_SCORE")
+            setSessionStorage("currentScore", this.score)
+        })
+        .then(() => history.go())
+        .catch((e) => {
             console.log("CATCH", e)
         })  
     }
