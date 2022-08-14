@@ -1,13 +1,14 @@
 
 import AbstractView from "./AbstractView.js";
+import Ranking from "./Ranking.js";
 
 export default class extends AbstractView {
     constructor() {
         super()
         this.setTitle("Home")
     }
+
     async getHtml() {
-        //async return HTML might be asynchronous
         return `
         <main id="main">
             <div class="main-container">
@@ -18,8 +19,10 @@ export default class extends AbstractView {
         </main>
         `
     }
-    addEvent() {
+    async addEvent() {
         document.querySelector(".start-button").addEventListener("click",this.event)
+        const ranking = new Ranking();
+        document.querySelector("#main").append(await ranking.getHtml())
     }
     event() {
         console.log("EVENT_CLICKED")

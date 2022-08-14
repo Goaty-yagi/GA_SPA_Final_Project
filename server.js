@@ -13,7 +13,8 @@ const {
   createUserTable, 
   getUserList, 
   patchUserData, 
-  deleteUser
+  deleteUser,
+  getUserById
 } = require("./database/apis/user");
 const { createJsQuizTable, getJsQuizList, deleteJsQuiz, patchJsQuizData } = require("./database/apis/quizzes/js");
 const { getScoreList, createScoreTable, deleteScore, patchScoreData, getScoreOrderList, getScoreById } = require("./database/apis/score");
@@ -80,6 +81,13 @@ app.patch("/api/user", (req, res) => {
   console.log("patch for user");
   // deleteTable("user")
   patchUserData(req, res)
+});
+
+app.get("/api/user-id/:id", (req, res) => {
+  console.log("API-=user");
+  getUserById(req, res)
+  // deleteTable("users", res)
+  // getUserList(req, res)
 });
 
 

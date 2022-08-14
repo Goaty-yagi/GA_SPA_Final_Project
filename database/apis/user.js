@@ -79,10 +79,25 @@ async function createUserTable(req, res) {
     closeDB(db);
   }
 
+  async function getUserById(req, res) {
+    console.log("PARAMS",req.params.id)
+    const id = req.params.id.split("=")[1]
+    db = await openDB();
+    const sql_SELECT = `
+    SELECT * FROM ${tableName} WHERE UUID = "${id}"
+    `
+    db.get(sql_SELECT, [], (err, rows) => {
+      if (err) return res.status(400).json(err.message);
+        res.status(200).json(rows);
+    });
+    closeDB(db);
+  }
+
   module.exports = {
     createUserTable,
     getUserList,
     patchUserData,
-    deleteUser
+    deleteUser,
+    getUserById
   }
    

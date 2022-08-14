@@ -2,7 +2,7 @@
 import { userData } from "../../../../firebase/authentication.js";
 import { routingEvent } from "../index.js";
 import Nav from "../views/Nav.js";
-import Ranking from "../views/Ranking.js";
+// import Ranking from "../views/Ranking.js";
 
 let initialized = false;
 export default async function initialization(userLogin,uid) {
@@ -14,8 +14,6 @@ export default async function initialization(userLogin,uid) {
     routingEvent();
     const nav = new Nav();
     nav.addEvent(userLogin);
-    const ranking = new Ranking();
-    ranking.addEvent();
     
     initialized = true;
     console.log("INITIALIZED",userLogin,uid)
@@ -23,7 +21,7 @@ export default async function initialization(userLogin,uid) {
 }
 async function fetchScoreData(uid) {
   const url = "http://localhost:5000";
-  const scorePath = `/api/score-id/:id=${userData.UID}`;
+  const scorePath = `/api/score-id/:id=${uid}`;
   const scoreEndpoint = url + scorePath;
   await fetch(scoreEndpoint, {})
     .then((result) => {

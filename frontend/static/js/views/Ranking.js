@@ -18,29 +18,31 @@ async function getScoreData() {
 export default class extends AbstractView {
   constructor() {
     super();
-    // this.url = "http://localhost:5000";
-    // this.path = "/api/score";
-    // this.params = "/type=js"
-    // this.endpoint = this.url + this.path + this.params;
     this.scoreData;
-    this.aside = document.querySelector("#aside");
+    this.rankingContainer = document.createElement("div")
+    this.rankingContainer.className = "rank-section"
+    this.rankWrapper = document.createElement("div")
+    this.rankWrapper.className = "rank-wrapper"
+    this.rankingContainer.append(this.rankWrapper)
     // this.setTitle(" Ranking")
   }
   async getHtml() {
     this.scoreData = await getScoreData();
-    // const scoreMarkup =
-    console.log(this.scoreData.length);
-    this.aside.innerHTML += "<h1>RANKING</h1>"
+    // // const scoreMarkup =
+    // console.log(this.scoreData.length);
+    this.rankWrapper.innerHTML += "<h1>RANKING</h1>"
     this.scoreData.forEach((elem, index) => {
       console.log("loop");
-      this.aside.innerHTML += `
-            <section class="ranking-wrapper">
+      this.rankWrapper.innerHTML += `
+            <section class="ranking-container">
             <div class="rank">${index + 1}</div>
             <div class="rank-name">${elem.username}</div>
             <div class="score">${elem.score}</div>
             </section>
             `;
     });
+    console.log("RANKING",this.rankingContainer)
+    return this.rankingContainer
   }
   addEvent() {
     // this.event()
