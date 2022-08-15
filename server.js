@@ -84,7 +84,7 @@ app.patch("/api/user", (req, res) => {
 });
 
 app.get("/api/user-id/:id", (req, res) => {
-  console.log("API-=user");
+  console.log("GET_USER_BY ID");
   getUserById(req, res)
   // deleteTable("users", res)
   // getUserList(req, res)

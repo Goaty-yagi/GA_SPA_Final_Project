@@ -41,8 +41,6 @@ function login(user) {
     .then((result) => {
       // Signed in
       resolve(true)
-      // statusChange()
-      // ...
     })
     .catch((error) => {
       resolve(false)
@@ -107,6 +105,7 @@ function getUserData() {
 async function logout() {
   await signOut(auth);
   removeSessionItem("currentScore")
+  removeSessionItem("isAuth")
   // statusChange()
   console.log("signout");
 }
@@ -115,7 +114,7 @@ function authChange() {
   onAuthStateChanged(auth, (user) => {
     setUser(user);
     if(user) {
-      console.log("CHECK", user.uid)
+      console.log("CHECK", user)
       initialization(userLogin,user.uid)
     } else {
       initialization(userLogin)

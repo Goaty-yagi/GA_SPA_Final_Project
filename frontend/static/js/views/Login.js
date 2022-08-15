@@ -36,8 +36,9 @@ export default class extends AbstractView {
         login(user).then((result) => {
             console.log("CCHECK", result)
             if(result) {
+                console.log("LOGIN_RELOAD")
                 // history.pushState(null, null, "/")
-                // history.go()
+                history.go()
                 // router()
             }
         })

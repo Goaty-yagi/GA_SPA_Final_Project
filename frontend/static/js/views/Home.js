@@ -9,12 +9,25 @@ export default class extends AbstractView {
     }
 
     async getHtml() {
+        const title = "Quiz Ranking"
+        const quizType= "Java script"
+        const description = "Test your knowledge and Beat your rival!"
         return `
         <main id="main">
             <div class="main-container">
-                <h1 class="title">Quiz Ranking</h1>
-                <h2 class="quiz-type">Java script</h2>
-                <button class="start-button" target-url="/quiz">START</button>
+                <div class="home-each-section">
+                    <h1 class="title">${title}</h1>
+                    <h2 class="quiz-type">${quizType}</h2>
+                    <p>${description}</p>
+                    <button class="start-button" target-url="/quiz">START</button>
+                </div>
+                <div class="home-each-section-fa-cog">
+                <i class="fas fa-cog big-cog"></i>
+                <div class="small-cogs">
+                <i class="fas fa-cog small-cog"></i>
+                <i class="fas fa-cog small-cog"></i>
+                </div
+                </div>
             </div>
         </main>
         `

@@ -1,3 +1,5 @@
+import { userData, userLogin } from "../../../../firebase/authentication.js";
+import { getSessionItem } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 
 const url = "http://localhost:5000";
@@ -14,7 +16,6 @@ async function getScoreData() {
       return data;
     });
 }
-
 export default class extends AbstractView {
   constructor() {
     super();
@@ -28,14 +29,30 @@ export default class extends AbstractView {
   }
   async getHtml() {
     this.scoreData = await getScoreData();
-    // // const scoreMarkup =
-    // console.log(this.scoreData.length);
     this.rankWrapper.innerHTML += "<h1>RANKING</h1>"
+    console.log("LOGIN_CHECK",userLogin)
+    if(userLogin) {
+      const username = userData.name
+      const currentScore = getSessionItem("currentScore")
+      const welcome = `
+      <div>WELCOME ${username}!
+      <p>Your Max Score is ${currentScore}</p>
+      </div>`
+      this.rankWrapper.innerHTML += welcome
+    }
     this.scoreData.forEach((elem, index) => {
+      let awardFont
+      if(index + 1 === 1) {
+        awardFont = `<i class="fas fa-crown rank-font"><div class="rank-order">${index + 1}</div></i>`
+      } else if (index + 1 === 2) {
+        awardFont = `<i class="fas fa-award second-award rank-font rank-font"><div class="rank-order second-third">${index + 1}</div></i>`
+      } else if (index + 1 === 3) {
+        awardFont = `<i class="fas fa-award third-award rank-font rank-font"><div class="rank-order second-third">${index + 1}</div></i>`
+      }
       console.log("loop");
       this.rankWrapper.innerHTML += `
             <section class="ranking-container">
-            <div class="rank">${index + 1}</div>
+            <div class="rank">${awardFont}</div>
             <div class="rank-name">${elem.username}</div>
             <div class="score">${elem.score}</div>
             </section>

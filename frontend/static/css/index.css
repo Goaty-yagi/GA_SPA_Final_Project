@@ -5,6 +5,8 @@ body{
     background-size: cover; 
     width: 100%;
     height: 100vh;
+    padding: 0;
+    margin: 0; 
 }
 .body-theme {
     color: white
@@ -30,6 +32,13 @@ nav{
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+.nav-menu{
+    font-family: initial;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: solid gray;
+    background: rgba(255,255,255,0.7);
 }
 /* theme start */
 .theme-group{
@@ -79,7 +88,7 @@ nav{
     background: white;
 }
 
-/* nav and theme end */
+/* @Nav and Theme END */
 
 /* #app start */
 #app{
@@ -92,7 +101,7 @@ nav{
     justify-content: center;
 }
 
-/* quiz start */
+/* @ HOME START */
 #main{
     display: flex;
     flex-direction: column;
@@ -106,6 +115,34 @@ nav{
     background: rgba(255,255,255,0.7);
     width: 100%;
     padding: 1rem;
+    display: flex;
+    align-items: center;
+
+}
+.home-each-section {
+    flex-basis: 70%;
+    font-size: 2rem;
+}
+.home-each-section-fa-cog{
+    position: relative;
+    flex-basis: 30%;
+    display: flex;
+    align-items: center;
+}
+.fa-cog{
+    color: #ccc;
+    text-shadow: 2px  2px 10px #777 ,
+                -2px  2px 10px #777 ,
+                 2px -2px 10px #777 ,
+                -2px -2px 10px #777;
+}
+.big-cog{
+    font-size: 15rem;
+    animation: cogs 20s linear infinite;
+}
+.small-cog{
+    font-size: 10rem;
+    animation: cogs 20s linear reverse infinite;
 
 }
 .title{
@@ -114,11 +151,11 @@ nav{
 .quiz-type{
 }
 .start-button{
-    width: 5rem;
-    height: 2rem;
+    width: 8rem;
+    height: 3rem;
     border-radius: 0.5rem;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 2rem;
     color: white;
     background: rgb(51, 20, 94);
     transition: .5s;
@@ -127,18 +164,39 @@ nav{
     color: black;
     background: rgb(251, 255, 202);
 }
+@keyframes cogs {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    }
+/* @HOME END */
+/* quiz start */
+
 .countdown{
     display: flex;
     justify-content: flex-end;
     width: 70%;
     /* font-size: 1.3rem; */
 }
-.countdown-num{
+.base-count-num{
+    text-align: right;
+    font-size: 3rem;
+    color: yellow;
+    margin-right: 1rem;
+    text-shadow: 2px 2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,-2px -2px 0 #000;
+}
+/* .more-than-three{
+
+} */
+.last-three{
+    text-align: right;
     font-size: 3rem;
     margin-right: 1rem;
-    color: red;
     text-shadow: 2px 2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,-2px -2px 0 #000;
-
+    color: red;
 }
 .second-left{
     display: flex;
@@ -310,13 +368,54 @@ label{
 }
 .rank {
     font-family: initial;
-    border: solid orange;
-    border-radius: 50vh;
+    /* border: solid orange;
+    border-radius: 50vh; */
     width: 2rem;
     text-align: center;
     vertical-align: center;
     margin-right: 1rem;
     margin-bottom: 0.2rem;
+}
+.rank-font{
+    position: relative;
+    height: 2rem;
+}
+.fa-crown {
+    color: yellow;
+    font-size: 1.7rem;
+    text-shadow: 1px  1px 5px #777 ,
+                -1px  1px 5px #777 ,
+                 1px -1px 5px #777 ,
+                -1px -1px 5px #777;
+}
+.second-award{
+    color: rgb(172, 172, 172);
+    font-size: 1.5rem;
+    text-shadow: 1px  1px 5px #777 ,
+                -1px  1px 5px #777 ,
+                 1px -1px 5px #777 ,
+                -1px -1px 5px #777;
+}
+.third-award{
+    color: rgb(148, 62, 50);
+    font-size: 1.5rem;
+    text-shadow: 1px  1px 5px #777 ,
+                -1px  1px 5px #777 ,
+                 1px -1px 5px #777 ,
+                -1px -1px 5px #777;
+}
+.rank-order{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 1rem;
+    text-shadow: none;
+}
+.second-third{
+    color: white;
+    
 }
 .rank-name {
     flex-basis: 50%;

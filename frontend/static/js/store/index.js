@@ -8,7 +8,8 @@ let initialized = false;
 export default async function initialization(userLogin,uid) {
     console.log("IN_INITIALIZE",userLogin,uid)
     if(uid) {
-        fetchScoreData(uid)
+        await fetchScoreData(uid)
+        // await getUserData(uid)
     }
   if (!initialized) {
     routingEvent();
@@ -28,10 +29,24 @@ async function fetchScoreData(uid) {
       return result.json();
     })
     .then((data) => {
-      console.log(data);
+      console.log("FETCHED_SCORE",data);
       setSessionStorage("currentScore", data.score);
     });
 }
+
+// async function getUserData(uid) {
+//   const url = "http://localhost:5000";
+//   const userPath = `"/api/user-id/:id=${uid}`;
+//   const userEndpoint = url + userPath;
+//   await fetch(userEndpoint, {})
+//     .then((result) => {
+//       return result.json();
+//     })
+//     .then((data) => {
+//       console.log(data);
+//       setSessionStorage("isAuth", data.isAuthenticated);
+//     });
+// }
 
 function setSessionStorage(key, val) {
   sessionStorage.setItem(key, val);

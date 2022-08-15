@@ -8,6 +8,7 @@ const app = document.querySelector("#app");
 const url = "http://localhost:5000";
 const path = "/api/quiz/js";
 const endpoint = url + path;
+let questionWrapper 
 
 let progress = 0;
 let correctNum = 0;
@@ -18,6 +19,7 @@ let allQuestion = [];
 let allTerm = [];
 let intervalStop = false
 
+allReset()
 fetch(endpoint, {
 })
   .then(turnResponseIntoJS)
@@ -44,16 +46,22 @@ class SetQuiz {
 function countdown() {
   let startSecond = 10;
   timer = document.createElement("div");
-  timer.className = countdown;
+  timer.className = "countdown";
   app.prepend(timer);
-  timer.innerHTML = `<div class="countdown-num">${startSecond}</div> <div class="second-left">second left...</div>`;
+  timer.innerHTML = `<div class="base-count-num">${startSecond}</div> <div class="second-left">seconds left...</div>`;
   intervalId = setInterval(() => {
+    let singularOrPlural = startSecond === 1 + 1? "second" : "seconds";
+    let greaterThanThree = startSecond > 3 + 1? "base-count-num" : "last-three";
     if (startSecond > 0) {
       startSecond -= 1;
-      timer.innerHTML = `<div class="countdown-num">${startSecond}</div> <div class="second-left">second left...</div>`;
+      timer.innerHTML = `<div class=${greaterThanThree}>${startSecond}</div> <div class="second-left">${singularOrPlural} left...</div>`;
     } else {
       clearInterval(intervalId);
       app.innerHTML += `<i id="font" class="fas fa-times"></i>`;
+
+      //stop hover
+      questionWrapper = document.querySelector(".question-wrapper")
+      questionWrapper.style.pointerEvents = "none"
       stop();
     }
   }, 1000);
@@ -74,11 +82,7 @@ function setQuiz() {
 }
 
 function quizProgress() {
-  console.log(
-    "PRGRS",
-    allQuestion[progress],
-    allQuestion[progress].description
-  );
+  console.log("PROGRESS_START")
   let lebal = allQuestion[progress].label;
   let choiceOne = allQuestion[progress].choices[0];
   let choiceTwo = allQuestion[progress].choices[1];
@@ -90,34 +94,46 @@ function quizProgress() {
         <div class="question-num">Q, ${progress + 1}</div>
         <label>${lebal}</label>
         </div>
-        <div class="each-choice" id="${choiceOne}"><div class="order">1</div><div class="choice">${choiceOne}</div></div>
-        <div class="each-choice" id="${choiceTwo}"><div class="order">2</div><div class="choice">${choiceTwo}</div></div>
-        <div class="each-choice" id="${choiceThree}"><div class="order">3</div><div class="choice">${choiceThree}</div></div>
-        <div class="each-choice" id="${choiceFour}"><div class="order">4</div><div class="choice">${choiceFour}</div></div>
+        <button class="each-choice" id="${choiceOne}"><div class="order">1</div><div class="choice">${choiceOne}</div></button>
+        <button class="each-choice" id="${choiceTwo}"><div class="order">2</div><div class="choice">${choiceTwo}</div></button>
+        <button class="each-choice" id="${choiceThree}"><div class="order">3</div><div class="choice">${choiceThree}</div></button>
+        <button class="each-choice" id="${choiceFour}"><div class="order">4</div><div class="choice">${choiceFour}</div></button>
         </div>`;
   app.innerHTML = questionHTML;
   let choices = document.querySelectorAll(".each-choice");
-  console.log(allQuestion[progress].answer);
+  console.log("ANSWER",allQuestion[progress].answer)
   for (let i = 0; i <= 3; i++) {
     choices[i].addEventListener(
       "click",
       (e) => {
+        clearInterval(intervalId);
+        //set style for clicked choice
+        choices[i].style.background = "gray"
+        choices[i].style.color = "white"
+        choices[i].style.border = "solid orange"
+        // stop hover
+        questionWrapper = document.querySelector(".question-wrapper")
+        questionWrapper.style.pointerEvents = "none"
+        
         if (allQuestion[progress].answer == e.target.id) {
           console.log("correct");
           correctNum += 1;
           progress += 1;
           app.innerHTML += `<i id="font" class="fab fa-angellist"></i>`;
           if (allQuestion.length == progress) {
-            clearInterval(intervalId);
+            console.log("LAST_QUESTION")
+            // clearInterval(intervalId);
             stop();
           } else {
-            clearInterval(intervalId);
+            console.log("NEXT_QUESTION")
+            // clearInterval(intervalId);
             intervalId = setTimeout(() => {
               quizProgress(), countdown();
             }, 2000);
           }
         } else {
-          clearInterval(intervalId);
+          console.log("NOT_CORRECT")
+          // clearInterval(intervalId);
           app.innerHTML += `<i id="font" class="fas fa-times"></i>`;
           stop();
         }
@@ -129,6 +145,7 @@ function quizProgress() {
 
 function stop() {
   updateScore()
+  clearInterval(intervalId)
   const message = "Your Score Is ...";
   const resultHTML = `
         <div class="relust-container">
@@ -252,7 +269,7 @@ function allReset() {
   timer;
   allQuestion = [];
   allTerm = [];
-  clearInterval();
+  clearInterval(intervalId);
 }
 
 export default class extends AbstractView {

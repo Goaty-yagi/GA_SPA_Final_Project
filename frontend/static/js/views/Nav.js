@@ -54,8 +54,8 @@ export default class extends AbstractView {
       if(userLogin) {
         console.log("LOGEDIN", userLogin)
         headerElement.children[1].innerHTML += `
-        <div class="quiz-create" target-url="/create">CREATE</div>
-        <div class="logout">LOGOUT</div>`
+        <div class="quiz-create nav-menu" target-url="/create">CREATE</div>
+        <div class="logout nav-menu">LOGOUT</div>`
         document.querySelector(".quiz-create").addEventListener('click',() => {
           console.log("clicked")
           history.replaceState(null, null, "/create")
@@ -67,8 +67,8 @@ export default class extends AbstractView {
         })
       } else {
         headerElement.children[1].innerHTML += `
-        <div class="login" target-url="/login">LOGIN</div>
-        <div class="signup" target-url="/signup">SIGNUP</div>
+        <div class="login nav-menu" target-url="/login">LOGIN</div>
+        <div class="signup nav-menu" target-url="/signup">SIGNUP</div>
         `
         document.querySelector(".signup").addEventListener('click',() => {
           console.log("clicked")

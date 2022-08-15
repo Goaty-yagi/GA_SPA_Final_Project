@@ -48,7 +48,6 @@ const router = async () => {
 
     document.querySelector("#app").innerHTML = await view.getHtml()// getHtml() is async so await here
     view.addEvent()
-    // match.route.view()
 }
 function routingEvent() {
     document.body.addEventListener("click", e => {
