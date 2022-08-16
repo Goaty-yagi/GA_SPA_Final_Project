@@ -6,7 +6,7 @@ import Nav from "./views/Nav.js";
 import Quiz from "./views/Quiz.js";
 import QuizCreate from "./views/QuizCreate.js";
 import Signup from "./views/Signup.js";
-
+import Study from "./views/Study.js";
 
 document.querySelector("#app").innerHTML = '<div class="lds-dual-ring"></div>'
 const navigateTo = (url) => {
@@ -24,7 +24,8 @@ const router = async () => {
         { path: "/quiz", view: Quiz},
         { path: "/create", view: QuizCreate},
         { path: "/signup", view: Signup},
-        { path: "/login", view: Login}
+        { path: "/login", view: Login},
+        { path: "/study", view: Study},
     ];
     const allReset = new Quiz()
             allReset.allReset()

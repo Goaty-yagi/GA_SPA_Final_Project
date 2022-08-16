@@ -122,6 +122,7 @@ nav{
 .home-each-section {
     flex-basis: 70%;
     font-size: 2rem;
+    
 }
 .home-each-section-fa-cog{
     position: relative;
@@ -145,7 +146,7 @@ nav{
     animation: cogs 20s linear reverse infinite;
 
 }
-.title{
+.home-title{
     font-family: cursive;
 }
 .quiz-type{
@@ -164,6 +165,57 @@ nav{
     color: black;
     background: rgb(251, 255, 202);
 }
+.second-hero{
+    position: relative;
+    width: 100%;
+    margin-top: 2rem;
+}
+.second-hero-flex{
+    width: 70%;
+    margin-left: 2rem;
+    margin-top: 0;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid blue;
+    background: rgba(255,255,255,0.7); 
+}
+.fa-pencil-alt{
+    flex-basis: 30%;
+    text-align: center;
+    font-size: 3rem;
+}
+.second-hero-flex-right{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.study-home{
+    flex-basis: 70%;
+    text-align: center;
+    vertical-align: center;
+    font-size: 2rem;
+}
+.go-study{
+    position: absolute;
+    margin: 0;
+    bottom: 0;
+    padding: 0.2rem 2rem;
+    border: solid rgb(255, 98, 0);
+    background: #777;
+    color: white;
+    transition: .5s;
+    
+}
+.go-study:hover {
+    border: solid gray;
+    background: rgb(239, 239, 239);
+    color: rgb(9, 16, 74);
+
+}
+
 @keyframes cogs {
     0% {
         transform: rotate(0deg);
@@ -171,9 +223,9 @@ nav{
     100% {
         transform: rotate(360deg);
     }
-    }
+}
 /* @HOME END */
-/* quiz start */
+/* @QUIZ START */
 
 .countdown{
     display: flex;
@@ -343,17 +395,137 @@ label{
 }
 /* @Quiz-END */
 
+/* @STUDY START */
+.study-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+.study-form{
+    display: flex;
+    justify-content: center;
+    background: rgba(255,255,255,0.9);
+    border: solid rgb(6, 6, 90);
+    width: 70%;
+    transition: .5s;
+}
+.study-title {
+    font-family: initial;
+    font-weight: bold;
+    border-bottom: solid blue;
+    display: inline-block;
+    padding: 0 0.5rem;
+    text-align: center;
+}
+form {
+}
+.study-main {
+    display: flex;
+    
+}
+.checkbox-container {
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+
+}
+.each-tag {
+}
+.search-container{
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+}
+select {
+    height: 2rem;
+}
+.text-input {
+    height: 1.7rem;
+    margin-left: 1rem;
+    width: 200px;
+    padding: 0 0.5rem;
+
+}
+.num{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: solid black;
+    color: rgb(0, 255, 208);
+    font-weight: bold;
+    text-shadow: 1px  1px 5px #777 ,
+                -1px  1px 5px #777 ,
+                 1px -1px 5px #777 ,
+                -1px -1px 5px #777;
+}
+.no-num {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: solid black;
+    color: rgb(255, 0, 238);
+    font-weight: bold;
+    text-shadow: 1px  1px 5px #777 ,
+                -1px  1px 5px #777 ,
+                 1px -1px 5px #777 ,
+                -1px -1px 5px #777;
+}
+.result-container{
+    width: 80%;
+}
+.each-item{
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    background: rgba(255,255,255,0.9);
+    /* background: rgb(243, 247, 226); */
+    border: solid rgb(6, 6, 90);
+    margin-bottom: 1rem;
+}
+/* .each-item-theme {
+    background: rgb(35, 52, 37);
+    color:white;
+} */
+.category {
+    display: flex;
+    border-bottom: solid rgb(169, 168, 168);
+    align-items: center;
+
+}
+.category:last-child {
+    border-bottom: none;
+}
+.title {
+    font-weight: bold;
+    width: 20%;
+}
+.value {
+    width: 80%;
+}
+tag{
+    border: solid orange;
+    border-radius: 50vh;
+    padding: 0.2rem 0.7rem;
+    margin-right: 0.5rem;
+    background: rgb(20, 20, 88);
+    color: white;
+    font-weight: bold;
+}
+
+/* @ STUDY END */
+
 /* @Ranking START*/
 
-.rank-section{
+/* .rank-section{
     position: relative;
     width: 100%;
     margin-top: 2rem;
-}
+} */
 .rank-wrapper{
     position: absolute;
+    top: 0;
     right: 0;
-    /* margin-right: -2rem; */
+    /* margin-top: 2rem; */
     width: 200px;
     border: solid blue;
     background: rgba(255,255,255,0.7);

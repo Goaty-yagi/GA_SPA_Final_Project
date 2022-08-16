@@ -35,9 +35,12 @@ export default class extends AbstractView {
       const username = userData.name
       const currentScore = getSessionItem("currentScore")
       const welcome = `
+      <div class="welcome-container">
       <div>WELCOME ${username}!
       <p>Your Max Score is ${currentScore}</p>
+      </div>
       </div>`
+
       this.rankWrapper.innerHTML += welcome
     }
     this.scoreData.forEach((elem, index) => {
