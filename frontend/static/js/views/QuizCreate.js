@@ -69,8 +69,8 @@ export default class extends AbstractView {
     async allQuestion() {
         console.log("clocked")
         const study = new Study()
-        console.log(study.getHtml())
-        document.querySelector("#app").innerHTML += await study.getHtml()
+        document.querySelector("#app").innerHTML += await study.renderHTML()
+        study.initialEvent()
         // await 
         // fetch(endpoint)
         // .then(response => response.json())

@@ -62,12 +62,16 @@ function routingEvent() {
     })
     router()
 }
+function defaultPopStateFunction(event) {
+    window.addEventListener("popstate", event)
+}
 
-window.addEventListener("popstate", router)
+
+defaultPopStateFunction(router)
 window>addEventListener("beforeunload", () => {
     console.log("BEFORE_UNLOAD")
 })
 // postate excute histrical data when browser back or forward
 // the data could be the data created with histry.pushState
 
-export {routingEvent, router}
+export {routingEvent, router ,defaultPopStateFunction}
