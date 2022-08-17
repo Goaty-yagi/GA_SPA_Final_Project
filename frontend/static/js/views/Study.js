@@ -20,7 +20,6 @@ let currentData = {
 let keysArray
 let container
 let num
-let allChecks
 let text
 
 let options
@@ -397,10 +396,15 @@ export default class extends AbstractView {
             <div aria-label="select tags" class="checkbox-container">
             </div>
             <div class="search-container">
+            <div class="study-font-container">
+            <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="select-text">
                 <select  name="select" >
                 <option class="select-class" value="">select class</option>
                 </select>
                 <input class="text-input" type="text" name="text" aria-label="search" value="" placeholder="type for searching">
+            </div>
             </div>
             </main>
         </form>
@@ -441,5 +445,10 @@ export default class extends AbstractView {
             return result.json()
           })
           .then((data) => apiData = data);
+    }
+    popState() {
+    }
+    beforeunload() {
+        keysArray = []
     }
 }

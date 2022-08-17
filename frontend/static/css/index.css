@@ -185,6 +185,7 @@ nav{
     flex-basis: 30%;
     text-align: center;
     font-size: 3rem;
+    color: gray;
 }
 .second-hero-flex-right{
     position: relative;
@@ -416,6 +417,10 @@ label{
     display: inline-block;
     padding: 0 0.5rem;
     text-align: center;
+    text-shadow: 1px  1px 5px red ,
+                -1px  1px 5px red ,
+                 1px -1px 5px red ,
+                -1px -1px 5px red;
 }
 form {
 }
@@ -432,9 +437,27 @@ form {
 }
 .search-container{
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
     margin-bottom: 1rem;
     margin-left: 2rem;
+}
+.study-font-container{
+    flex-basis: 90%;
+    display: flex;
+    align-items: center;
+}
+.fa-chart-line{
+    font-size: 12rem;
+    color: gray;
+    text-shadow: 1px  1px 5px black ,
+                -1px  1px 5px black ,
+                 1px -1px 5px black ,
+                -1px -1px 5px black;
+}
+.select-text{
+
 }
 select {
     height: 2rem;
@@ -453,10 +476,10 @@ select {
     border-bottom: solid black;
     color: rgb(0, 255, 208);
     font-weight: bold;
-    text-shadow: 1px  1px 5px #777 ,
-                -1px  1px 5px #777 ,
-                 1px -1px 5px #777 ,
-                -1px -1px 5px #777;
+    text-shadow: 1px  1px 5px black ,
+                -1px  1px 5px black ,
+                 1px -1px 5px black ,
+                -1px -1px 5px black;
 }
 .no-num {
     margin-top: 1rem;
@@ -465,10 +488,10 @@ select {
     border-bottom: solid black;
     color: rgb(255, 0, 238);
     font-weight: bold;
-    text-shadow: 1px  1px 5px #777 ,
-                -1px  1px 5px #777 ,
-                 1px -1px 5px #777 ,
-                -1px -1px 5px #777;
+    text-shadow: 1px  1px 5px black ,
+                -1px  1px 5px black ,
+                 1px -1px 5px black ,
+                -1px -1px 5px black;
 }
 .result-container{
     width: 80%;

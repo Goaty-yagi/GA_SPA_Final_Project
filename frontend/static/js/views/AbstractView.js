@@ -14,4 +14,11 @@ export default class {
     event() {
         return ""
     }
+    beforeunload() {
+        return ""
+    }
+    popState() {
+        return ""
+    }
+
 } 

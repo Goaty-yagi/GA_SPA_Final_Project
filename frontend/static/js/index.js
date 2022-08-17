@@ -8,6 +8,8 @@ import QuizCreate from "./views/QuizCreate.js";
 import Signup from "./views/Signup.js";
 import Study from "./views/Study.js";
 
+const app = document.querySelector("#app")
+
 document.querySelector("#app").innerHTML = '<div class="lds-dual-ring"></div>'
 const navigateTo = (url) => {
     // DOM won't change.
@@ -19,6 +21,7 @@ const navigateTo = (url) => {
 
 // why async?? will be render page so takes time
 const router = async () => {
+    app.style.display = "flex"
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
@@ -61,6 +64,9 @@ function routingEvent() {
 }
 
 window.addEventListener("popstate", router)
+window>addEventListener("beforeunload", () => {
+    console.log("BEFORE_UNLOAD")
+})
 // postate excute histrical data when browser back or forward
 // the data could be the data created with histry.pushState
 
