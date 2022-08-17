@@ -7,7 +7,7 @@ export default class extends AbstractView {
         super()
         this.setTitle("Login")
     }
-    async getHtml() {
+    async renderHTML() {
         //async return HTML might be asynchronous
         return `
         <div class="signup-wrapper"">
@@ -21,7 +21,7 @@ export default class extends AbstractView {
         </div>
         `
     }
-    addEvent() {
+    initialEvent() {
         document.querySelector(".submit-button").addEventListener("click",this.loginUser)
     }
     event() {

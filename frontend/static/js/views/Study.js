@@ -385,9 +385,11 @@ export default class extends AbstractView {
     constructor() {
         super()
         this.setTitle("Study")
+        console.log("ST CONST")
     }
 
-    async getHtml() {
+    async renderHTML() {
+        console.log("GOTHH")
         return `
         <section class="study-section">
         <h1 class="study-title">Study TECH Terms</h1>
@@ -396,16 +398,16 @@ export default class extends AbstractView {
             <div aria-label="select tags" class="checkbox-container">
             </div>
             <div class="search-container">
-            <div class="study-font-container">
-            <i class="fas fa-chart-line"></i>
-            </div>
-            <div class="select-text">
-                <select  name="select" >
-                <option class="select-class" value="">select class</option>
-                </select>
-                <input class="text-input" type="text" name="text" aria-label="search" value="" placeholder="type for searching">
-            </div>
-            </div>
+                <div class="study-font-container">
+                <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="select-text">
+                    <select  name="select" >
+                    <option class="select-class" value="">select class</option>
+                    </select>
+                    <input class="text-input" type="text" name="text" aria-label="search" value="" placeholder="type for searching">
+                </div>
+                </div>
             </main>
         </form>
         <div class="num-items-container"></div>
@@ -413,7 +415,7 @@ export default class extends AbstractView {
         </section>       
         `
     }
-    async addEvent() {
+    async initialEvent() {
         await this.fetchQuizData()
         .then(() => {
             getClassOption()

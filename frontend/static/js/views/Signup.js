@@ -15,7 +15,7 @@ export default class extends AbstractView {
         this.userEndpoint = this.url + this.userPath;
         this.scoreEndpoint = this.url + this.scorePath
     }
-    async getHtml() {
+    async renderHTML() {
         //async return HTML might be asynchronous
         return `
         <div class="signup-wrapper"">
@@ -31,7 +31,7 @@ export default class extends AbstractView {
         </div>
         `
     }
-    addEvent() {
+    initialEvent() {
         document.querySelector(".submit-button").addEventListener("click",() => this.signupUser(this.userEndpoint, this.scoreEndpoint))
     }
     event() {

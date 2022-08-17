@@ -278,13 +278,13 @@ export default class extends AbstractView {
     this.setTitle("Quiz");
     console.log("CONST",userData)
   }
-  async getHtml() {
+  async renderHTML() {
     //async return HTML might be asynchronous
     return `
         <div class="start-countdown">3</div>
         `;
   }
-  addEvent() {
+  initialEvent() {
     this.event().then(() => {
       clearInterval(intervalId);
           setQuiz();

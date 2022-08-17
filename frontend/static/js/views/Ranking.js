@@ -27,7 +27,7 @@ export default class extends AbstractView {
     this.rankingContainer.append(this.rankWrapper)
     // this.setTitle(" Ranking")
   }
-  async getHtml() {
+  async renderHTML() {
     this.scoreData = await getScoreData();
     this.rankWrapper.innerHTML += "<h1>RANKING</h1>"
     console.log("LOGIN_CHECK",userLogin)
@@ -64,7 +64,7 @@ export default class extends AbstractView {
     console.log("RANKING",this.rankingContainer)
     return this.rankingContainer
   }
-  addEvent() {
+  initialEvent() {
     // this.event()
     this.getHtml();
     // document.querySelector(".start-button").addEventListener("click",this.event)

@@ -14,7 +14,7 @@ export default async function initialization(userLogin,uid) {
   if (!initialized) {
     routingEvent();
     const nav = new Nav();
-    nav.addEvent(userLogin);
+    nav.initialEvent(userLogin);
     
     initialized = true;
     console.log("INITIALIZED",userLogin,uid)

@@ -34,7 +34,7 @@ export default class extends AbstractView {
     constructor() {
         super()
     }
-    async getHtml(userLogin) {
+    async renderHTML(userLogin) {
       const headerElement = document.querySelector("#header")
       headerElement.innerHTML = `<img target-url="/" class="logo" src="${logo}" alt="logo">`
       headerElement.innerHTML += `
@@ -58,7 +58,6 @@ export default class extends AbstractView {
         <div class="logout nav-menu">LOGOUT</div>`
         document.querySelector(".quiz-create").addEventListener('click',() => {
           console.log("clicked")
-          history.replaceState(null, null, "/create")
         })
         document.querySelector(".logout").addEventListener('click',() => {
           console.log("GONNA LOGOUT")
@@ -78,8 +77,8 @@ export default class extends AbstractView {
         })
       }
     }
-    async addEvent(userLogin) {
-      await this.getHtml(userLogin)
+    async initialEvent(userLogin) {
+      await this.renderHTML(userLogin)
       document.querySelector(".circle").addEventListener('click',theme)
       document.querySelector(".logo").addEventListener('click',() => {
           console.log("clicked")

@@ -5,10 +5,10 @@ export default class {
     setTitle(title) {
         document.title = title
     };
-    async getHtml() {
+    async renderHTML() {
         return ""
     }
-    addEvent() {
+    initialEvent() {
         return ""
     }
     event() {

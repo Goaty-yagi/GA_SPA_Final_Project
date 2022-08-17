@@ -8,7 +8,7 @@ export default class extends AbstractView {
         this.setTitle("Home")
     }
 
-    async getHtml() {
+    async renderHTML() {
         const title = "Quiz Ranking"
         const quizType= "Java script"
         const description = "Test your knowledge and Beat your rivals!"
@@ -42,10 +42,10 @@ export default class extends AbstractView {
         </main>
         `
     }
-    async addEvent() {
+    async initialEvent() {
         document.querySelector(".start-button").addEventListener("click",this.event)
         const ranking = new Ranking();
-        document.querySelector(".second-hero").append(await ranking.getHtml())
+        document.querySelector(".second-hero").append(await ranking.renderHTML())
     }
     event() {
         console.log("EVENT_CLICKED")

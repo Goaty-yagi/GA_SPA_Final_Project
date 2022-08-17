@@ -50,8 +50,8 @@ const router = async () => {
     }
     const view = new match.route.view()//make a new instance
 
-    document.querySelector("#app").innerHTML = await view.getHtml()// getHtml() is async so await here
-    view.addEvent()
+    document.querySelector("#app").innerHTML = await view.renderHTML()// getHtml() is async so await here
+    view.initialEvent()
 }
 function routingEvent() {
     document.body.addEventListener("click", e => {
