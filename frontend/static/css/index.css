@@ -618,7 +618,12 @@ tag{
 }
 /* @Ranking END */
 
-/* create-quiz start */
+/* @ Create Quiz START */
+.chosen-tag{
+    border: solid blue;
+    background: white;
+}
+
 
 .all-question {
     /* height: 400px;

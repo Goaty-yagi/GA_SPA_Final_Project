@@ -9,15 +9,14 @@ export default class {
         return ""
     }
     initialEvent() {
-        return ""
-    }
-    event() {
+        // this will be rendered with HTML together
         return ""
     }
     beforeunload() {
         return ""
     }
     popState() {
+        //import defaultPopStateFunction from index to be invoked
         return ""
     }
 

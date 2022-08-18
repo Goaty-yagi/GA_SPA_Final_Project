@@ -55,6 +55,7 @@ export default class extends AbstractView {
       this.getClassOption();
       defaultPopStateFunction(this.popState);
       this.tags = this.getSelectOption();
+      this.keysArray = ''
       this.keysArray = Object.keys(this.apiData[0]);
       delete this.keysArray[0]; //delete UUID
       this.container = document.querySelector(".result-container");
@@ -67,7 +68,6 @@ export default class extends AbstractView {
       for (let i = 0; i < this.allChecks.length; i++) {
         this.allChecks[i].addEventListener("change", (e) => this.firstSearch(e));
       }
-      console.log("AP", this.apiData)
     });
   }
   async fetchQuizData() {
@@ -79,6 +79,9 @@ export default class extends AbstractView {
         return result.json();
       })
       .then((data) => this.apiData = data)
+      .catch(e => {
+        console.log("ERR", e)
+      }) 
   }
   popState() {
     this.keysArray = [];

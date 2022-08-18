@@ -91,11 +91,11 @@ app.get("/api/user-id/:id", (req, res) => {
 });
 
 
-//@js_quiz API
+//@Js_quiz API
 
 app.get("/api/quiz/js", (req, res) => {
   console.log("jsquiz");
-  // deleteTable("users", res)
+  // deleteTable("jsQuiz", res)
   // createUserTable(req, res)
   getJsQuizList(req, res)
 });
