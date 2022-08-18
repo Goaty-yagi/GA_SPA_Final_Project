@@ -1,5 +1,3 @@
-import { application } from "express"
-
 export default class {
     constructor() {
 
@@ -8,8 +6,6 @@ export default class {
         document.title = title
     };
     async renderHTML() {
-        // return document-element so rendering will be
-        // app.append(component.renderHTML)
         return ""
     }
     initialEvent() {

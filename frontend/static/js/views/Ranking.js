@@ -65,6 +65,9 @@ export default class extends AbstractView {
     return this.rankingContainer
   }
   initialEvent() {
+    // this.event()
+    this.getHtml();
+    // document.querySelector(".start-button").addEventListener("click",this.event)
   }
   event() {
     console.log("EVENT_CLICKED");
