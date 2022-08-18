@@ -7,8 +7,11 @@ export default class extends AbstractView {
         this.setTitle("Create")
         this.createSection
         this.questions
+        this.selecterWindowContainer
+        this.createButton
         this.chosenTags = []
         this.formError = []
+        this.windowIsOpen = false
         // this.formError = {
         //     term : "",
         //     description : "",
@@ -36,55 +39,68 @@ export default class extends AbstractView {
     async renderHTML() {
         //async return HTML might be asynchronous
         return `
-        <h1 class="title">CREATE QUESTION</h1>
+        <div class="create-header">
+        <p class="create-header-menu">Create</p>
+        <p class="create-header-menu">AllQuestions</p>
+        </div>
         <section class="create-section">
-        <form onsubmit="return false" id="form">
-            <div>
-                <div>TERM</div>
-                <input class="text-input" type="text" name="text" aria-label="term" value="">
-                <div>Description</div>
-                <input class="text-input" type="text" name="text" aria-label="description" value="">
-                <div>CLASS</div>
-                <input class="text-input" type="number" min="1" max="8" name="number" aria-label="class" value="">
-                <div class="create-select-text">
-                    <div>TAGS</div>
-                    <div class="selecter-box">Choose tags</div>
-                    <div class="selecter-window"></div>
-                    <div class="select-chosen"></div>
-                </div>
-                <button class="submit-button" aria-label="submit">CREATE</button>
+        <h1 class="title">CREATE QUESTION</h1>
+        <form class="create-form" onsubmit="return false" id="form">
+            <div>TERM</div>
+            <input class="text-input" type="text" name="text" aria-label="term" value="">
+            <div>Description</div>
+            <input class="text-input" type="text" name="text" aria-label="description" value="">
+            <div>CLASS</div>
+            <input class="text-input" type="number" min="1" max="8" name="number" aria-label="class" value="">
+            <div class="create-select-text">
+                <div>TAGS</div>
+                <div class="selecter-box">Choose tags <i class="fas fa-angle-down"></i></div>
+                <div class="selecter-window-container"></div>
+                <div class="select-chosen"></div>
+            </div>
+            <div class="create-button-container">
+            <button class="create-submit-button"  aria-label="submit">CREATE</button>
             </div>
         </form>
-        <h1 class="check">Check All Questions?</h1>
-        <div class="all-question"></div>
         </section>
         `
     }
     initialEvent() {
+        app.style.display = "initial";
+        this.selecterWindowContainer = document.querySelector(".selecter-window-container")
         this.createSection = document.querySelector(".create-section")
-        document.querySelector(".submit-button").addEventListener("click",() => {
+        this.createButton = document.querySelector(".create-submit-button")
+        this.createButton.addEventListener("click",() => {
             this.createEvent()
         })
-        document.querySelector(".check").addEventListener("click",() => this.allQuestion())
+        const headerMenues = document.querySelectorAll(".create-header-menu");
+        for (let i = 0; i < headerMenues.length; i++) {
+            headerMenues[i].addEventListener(
+            "click",
+            (e) => { this.boardControle(e)})
+        }
+        // document.querySelector(".check").addEventListener("click",() => this.allQuestion())
         this._selectorEvent()
 
     }
     _selectorEvent() {
         const selecterBox = document.querySelector(".selecter-box")
-        const selecterWindow = document.querySelector(".selecter-window")
-        let isOpen = false
+        // const this.selecterWindowContainer = document.querySelector(".selecter-window-container")
+        const selecterWindow = document.createElement("div")
+        selecterWindow.className = "select-window"
         selecterBox.addEventListener("click",() => {
-            if(!isOpen) {
+            if(!this.windowIsOpen) {
                 for(let i = 0; i < this.tagsArray.length; i ++) {
                     let tagChild = document.createElement("div")
                     tagChild.innerHTML = `${this.tagsArray[i]}`
                     selecterWindow.appendChild(tagChild)
-                    tagChild.addEventListener('click', chosenEvent) 
-                    isOpen = true         
+                    tagChild.addEventListener('click', chosenEvent)
+                    this.selecterWindowContainer.append(selecterWindow)
+                    this.windowIsOpen = true         
                 }
             } else {
-                selecterWindow.innerHTML = ""
-                isOpen = false
+                this.selecterWindowContainer.innerHTML = ""
+                this.windowIsOpen = false
             }   
         })
 
@@ -103,10 +119,14 @@ export default class extends AbstractView {
                         const child = document.querySelector(`.${chosenTag}`)
                         selectChosen.removeChild(child)
                     }
+                    this.windowIsOpen = false
+                    this.selecterWindowContainer.innerHTML = ""
                 }
             } else {
                 this.chosenTags.push(chosenTag)
                 selectChosen.innerHTML += `<div class="chosen-tag ${chosenTag}">${chosenTag}</div>`
+                this.windowIsOpen = false
+                this.selecterWindowContainer.innerHTML = ""
                 // console.log("SWITCH", currentChosenTagsLength)
                 // switch (true) {
                 //     case currentChosenTagsLength === 0 ||
@@ -163,54 +183,39 @@ export default class extends AbstractView {
                 }
             }).then(r => console.log("result", r))
         } else {
+            this.createButton.setAttribute("disabled", true)
+            const errorTitle = `<div class="error-title">ERROR OCCURRED</div>`
             const errorSection = document.createElement("div")
             errorSection.className = "error-section"
+            errorSection.innerHTML += errorTitle
             this.formError.forEach(err => {
-                errorSection.innerHTML += `<div class="each-error">${err}</div>`
+                errorSection.innerHTML += `<li class="each-error">${err}</li>`
             })
             this.createSection.append(errorSection)
+            setTimeout(() => {
+                this.createSection.removeChild(errorSection)
+                this.createButton.disabled = false
+            }, 4000)
         }
         this.formError = []
     }
-    async allQuestion() {
+
+    async allQuestions() {
         console.log("clocked")
         const study = new Study()
-        document.querySelector("#app").innerHTML += await study.renderHTML()
+        this.createSection.innerHTML = await study.renderHTML()
         study.initialEvent()
-        // await 
-        // fetch(endpoint)
-        // .then(response => response.json())
-        // .then(data => this.questions = data)
-        // const targetElement = document.querySelector(".all-question")
-        // targetElement.style.border = "solid black"
-        // targetElement.style.height = "400px" 
-        // targetElement.style.overflow =  "scroll"       
-        // this.questions.forEach(e => {
-        //     targetElement.innerHTML += `
-        //     <div class="all-container">
-        //         <div class="term-question">
-        //             <div class"title-question">TERM</div>
-        //             <div class"value-question">${e.term}</div>
-        //         </div>
-        //         <div class="term-question">
-        //             <div class"title-question">Description</div>
-        //             <div class"value-question">${e.description}</div>
-        //         </div>
-        //         <button class="delete" id="${e.id}">DELETE</button>
-        //     </div>    
-        //     `
-        // })
-        // const deleteElement = document.querySelectorAll(".delete")
-        // deleteElement.forEach(each => {
-        //     each.addEventListener("click", (e) => {
-        //         this.deleteEvent(e.target.id)
-        //     })
-        // })
     }
     async deleteEvent(id) {
         console.log(id)
         await fetch(`http://localhost:5000/api/${id}`,{
             method:"DELETE",
         })
+    }
+    boardControle(e) {
+        if(e.target.innerHTML === "AllQuestions") {
+            this.allQuestions()
+        }
+        console.log(e.target.innerHTML)
     }
 }
