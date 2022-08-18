@@ -642,7 +642,7 @@ tag{
     border: solid orange;
 }
 /* @ DashBoard END */
-/* @create-quiz START */
+/* @Create-quiz START */
 .create-section{
     display: flex;
     align-items: center;
@@ -742,6 +742,41 @@ tag{
     color: red;
     text-align: left;
 }
+/* @ CREATE QUIZ END */
+/* @ALL_QUESTION_START */
+.each-item{
+    position: relative;
+}
+.delete-question-container{
+    position: absolute;
+    right: 0;
+    border: solid gray;
+    border-radius: 50vh;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .5s;
+}
+.delete-question-container:hover{
+    border: solid rgb(210, 210, 210);
+}
+.delete-question-container:hover .delete-question{
+    color: rgb(210, 210, 210);
+}
+.delete-question{
+    color: gray;
+    text-shadow: initial;
+    font-size: 1.2rem;
+    transition: .5s;
+    
+}
+
+/* @ALL_QUESTION_START */
+
 @keyframes fade {
     0% {
       opacity: 0%

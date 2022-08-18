@@ -346,7 +346,11 @@ export default class extends AbstractView {
         results.forEach((result) => {
           this.currentDom.push(result);
           this.container.innerHTML +=
-            '<div aria-live="polite" class="each-item"></div>';
+            `<div aria-live="polite" class="each-item">
+                <div class="delete-question-container">
+                    <i class="fas fa-times delete-question"></i>
+                </div>
+            </div>`;
           let each = document.querySelectorAll(".each-item");
           this.keysArray.forEach((e) => {
             if (e !== "tags") {
@@ -372,6 +376,7 @@ export default class extends AbstractView {
         this.remove();
       }
       this.checkCurrentItem();
+      this.deleteQuestion()
       console.log("result-end");
     
   }
@@ -427,5 +432,17 @@ export default class extends AbstractView {
   }
   tagsStringToArray(stringTag) {
     return stringTag.tags.split(",");
+  }
+  async deleteQuestion() {
+    const deleteQuestionContainer = document.querySelectorAll(".delete-question-container")
+    for (let i = 0; i < deleteQuestionContainer.length; i ++) {
+        deleteQuestionContainer[i].addEventListener("click", (e) => {
+            console.log(e)
+            // await fetch(`http://localhost:5000/api/${id}`,{
+            // method:"DELETE",
+        // })
+        })
+    }
+
   }
 }

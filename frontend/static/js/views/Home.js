@@ -9,7 +9,7 @@ export default class extends AbstractView {
     }
 
     async renderHTML() {
-        const title = "Quiz Ranking"
+        const title = "Quiz Ranking Dojo"
         const quizType= "Java script"
         const description = "Test your knowledge and Beat your rivals!"
         return `
