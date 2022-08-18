@@ -54,7 +54,7 @@ export default class extends AbstractView {
       if(userLogin) {
         console.log("LOGEDIN", userLogin)
         headerElement.children[1].innerHTML += `
-        <div class="quiz-create nav-menu" target-url="/create">CREATE</div>
+        <div class="quiz-create nav-menu" target-url="/dashboard">DASHBOARD</div>
         <div class="logout nav-menu">LOGOUT</div>`
         document.querySelector(".quiz-create").addEventListener('click',() => {
           console.log("clicked")

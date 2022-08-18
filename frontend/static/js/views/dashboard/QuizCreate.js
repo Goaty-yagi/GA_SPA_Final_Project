@@ -1,5 +1,4 @@
-import AbstractView from "./AbstractView.js";
-import Study from "./Study.js";
+import AbstractView from "../AbstractView.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -39,10 +38,6 @@ export default class extends AbstractView {
     async renderHTML() {
         //async return HTML might be asynchronous
         return `
-        <div class="create-header">
-        <p class="create-header-menu">Create</p>
-        <p class="create-header-menu">AllQuestions</p>
-        </div>
         <section class="create-section">
         <h1 class="title">CREATE QUESTION</h1>
         <form class="create-form" onsubmit="return false" id="form">
@@ -73,12 +68,6 @@ export default class extends AbstractView {
         this.createButton.addEventListener("click",() => {
             this.createEvent()
         })
-        const headerMenues = document.querySelectorAll(".create-header-menu");
-        for (let i = 0; i < headerMenues.length; i++) {
-            headerMenues[i].addEventListener(
-            "click",
-            (e) => { this.boardControle(e)})
-        }
         // document.querySelector(".check").addEventListener("click",() => this.allQuestion())
         this._selectorEvent()
 
@@ -200,22 +189,10 @@ export default class extends AbstractView {
         this.formError = []
     }
 
-    async allQuestions() {
-        console.log("clocked")
-        const study = new Study()
-        this.createSection.innerHTML = await study.renderHTML()
-        study.initialEvent()
-    }
     async deleteEvent(id) {
         console.log(id)
         await fetch(`http://localhost:5000/api/${id}`,{
             method:"DELETE",
         })
-    }
-    boardControle(e) {
-        if(e.target.innerHTML === "AllQuestions") {
-            this.allQuestions()
-        }
-        console.log(e.target.innerHTML)
     }
 }

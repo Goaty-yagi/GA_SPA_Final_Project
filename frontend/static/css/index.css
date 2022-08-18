@@ -619,17 +619,30 @@ tag{
 /* @Ranking END */
 
 /* @ DashBoard START */
-.create-header {
+
+.dashboard-header {
     display: flex;
     justify-content: center;
 }
-.create-header-menu {
+.dashboard-header-menu {
     font-family: initial;
     font-weight: bold;
     padding: 0.5rem;
     border: solid gray;
     background-color: rgb(241, 241, 241);
+    transition: .5s;
 }
+.dashboard-header-menu:hover{
+    background: rgb(93, 93, 246);
+    color: white;
+}
+.selected-menu{
+    background: navy;
+    color: white;
+    border: solid orange;
+}
+/* @ DashBoard END */
+/* @create-quiz START */
 .create-section{
     display: flex;
     align-items: center;

@@ -1,10 +1,9 @@
 // import authentication, { userIsReady } from "../../../firebase/authentication.js";
 import initialization from "./store/index.js";
+import Dashboard from "./views/dashboard/Dashboard.js";
 import Home from "./views/Home.js"
 import Login from "./views/Login.js";
-import Nav from "./views/Nav.js";
 import Quiz from "./views/Quiz.js";
-import QuizCreate from "./views/QuizCreate.js";
 import Signup from "./views/Signup.js";
 import Study from "./views/Study.js";
 
@@ -25,7 +24,7 @@ const router = async () => {
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
-        { path: "/create", view: QuizCreate},
+        { path: "/dashboard", view: Dashboard},
         { path: "/signup", view: Signup},
         { path: "/login", view: Login},
         { path: "/study", view: Study},
