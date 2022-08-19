@@ -29,8 +29,6 @@ const router = async () => {
         { path: "/login", view: Login},
         { path: "/study", view: Study},
     ];
-    const allReset = new Quiz()
-            allReset.allReset()
     // Test each route for potential match
     const potentialMatches = routes.map(route => {
         return {
@@ -49,7 +47,7 @@ const router = async () => {
     }
     const view = new match.route.view()//make a new instance
 
-    document.querySelector("#app").innerHTML = await view.renderHTML()// getHtml() is async so await here
+    app.innerHTML = await view.renderHTML()// renderHTML() is async so await here
     view.initialEvent()
 }
 function routingEvent() {
@@ -61,16 +59,12 @@ function routingEvent() {
     })
     router()
 }
-function defaultPopStateFunction(event) {
-    window.addEventListener("popstate", event)
-}
 
-
-defaultPopStateFunction(router)
-window>addEventListener("beforeunload", () => {
-    console.log("BEFORE_UNLOAD")
-})
+window.addEventListener("popstate",router)
 // postate excute histrical data when browser back or forward
 // the data could be the data created with histry.pushState
 
-export {routingEvent, router ,defaultPopStateFunction}
+export {
+    routingEvent,
+    router, 
+}

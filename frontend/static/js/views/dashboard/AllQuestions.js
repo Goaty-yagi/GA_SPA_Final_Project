@@ -1,4 +1,4 @@
-import { defaultPopStateFunction } from "../../index.js";
+
 import AbstractView from "../AbstractView.js";
 
 AbstractView
@@ -25,7 +25,7 @@ export default class extends AbstractView {
   async renderHTML() {
     return `
         <section class="study-section">
-        <h1 class="study-title">Study TECH Terms</h1>
+        <h1 class="study-title">All Questions</h1>
         <form class="study-form" onsubmit="return false" name="form">
             <main class="study-main">
             <div aria-label="select tags" class="checkbox-container">
@@ -54,9 +54,7 @@ export default class extends AbstractView {
 
     await this.fetchQuizData().then(() => {
       this.getClassOption();
-      defaultPopStateFunction(this.popState);
       this.tags = this.getSelectOption();
-      this.keysArray = ''
       this.keysArray = Object.keys(this.apiData[0]);
       delete this.keysArray[0]; //delete UUID
       this.container = document.querySelector(".result-container");
@@ -84,7 +82,7 @@ export default class extends AbstractView {
         console.log("ERR", e)
       }) 
   }
-  popState() {
+  reset() {
     this.keysArray = [];
     console.log("CLEAR", this.keysArray)
   }
