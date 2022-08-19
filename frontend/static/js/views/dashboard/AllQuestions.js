@@ -342,12 +342,12 @@ export default class extends AbstractView {
     this.container.innerHTML = "";
     this.currentDom = [];
       if (results.length) {
-        this.num.innerHTML = `<div aria-live="polite" class="num">${results.length} terms found</div>`;
+        this.num.innerHTML = this.setResultNum(results.length)
         results.forEach((result) => {
           this.currentDom.push(result);
           this.container.innerHTML +=
             `<div aria-live="polite" class="each-item">
-                <div class="delete-question-container">
+                <div id=${result.UUID} class="delete-question-container">
                     <i class="fas fa-times delete-question"></i>
                 </div>
             </div>`;
@@ -356,8 +356,9 @@ export default class extends AbstractView {
             if (e !== "tags") {
               each[
                 each.length - 1
-              ].innerHTML += `<div class="category"><p class="title">${e}:</p>
-                          <p class="value">${result[e]}</p></div>`;
+              ].innerHTML += `
+                <div class="category"><p class="title">${e}:</p>
+                <p class="value">${result[e]}</p></div>`;
             } else {
               each[
                 each.length - 1
@@ -433,14 +434,28 @@ export default class extends AbstractView {
   tagsStringToArray(stringTag) {
     return stringTag.tags.split(",");
   }
-  async deleteQuestion() {
+  setResultNum(length) {
+    return `<div aria-live="polite" class="num">${length} terms found</div>`;
+  }
+  deleteQuestion() {
+    console.log("SET_DELETE_QUESTION")
+    const url = "http://localhost:5000";
+    const path = "/api/quiz/js:id=";
+    const endpoint = url + path;
+
     const deleteQuestionContainer = document.querySelectorAll(".delete-question-container")
     for (let i = 0; i < deleteQuestionContainer.length; i ++) {
-        deleteQuestionContainer[i].addEventListener("click", (e) => {
-            console.log(e)
-            // await fetch(`http://localhost:5000/api/${id}`,{
-            // method:"DELETE",
-        // })
+        deleteQuestionContainer[i].addEventListener("click",async (e) => {
+          const uuid = e.target.id
+          this.apiData = this.apiData.filter(data => {
+            return data.UUID !== uuid
+          })
+          const removeItemFromBrowser = deleteQuestionContainer[i].parentElement
+          this.container.removeChild(removeItemFromBrowser)
+          this.num.innerHTML = this.setResultNum(this.container.childNodes.length)
+            await fetch(endpoint+uuid,{
+            method:"DELETE",
+          })
         })
     }
 

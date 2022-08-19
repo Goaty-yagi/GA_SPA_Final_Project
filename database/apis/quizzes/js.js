@@ -56,12 +56,14 @@ async function createJsQuizTable(req, res) {
   //delete object
   async function deleteJsQuiz(req, res) {
     console.log("IN_DELETE", req.params);
+    const id = req.params.id.split("=")[1]
     db = await openDB();
-    const id = req.body.UUID
+    // const id = req.body.UUID
     sql = `DELETE FROM ${tableName} WHERE UUID = ?`;
     db.run(sql, [id], (err) => {
       if (err) return res.status(400).json(err.message);
       res.status(200).json("DELETED");
+      console.log("DELETED")
     });
     closeDB(db);
   }

@@ -772,6 +772,7 @@ tag{
     text-shadow: initial;
     font-size: 1.2rem;
     transition: .5s;
+    pointer-events: none;
     
 }
 

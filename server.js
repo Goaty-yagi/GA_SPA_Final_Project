@@ -1,14 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors")
-const {
-  createTable,
-  insertDataIntoTable,
-  getALLData,
-  patchData,
-  deleteData,
-  deleteTable
-} = require("./database/database");
+
 const { 
   createUserTable, 
   getUserList, 
@@ -18,21 +11,19 @@ const {
 } = require("./database/apis/user");
 const { createJsQuizTable, getJsQuizList, deleteJsQuiz, patchJsQuizData } = require("./database/apis/quizzes/js");
 const { getScoreList, createScoreTable, deleteScore, patchScoreData, getScoreOrderList, getScoreById } = require("./database/apis/score");
-// const { createUser, login } = require("./firebase/authentication");
-// const auth = require("./firebase/config");
+
 
 const port = process.env.PORT || 5000;
 const app = express();
 
 
-// app.use((req, res, next) => {
-//   console.log("middle", req.params, req.path, req)
-// })
 // middleware 
 app.use(express.json());
 
 // read static file
 app.use(cors())
+//accept delete and patch
+// app.use(allowMethods)
 app.use(
   "/static",
   express.static(path.resolve(__dirname, "frontend", "static")),
@@ -106,8 +97,8 @@ app.post("/api/quiz/js", (req, res) => {
   createJsQuizTable(req, res)
 });
 
-app.delete("/api/quiz/js", (req, res) => {
-  console.log("delete");
+app.delete("/api/quiz/js:id", (req, res) => {
+  console.log("delete_IN_QUIZ");
   deleteJsQuiz(req, res)
 });
 
