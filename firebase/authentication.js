@@ -24,7 +24,8 @@ async function createUser(user) {
     .then(() => {
       updateProfile(auth.currentUser, {
         displayName: username,
-      }).then(() => authChange())
+      })
+      // .then(() => authChange())
     })
     .catch((error) => {
       const errorCode = error.code;

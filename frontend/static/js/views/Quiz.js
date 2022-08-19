@@ -237,7 +237,7 @@ export default class extends AbstractView {
               html = `
                   <div class="footer-section">
                       <div>Register? your score sould be in the Ranking!</div>
-                      <div class="register-button" target-url="/signup?score=${correctNum}">Register</div>
+                      <div class="register-button" target-url="/signup?score=${this.correctNum}">Register</div>
                   </div>
                   `;
             }

@@ -65,8 +65,8 @@ export default class extends AbstractView {
                     'Content-Type': 'application/json'
                 }
             })
-        }).then(() => {
-            fetch(this.userEndpoint, {
+        }).then( async () => {
+            await fetch(this.userEndpoint, {
                 method:"POST",
                 body: JSON.stringify({
                     UUID: user.uid,

@@ -1,4 +1,3 @@
-import { defaultPopStateFunction } from "../index.js";
 import AbstractView from "./AbstractView.js";
 
 export default class extends AbstractView {
@@ -53,7 +52,6 @@ export default class extends AbstractView {
 
     await this.fetchQuizData().then(() => {
       this.getClassOption();
-      defaultPopStateFunction(this.popState);
       this.tags = this.getSelectOption();
       this.keysArray = ''
       this.keysArray = Object.keys(this.apiData[0]);
