@@ -48,9 +48,11 @@ export default class extends AbstractView {
       if(index + 1 === 1) {
         awardFont = `<i class="fas fa-crown rank-font"><div class="rank-order">${index + 1}</div></i>`
       } else if (index + 1 === 2) {
-        awardFont = `<i class="fas fa-award second-award rank-font rank-font"><div class="rank-order second-third">${index + 1}</div></i>`
+        awardFont = `<i class="fas fa-award second-award rank-font"><div class="rank-order second-third">${index + 1}</div></i>`
       } else if (index + 1 === 3) {
-        awardFont = `<i class="fas fa-award third-award rank-font rank-font"><div class="rank-order second-third">${index + 1}</div></i>`
+        awardFont = `<i class="fas fa-award third-award rank-font"><div class="rank-order second-third">${index + 1}</div></i>`
+      } else {
+        awardFont = `<div class="rank-font"><div class="rank-order">${index + 1}</div></div>`
       }
       console.log("loop");
       this.rankWrapper.innerHTML += `

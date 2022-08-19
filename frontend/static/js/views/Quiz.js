@@ -1,5 +1,9 @@
 import AbstractView from "./AbstractView.js";
 import twitter from "../../images/twitter.png";
+import { userData, userLogin } from "../../../../firebase/authentication.js";
+import { getSessionItem, setSessionStorage } from "../store/index.js";
+
+
 
 let allQuestion = []
 let allTerm = []
@@ -182,54 +186,102 @@ export default class extends AbstractView {
         },1000)
     }
     stop() {
-        const message = "Your Score Is ..."
-        const resultHTML = `
+      this.updateScore()
+      clearInterval(this.intervalId)
+      const message = "Your Score Is ...";
+      const resultHTML = `
             <div class="relust-container">
             <div class="score-text">${message}
             <span class="score-num"></span>
             </div>
             </div>
-        `
-        new Promise((resolve, reject) => {
+        `;
+      new Promise((resolve, reject) => {
+        this.intervalId = setTimeout(() => {
+          this.timer.innerHTML = "";
+          this.quizComponentDom.innerHTML = resultHTML;
+          const score = document.querySelector(".score-num");
+          resolve(score);
+        }, 2000);
+      })
+        .then((score) => {
+          return new Promise((resolve, reject) => {
             this.intervalId = setTimeout(() => {
-                this.timer.innerHTML = ''
-                this.quizComponentDom.innerHTML = resultHTML
-                const score = document.querySelector(".score-num")
-                resolve(score)
-            },2000)
-        }).then((score) => {
-            return new Promise((resolve, reject) => {
-                this.intervalId = setTimeout(() => {
-                    score.innerHTML = `${this.correctNum}`
-                    resolve()
-                },1000)
-            })
-        }).then(() => {
-            // will be added some functionalities
-            this.intervalId = setTimeout(() => {
-                const resultContainer = document.querySelector(".relust-container")
-                const tweetHTML = `
-                <div class="result-footer">
-                    <div class="footer-section">
-                        <div>Tweet your score</div>
-                        <img class="social-img" src="${twitter}">
-                    </div>
-                    <div class="footer-section">
-                        <div>Register? your score sould be in the Ranking!</div>
-                        <div class="register-button" data-link>Register</div>
-                    </div>
-                </div>
-                `
-                resultContainer.innerHTML += `${tweetHTML}`
-                document.querySelector(".social-img").addEventListener("click", () => {
-                    const shareURL = "https://twitter.com/intent/tweet?text=" + "%23" + "RANKINQUIZ" + "%20%0a" + "Your score is "+ this.correctNum + "%0a" + "&url=" + "%0a" + frontURL;
-                    window.open(shareURL)
-                })
-                document.querySelector(".register-button").addEventListener("click", () => {
-                    history.replaceState(null, null, `/signup?score=${this.correctNum}`)
-                })
-            },1000)
+              score.innerHTML = this.correctNum;
+              resolve();
+            }, 1000);
+          });
         })
+        .then(() => {
+          //     // will be added some functionalities
+          this.intervalId = setTimeout(() => {
+            const resultContainer = document.querySelector(".relust-container");
+            const resultFooter = document.createElement("div")
+            resultFooter.className = "result-footer"
+            let html
+            const twitterHtml =`
+              <div class="footer-section">
+                  <div>Tweet your score</div>
+                  <img class="social-img" src="${twitter}">
+              </div>
+            `
+            resultFooter.innerHTML = twitterHtml
+            if(userLogin) {
+              html = `
+                <div class="footer-section">
+                    <div>Get More Score!</div>
+                    <div class="register-button" target-url="/quiz">Try Again!</div>
+                </div>
+              `
+            } else {
+              html = `
+                  <div class="footer-section">
+                      <div>Register? your score sould be in the Ranking!</div>
+                      <div class="register-button" target-url="/signup?score=${correctNum}">Register</div>
+                  </div>
+                  `;
+            }
+            resultFooter.innerHTML += html
+            resultContainer.append(resultFooter);
+            document.querySelector(".social-img").addEventListener("click", () => {
+              const shareURL =
+                "https://twitter.com/intent/tweet?text=" +
+                "%23" +
+                "RANKINQUIZ" +
+                "%20%0a" +
+                "Your score is " +
+                this.correctNum +
+                "%0a" +
+                "&url=" +
+                "%0a" +
+                frontURL;
+              window.open(shareURL);
+            });
+          }, 1000);
+        });
+    }
+    async updateScore() {
+      const url = "http://localhost:5000";
+      const scorePath = "/api/score";
+      const scoreEndpoint = url + scorePath
+      const maxScore = getSessionItem("currentScore")
+      console.log(maxScore)
+      if(maxScore && maxScore < this.correctNum) {
+        console.log("MAX")
+        await fetch(scoreEndpoint, {
+          method: "PATCH",
+          body: JSON.stringify({
+            UUID: userData.UID,
+            score: this.correctNum
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(() => {
+          setSessionStorage("currentScore", this.correctNum)
+        })
+      } 
     }
     shaffleArray(array) {
         //Fisher–Yates shuffle
