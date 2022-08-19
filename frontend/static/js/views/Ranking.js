@@ -2,20 +2,20 @@ import { userData, userLogin } from "../../../../firebase/authentication.js";
 import { getSessionItem } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 
-const url = "http://localhost:5000";
-const path = "/api/score";
-const params = "/type=js";
-const endpoint = url + path + params;
+// const url = "http://localhost:5000";
+// const path = "/api/score";
+// const params = "/type=js";
+// const endpoint = url + path + params;
 
-async function getScoreData() {
-  return fetch(endpoint)
-    .then((result) => {
-      return result.json();
-    })
-    .then((data) => {
-      return data;
-    });
-}
+// async function getScoreData() {
+//   return fetch(endpoint)
+//     .then((result) => {
+//       return result.json();
+//     })
+//     .then((data) => {
+//       return data;
+//     });
+// }
 export default class extends AbstractView {
   constructor() {
     super();
@@ -28,7 +28,7 @@ export default class extends AbstractView {
     // this.setTitle(" Ranking")
   }
   async renderHTML() {
-    this.scoreData = await getScoreData();
+    this.scoreData = await this.fetchData()
     this.rankWrapper.innerHTML += "<h1>RANKING</h1>"
     console.log("LOGIN_CHECK",userLogin)
     if(userLogin) {
@@ -67,13 +67,10 @@ export default class extends AbstractView {
     return this.rankingContainer
   }
   initialEvent() {
-    // this.event()
-    this.getHtml();
-    // document.querySelector(".start-button").addEventListener("click",this.event)
+    this.showAppNode()
   }
-  event() {
-    console.log("EVENT_CLICKED");
-    this.getHtml();
+  async beforeInitialRender() {
+    this.hideAppNode()
   }
   async getScoreData() {
     return fetch(this.endpoint)
@@ -83,5 +80,18 @@ export default class extends AbstractView {
       .then((data) => {
         return data;
       });
+  }
+  async fetchData() {
+    const url = "http://localhost:5000";
+    const path = "/api/score";
+    const params = "/type=js";
+    const endpoint = url + path + params;
+    return fetch(endpoint)
+      .then((result) => {
+        return result.json();
+      })
+      .then((data) => {
+        return data;
+      })
   }
 }

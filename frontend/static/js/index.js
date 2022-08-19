@@ -7,6 +7,7 @@ import Quiz from "./views/Quiz.js";
 import Signup from "./views/Signup.js";
 import Study from "./views/Study.js";
 
+const body = document.querySelector("body")
 const app = document.querySelector("#app")
 
 document.querySelector("#app").innerHTML = '<div class="lds-dual-ring"></div>'
@@ -20,7 +21,7 @@ const navigateTo = (url) => {
 
 // why async?? will be render page so takes time
 const router = async () => {
-    app.style.display = "flex"
+    // app.style.display = "flex"
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
@@ -46,7 +47,7 @@ const router = async () => {
         }
     }
     const view = new match.route.view()//make a new instance
-
+    await view.beforeInitialRender()
     app.innerHTML = await view.renderHTML()// renderHTML() is async so await here
     view.initialEvent()
 }
@@ -63,6 +64,9 @@ function routingEvent() {
 window.addEventListener("popstate",router)
 // postate excute histrical data when browser back or forward
 // the data could be the data created with histry.pushState
+
+
+
 
 export {
     routingEvent,

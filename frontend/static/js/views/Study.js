@@ -21,6 +21,7 @@ export default class extends AbstractView {
   }
 
   async renderHTML() {
+    console.log("return")
     return `
         <section class="study-section">
         <h1 class="study-title">Study TECH Terms</h1>
@@ -67,6 +68,10 @@ export default class extends AbstractView {
         this.allChecks[i].addEventListener("change", (e) => this.firstSearch(e));
       }
     });
+    this.showAppNode()
+  }
+  async beforeInitialRender() {
+    this.hideAppNode()
   }
   async fetchQuizData() {
     const url = "http://localhost:5000";

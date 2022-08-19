@@ -5,6 +5,7 @@ import Ranking from "./Ranking.js";
 export default class extends AbstractView {
     constructor() {
         super()
+        this.ranking
         this.setTitle("Home")
     }
 
@@ -42,10 +43,14 @@ export default class extends AbstractView {
         </main>
         `
     }
+    async beforeInitialRender() {
+        this.ranking = new Ranking();
+        this.hideAppNode()
+    }
     async initialEvent() {
         document.querySelector(".start-button").addEventListener("click",this.event)
-        const ranking = new Ranking();
-        document.querySelector(".second-hero").append(await ranking.renderHTML())
+        document.querySelector(".second-hero").append(await this.ranking.renderHTML())
+        this.showAppNode()
     }
     event() {
         console.log("EVENT_CLICKED")
