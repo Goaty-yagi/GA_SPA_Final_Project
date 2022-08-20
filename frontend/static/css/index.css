@@ -12,7 +12,7 @@ body{
     color: white
 }
 
-/* header start */
+/*@Header START */
 header{
     position: fixed;
     top: 0;
@@ -41,7 +41,7 @@ nav{
     border: solid gray;
     background: rgba(255,255,255,0.7);
 }
-/* theme start */
+/*@Theme START */
 .theme-group{
     margin-right: 1rem;
     display: flex;
@@ -89,9 +89,9 @@ nav{
     background: white;
 }
 
-/* @Nav and Theme END */
+/* @Header and Theme END */
 
-/* #app start */
+/* #App start */
 #app{
     height: 80%;
     width: 100%;
@@ -228,6 +228,38 @@ nav{
     }
 }
 /* @HOME END */
+/* Signup START */
+.signup-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.signup-form{
+    text-align: center;
+    border: solid rgb(16, 16, 78);
+    background: rgba(255,255,255,0.7);
+    width: 50%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+.signup-text{
+    text-align: left;
+}
+.signup-text-input{
+    margin-bottom: 1rem;
+    height: 2rem;
+    
+}
+.signup-submit-button{
+    width: 6rem;
+    font-size: 1.3rem;
+    display:block;
+    margin:0 auto;
+    padding: 0.2rem 0.8rem;
+}
+
+/* Signup END */
 /* @QUIZ START */
 .quiz-dom{
     height: 80%;
@@ -721,35 +753,7 @@ tag{
     font-weight: bold;
 
 }
-/* @ ERROR SECTION IN CREATE QUIZ */
-.error-section{
-    font-family: initial;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    border: solid red;
-    width: 50%;
-    height: 30%;
-    text-align: center;
-    background: rgb(255, 236, 236);
-    padding: 1rem;
-    transition: .5s;
-    animation: fade 4s forwards;
-}
-.error-title{
-    color: red;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    border-bottom: 0.2rem solid red;
-    display: inline-block;
-}
-.each-error{
-    color: red;
-    text-align: left;
-}
+
 /* @ CREATE QUIZ END */
 /* @ALL_QUESTION_START */
 .each-item{
@@ -783,9 +787,62 @@ tag{
     pointer-events: none;
     
 }
-
-/* @ALL_QUESTION_START */
-
+/* @PopupNotification START */
+.error-section{
+    font-family: initial;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: solid red;
+    width: 50%;
+    height: 30%;
+    text-align: center;
+    background: rgb(255, 236, 236);
+    padding: 1rem;
+    transition: .5s;
+    animation: fade 4s forwards;
+}
+.error-title{
+    color: red;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    border-bottom: 0.2rem solid red;
+    display: inline-block;
+}
+.each-error{
+    color: red;
+    text-align: left;
+}
+.success-section{
+    font-family: initial;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: solid rgb(0, 123, 16);
+    width: 40%;
+    height: 5%;
+    text-align: center;
+    background: rgb(212, 254, 230);
+    padding: 1rem;
+    transition: .5s;
+    animation: fade 4s forwards;
+}
+.success-title{
+    color:  rgb(0, 123, 16);
+    font-weight: bold;
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+}
+.each-success{
+    color: rgb(0, 123, 16);
+    text-align: left;
+}
 @keyframes fade {
     0% {
       opacity: 0%
@@ -798,6 +855,9 @@ tag{
         opacity: 0%
     }
   }
+/* @PopupNotification END */
+
+/* @ALL_QUESTION_START */
 
 .all-question {
     /* height: 400px;

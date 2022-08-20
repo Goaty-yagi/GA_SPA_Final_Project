@@ -1,4 +1,5 @@
 import AbstractView from "../AbstractView.js";
+import PopupNotification from "../PopupNotification.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -11,6 +12,7 @@ export default class extends AbstractView {
         this.chosenTags = []
         this.formError = []
         this.windowIsOpen = false
+        this.selectChosen
         // this.formError = {
         //     term : "",
         //     description : "",
@@ -96,24 +98,24 @@ export default class extends AbstractView {
         const chosenEvent = (e) => {
             const currentChosenTagsLength = this.chosenTags.length
             const chosenTag = e.target.innerHTML
-            const selectChosen = document.querySelector(".select-chosen")
+            this.selectChosen = document.querySelector(".select-chosen")
             if(this.chosenTags.includes(chosenTag)) {
                 //delete
                 this.chosenTags = this.chosenTags.filter(tag => {
                     // tag.match(`/${chosenTag}/`) === null
                     return tag !== chosenTag
                 })
-                for(let i = 0; i < selectChosen.children.length; i ++) {
-                    if(selectChosen.children[i].innerHTML === chosenTag) {
+                for(let i = 0; i < this.selectChosen.children.length; i ++) {
+                    if(this.selectChosen.children[i].innerHTML === chosenTag) {
                         const child = document.querySelector(`.${chosenTag}`)
-                        selectChosen.removeChild(child)
+                        this.selectChosen.removeChild(child)
                     }
                     this.windowIsOpen = false
                     this.selecterWindowContainer.innerHTML = ""
                 }
             } else {
                 this.chosenTags.push(chosenTag)
-                selectChosen.innerHTML += `<div class="chosen-tag ${chosenTag}">${chosenTag}</div>`
+                this.selectChosen.innerHTML += `<div class="chosen-tag ${chosenTag}">${chosenTag}</div>`
                 this.windowIsOpen = false
                 this.selecterWindowContainer.innerHTML = ""
                 // console.log("SWITCH", currentChosenTagsLength)
@@ -154,11 +156,11 @@ export default class extends AbstractView {
         const path = "/api/quiz/js";
         const endpoint = url + path;
         if(formCheck) {
+            this.createButton.setAttribute("disabled", true)
             const term = inputValues[0].value
             const description = inputValues[1].value
             const classNum = inputValues[2].value
             const tags = this.chosenTags.join()
-            debugger
             await fetch(endpoint,{
                 method:"POST",
                 body: JSON.stringify({
@@ -170,21 +172,30 @@ export default class extends AbstractView {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(r => console.log("result", r))
-        } else {
-            this.createButton.setAttribute("disabled", true)
-            const errorTitle = `<div class="error-title">ERROR OCCURRED</div>`
-            const errorSection = document.createElement("div")
-            errorSection.className = "error-section"
-            errorSection.innerHTML += errorTitle
-            this.formError.forEach(err => {
-                errorSection.innerHTML += `<li class="each-error">${err}</li>`
-            })
-            this.createSection.append(errorSection)
-            setTimeout(() => {
-                this.createSection.removeChild(errorSection)
+            }).then(() => {
+                const notify = new PopupNotification(
+                    [], 
+                    "CREAED",
+                    this.createSection,
+                    "success")
+                notify.initialEvent()
                 this.createButton.disabled = false
-            }, 4000)
+                for(let i= 0; i < inputValues.length; i++) {
+                    inputValues[i].value = ""
+                }
+                this.chosenTags = []
+                this.selectChosen.innerHTML = ""
+            }).catch((e) => console.log(e))
+        } else {
+            const title = 'ERROR OCCURRED'
+            const color = "error"
+            const notify = new PopupNotification(
+                this.formError, 
+                title,
+                this.createSection,
+                color)
+            notify.initialEvent()
+            this.createButton.disabled = false
         }
         this.formError = []
     }
