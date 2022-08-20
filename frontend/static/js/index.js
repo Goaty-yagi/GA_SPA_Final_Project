@@ -7,10 +7,13 @@ import Quiz from "./views/Quiz.js";
 import Signup from "./views/Signup.js";
 import Study from "./views/Study.js";
 
-const body = document.querySelector("body")
 const app = document.querySelector("#app")
 
-document.querySelector("#app").innerHTML = '<div class="lds-dual-ring"></div>'
+function showDualRing() {
+    const body = document.querySelector("body")
+}
+
+app.innerHTML = '<div class="lds-dual-ring"></div>'
 const navigateTo = (url) => {
     // DOM won't change.
     // this is like set currentURL in the history then 
