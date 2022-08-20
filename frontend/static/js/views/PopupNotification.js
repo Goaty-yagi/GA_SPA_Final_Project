@@ -1,4 +1,5 @@
 
+import { getMultiFactorResolver } from "firebase/auth";
 import AbstractView from "./AbstractView.js";
 
 export default class extends AbstractView {
@@ -16,6 +17,7 @@ export default class extends AbstractView {
        
     }
     async initialEvent() {
+        
         const Title = `<div class="${this.type}-title">${this.notificationTitle}</div>`
         const noteSection = document.createElement("div")
         noteSection.className = `${this.type}-section`
@@ -24,8 +26,14 @@ export default class extends AbstractView {
             noteSection.innerHTML += `<li class="each-${this.type}">${err}</li>`
         })
         this.mainNode.append(noteSection)
-        setTimeout(() => {
-            this.mainNode.removeChild(noteSection)
-        }, 4000)
+        const promise = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.mainNode.removeChild(noteSection)
+                resolve()
+
+            }, 4000)
+        })
+        // this is solution(setTimeOut in async function) to use await at the invoked point 
+        await promise
     }    
 }
