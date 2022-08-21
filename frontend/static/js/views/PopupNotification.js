@@ -17,7 +17,7 @@ export default class extends AbstractView {
        
     }
     async initialEvent() {
-        
+        console.log("HAPPENED")
         const Title = `<div class="${this.type}-title">${this.notificationTitle}</div>`
         const noteSection = document.createElement("div")
         noteSection.className = `${this.type}-section`

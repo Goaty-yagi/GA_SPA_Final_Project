@@ -585,7 +585,41 @@ tag{
     color: white;
     font-weight: bold;
 }
+/* @ALL Question START */
+.edit-question {
 
+    display: block;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 5rem;
+    font-size: 1.2rem;
+}
+.patch-wrapper{
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.patch-container{
+    position: relative;
+    border: solid orange;
+    background: rgb(241, 241, 241);
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.edit-item{
+    position: absolute;
+    right: 0;
+}
+/* @ALL Question END */
 /* @ STUDY END */
 
 /* @Ranking START*/
@@ -842,6 +876,7 @@ tag{
     padding: 1rem;
     transition: .5s;
     animation: fade 4s forwards;
+    z-index:3
 }
 .error-title{
     color: red;
@@ -856,25 +891,23 @@ tag{
 }
 .success-section{
     font-family: initial;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: fixed;
     right: 0;
-    bottom: 0;
+    top: 0;
     margin: auto;
     border: solid rgb(0, 123, 16);
     width: 40%;
-    height: 5%;
+    margin: 1rem;
     text-align: center;
     background: rgb(212, 254, 230);
     padding: 1rem;
     transition: .5s;
     animation: fade 4s forwards;
+    z-index:3
 }
 .success-title{
     color:  rgb(0, 123, 16);
     font-weight: bold;
-    margin-bottom: 2rem;
     font-size: 1.4rem;
 }
 .each-success{

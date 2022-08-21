@@ -1,5 +1,6 @@
 
 import AbstractView from "../AbstractView.js";
+import PopupNotification from "../PopupNotification.js";
 
 AbstractView
 export default class extends AbstractView {
@@ -19,9 +20,35 @@ export default class extends AbstractView {
     this.num;
     this.text;
     this.options;
+    this.mainNode
+    this.tagsArray = [
+      "General",
+      "Git",
+      "GitHub",
+      "Internet",
+      "Node",
+      "Protocol",
+      "HTTP",
+      "Front-End",
+      "Programming",
+      "JavaScript",
+      "Browser",
+      "DOM",
+      "Higher-Order Functions",
+      "Events",
+      "Functional"
+    ]
+    this.chosenTags = []
+    this.selecterWindowContainer
+    this.selectChosen
+    this.editButton
+    this.formError = []
+    this.patchElement
+    this.questionId
+    this.inputValues
+    this.id
     this.setTitle("Study");
   }
-
   async renderHTML() {
     return `
         <section class="study-section">
@@ -50,6 +77,7 @@ export default class extends AbstractView {
   }
   async initialEvent() {
     const app = document.querySelector("#app");
+    this.mainNode = document.querySelector(".study-section");
     app.style.display = "initial";
 
     await this.fetchQuizData().then(() => {
@@ -341,7 +369,8 @@ export default class extends AbstractView {
     this.currentDom = [];
       if (results.length) {
         this.num.innerHTML = this.setResultNum(results.length)
-        results.forEach((result) => {
+        const patchButton = `<button class="edit-question">EDIT</button>`
+        results.forEach((result, index) => {
           this.currentDom.push(result);
           this.container.innerHTML +=
             `<div aria-live="polite" class="each-item">
@@ -369,6 +398,12 @@ export default class extends AbstractView {
               });
             }
           });
+          each[index].innerHTML += patchButton
+          const patchDoms = document.querySelectorAll(".edit-question")
+          for(let i =0; i < patchDoms.length; i++) {
+            patchDoms[i].addEventListener("click", (e) => this.patchHandler(e))
+          }
+
         });
       } else {
         console.log("all-REMOVE");
@@ -384,6 +419,7 @@ export default class extends AbstractView {
     const allRemove = () => {
       this.container.innerHTML = "";
       this.currentDom = [];
+      this.num.innerHTML = ''
     };
     if (!target) {
       allRemove();
@@ -435,6 +471,213 @@ export default class extends AbstractView {
   setResultNum(length) {
     return `<div aria-live="polite" class="num">${length} terms found</div>`;
   }
+
+  // @Patch Start
+  patchHandler(e) {
+    this.id = e.target.offsetParent.firstElementChild.id//from delete
+    const question = this.apiData.find(data => {
+      return data.UUID === this.id
+    })
+    this.patchElement = document.createElement("div")
+    this.patchElement.className = "patch-wrapper"
+    this.questionId = question.UUID
+    const term = question.term
+    const definition = question.definition
+    const classNum = question.class
+    this.chosenTags = question.tags.split(",")
+    const tagselectedHTML = this.chosenTags.map( t => {
+      return `<div class="chosen-tag ${t}">${t}</div>`
+    }) 
+
+    this.patchElement.innerHTML = `
+    <div class="patch-container">
+    <div aria-live="polite" class="edit-item">
+        <div class="delete-question-container">
+            <i class="fas fa-times delete-question"></i>
+        </div>
+    </div>
+      <h1 class="title">EDIT QUESTION</h1>
+      <form class="create-form" onsubmit="return false" id="form">
+          <div>TERM</div>
+          <input class="patch-input" type="text" name="term" aria-label="term" value=${term}>
+          <div>Description</div>
+          <input class="patch-input" type="text" name="description" aria-label="description" value="${definition}">
+          <div>CLASS</div>
+          <input class="patch-input" type="number" min="1" max="8" name="class" aria-label="class" value="${classNum}">
+          <div class="create-select-text">
+              <div>TAGS</div>
+              <div class="selecter-box">Choose tags <i class="fas fa-angle-down"></i></div>
+              <div class="selecter-window-container"></div>
+              <div class="select-chosen">
+              </div>
+          </div>
+          <div class="create-button-container">
+          <button class="create-submit-button"  aria-label="submit">EDIT</button>
+          </div>
+      </form>
+    </div>
+    `
+    this.mainNode.append(this.patchElement)
+    document.querySelector(".edit-item").addEventListener("click", () => this.closeEditModal())
+    this.selectChosen = document.querySelector(".select-chosen")
+    tagselectedHTML.forEach(e => {
+      this.selectChosen.innerHTML += e
+    })
+    this.selectChosen = document.querySelector(".select-chosen")
+    this.editButton = document.querySelector(".create-submit-button")
+    this.editButton.addEventListener("click", () => this.patchQuestion())
+    this._selectorEvent()
+    
+  }
+  _selectorEvent() {
+    this.selecterWindowContainer = document.querySelector(".selecter-window-container")
+    const selecterBox = document.querySelector(".selecter-box")
+    const selecterWindow = document.createElement("div")
+    selecterWindow.className = "select-window"
+    selecterBox.addEventListener("click",() => {
+        if(!this.windowIsOpen) {
+            for(let i = 0; i < this.tagsArray.length; i ++) {
+                let tagChild = document.createElement("div")
+                tagChild.innerHTML = `${this.tagsArray[i]}`
+                selecterWindow.appendChild(tagChild)
+                tagChild.addEventListener('click', chosenEvent)
+                this.selecterWindowContainer.append(selecterWindow)
+                this.windowIsOpen = true         
+            }
+        } else {
+            this.selecterWindowContainer.innerHTML = ""
+            this.windowIsOpen = false
+        }   
+    })
+
+    const chosenEvent = (e) => {
+
+        const chosenTag = e.target.innerHTML
+        if(this.chosenTags.includes(chosenTag)) {
+            //delete
+            this.chosenTags = this.chosenTags.filter(tag => {
+                // tag.match(`/${chosenTag}/`) === null
+                return tag !== chosenTag
+            })
+            for(let i = 0; i < this.selectChosen.children.length; i ++) {
+                if(this.selectChosen.children[i].innerHTML === chosenTag) {
+                    const child = document.querySelector(`.${chosenTag}`)
+                    this.selectChosen.removeChild(child)
+                }
+                this.windowIsOpen = false
+                this.selecterWindowContainer.innerHTML = ""
+            }
+        } else {
+            this.chosenTags.push(chosenTag)
+            this.selectChosen.innerHTML += `<div class="chosen-tag ${chosenTag}">${chosenTag}</div>`
+            this.windowIsOpen = false
+            this.selecterWindowContainer.innerHTML = ""
+        }
+    }
+  }
+  _checkForm(inputValues) {
+
+    for(let i = 0; i < inputValues.length; i++) {
+        if(!inputValues[i].value) {
+          console.log(inputValues[i].ariaLabel)
+            this.formError.push(`${inputValues[i].name} is empty.` )
+        }
+    }
+    if(!this.chosenTags.length){
+        this.formError.push(`tag is empty.` )
+    }
+    if(this.formError.length) {
+        return false
+    } else {
+        return true
+    }
+}
+
+closeEditModal() {
+  this.mainNode.removeChild(this.patchElement)
+}
+  async patchQuestion() {
+    this.inputValues = document.querySelectorAll(".patch-input")
+    console.log("PATCH_QUESTION", this.inputValues)
+        const formCheck = this. _checkForm(this.inputValues)
+        const url = "http://localhost:5000";
+        const path = "/api/quiz/js";
+        const endpoint = url + path;
+        console.log("FC",formCheck)
+        if(formCheck) {
+            this.editButton.setAttribute("disabled", true)
+
+            const term = this.inputValues[0].value
+            const description = this.inputValues[1].value
+            const classNum = this.inputValues[2].value
+            const tags = this.chosenTags.join()
+            await fetch(endpoint,{
+                method:"PATCH",
+                body: JSON.stringify({
+                    UUID: this.questionId,
+                    term: term,
+                    class: classNum,
+                    description: description,
+                    tags : tags
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(() => {
+              this.allReset()
+              console.log("THEN")
+                const notify = new PopupNotification(
+                    [], 
+                    "UPLOADED",
+                    this.mainNode,
+                    "success")
+                this.closeEditModal()
+                notify.initialEvent()
+                this.editButton.disabled = false
+                for(let i= 0; i < this.inputValues.length; i++) {
+                    this.inputValues[i].value = ""
+                }
+                this.chosenTags = []
+                this.selectChosen.innerHTML = ""
+            }).catch((e) => console.log(e))
+        } else {
+            const title = 'ERROR OCCURRED'
+            const color = "error"
+            const notify = new PopupNotification(
+                this.formError, 
+                title,
+                this.mainNode,
+                color)
+            console.log(notify)
+            // this.mainNode.removeChild(this.patchElement)
+            notify.initialEvent()
+            this.editButton.disabled = false
+        }
+        this.formError = []
+  }
+  allReset() {
+    console.log("C",this.allChecks, "T",this.text.value, "O",this.options)
+    for(let i = 0; i < this.allChecks.length; i ++) {
+      this.allChecks[i].checked = false
+    }
+    this.options.value = "select class"
+    this.text.value = ""
+    this.remove()
+    this.fetchQuizData()
+  }
+  // updateCurrentDom() {
+  //   const currentDom = document.querySelectorAll(".each-item")
+  //   for(let i = 0; i < currentDom.length; i ++) {
+  //     if(this.id === currentDom[i].children[0].id) {
+  //       for(let k = 0; k < currentDom[i].children.length; k ++) {
+  //         if(currentDom[i].children[k].className === "category") {
+  //           this.inputValues
+  //           console.log(currentDom[i].children[k])
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   deleteQuestion() {
     console.log("SET_DELETE_QUESTION")
     const url = "http://localhost:5000";

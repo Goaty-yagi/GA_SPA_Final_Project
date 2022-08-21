@@ -8,7 +8,7 @@ const VALUES = 'VALUES(?,?,?,?,?)'
 async function createJsQuizTable(req, res) {
   console.log("CREATE", "JS_QUIZ")
     db = await openDB();
-      await db.run(`CREATE TABLE IF NOT EXISTS ${tableName}(UUID unique, term, class, definition, tags)`,(err, result) => {
+      await db.run(`CREATE TABLE IF NOT EXISTS ${tableName}(UUID unique, term, class integer, definition, tags)`,(err, result) => {
         if(err) {
           console.log("err")
           res.status(400).json(err.message)

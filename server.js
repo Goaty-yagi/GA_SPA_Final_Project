@@ -11,7 +11,7 @@ const {
 } = require("./database/apis/user");
 const { createJsQuizTable, getJsQuizList, deleteJsQuiz, patchJsQuizData } = require("./database/apis/quizzes/js");
 const { getScoreList, createScoreTable, deleteScore, patchScoreData, getScoreOrderList, getScoreById } = require("./database/apis/score");
-
+const { deleteTable } = require("./database/database");
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -87,13 +87,10 @@ app.get("/api/user-id/:id", (req, res) => {
 app.get("/api/quiz/js", (req, res) => {
   console.log("jsquiz");
   // deleteTable("jsQuiz", res)
-  // createUserTable(req, res)
   getJsQuizList(req, res)
 });
 
 app.post("/api/quiz/js", (req, res) => {
-  console.log("jsquiz");
-  // deleteTable("user")
   createJsQuizTable(req, res)
 });
 
@@ -103,7 +100,6 @@ app.delete("/api/quiz/js:id", (req, res) => {
 });
 
 app.patch("/api/quiz/js", (req, res) => {
-  // deleteTable("user")
   patchJsQuizData(req, res)
 });
 
