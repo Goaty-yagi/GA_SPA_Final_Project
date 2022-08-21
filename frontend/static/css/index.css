@@ -31,6 +31,7 @@ header{
     height: 80px;
     width: 100%;
     margin-bottom: 2rem;
+    z-index: 1;
    
 }
 img{
@@ -606,10 +607,26 @@ tag{
     display: flex;
     flex-direction: column;
     text-align: center;
-
 }
-.ranking-container{
+.welcome-container{
+    border: 2mm ridge red;
+    border-radius: 1rem;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.each-ranking-container{
+    display: flex;
+    align-items: center;
+}
+.rank-user{
+   background: rgb(249, 196, 250);
+   border: solid navy;
+   animation: flash 4s infinite;
+   transition: .5s;
 }
 .rank {
     font-family: initial;
@@ -666,6 +683,17 @@ tag{
     flex-basis: 50%;
     margin-right: 1rem;
 }
+@keyframes flash {
+    0% {
+      opacity: 0%
+    }
+    50% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 0%;
+    }
+  }
 /* @Ranking END */
 
 /* @ DashBoard START */

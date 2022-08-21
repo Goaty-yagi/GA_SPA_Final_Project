@@ -30,20 +30,26 @@ export default class extends AbstractView {
   async renderHTML() {
     this.scoreData = await this.fetchData()
     this.rankWrapper.innerHTML += "<h1>RANKING</h1>"
-    console.log("LOGIN_CHECK",userLogin)
+    let userStyleClass
     if(userLogin) {
       const username = userData.name
       const currentScore = getSessionItem("currentScore")
       const welcome = `
       <div class="welcome-container">
-      <div>WELCOME ${username}!
-      <p>Your Max Score is ${currentScore}</p>
+      <div>WELCOME ${username}!</div>
+      <div>Your Max Score is ${currentScore}</div>
       </div>
       </div>`
 
       this.rankWrapper.innerHTML += welcome
     }
     this.scoreData.forEach((elem, index) => {
+      console.log(elem.UUID === userData.UID)
+      if(elem.UUID === userData.UID){
+        userStyleClass = "rank-name rank-user"
+      } else {
+        userStyleClass = "rank-name"
+      }
       let awardFont
       if(index + 1 === 1) {
         awardFont = `<i class="fas fa-crown rank-font"><div class="rank-order">${index + 1}</div></i>`
@@ -54,11 +60,10 @@ export default class extends AbstractView {
       } else {
         awardFont = `<div class="rank-font"><div class="rank-order">${index + 1}</div></div>`
       }
-      console.log("loop");
       this.rankWrapper.innerHTML += `
-            <section class="ranking-container">
+            <section class="each-ranking-container">
             <div class="rank">${awardFont}</div>
-            <div class="rank-name">${elem.username}</div>
+            <div class="${userStyleClass}">${elem.username}</div>
             <div class="score">${elem.score}</div>
             </section>
             `;
