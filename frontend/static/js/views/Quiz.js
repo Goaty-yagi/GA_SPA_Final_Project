@@ -139,7 +139,7 @@ export default class extends AbstractView {
               if (allQuestion[this.progress].answer == e.target.id) {
                 this.correctNum += 1;
                 this.progress += 1;
-                this.quizComponentDom.innerHTML += `<i id="font" class="fab fa-angellist"></i>`;
+                this.quizComponentDom.innerHTML += `<i id="font" class="fas fa-thumbs-up"></i>`;
                 if (allQuestion.length == this.progress) {
                   console.log("LAST_QUESTION")
                   // clearInterval(intervalId);

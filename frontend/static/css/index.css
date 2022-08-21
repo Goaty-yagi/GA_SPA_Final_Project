@@ -12,6 +12,15 @@ body{
     color: white
 }
 
+/* @COMMON Component START */
+.compo-title {
+    font-size: 2rem;
+    border-bottom: 0.2rem solid navy;
+    margin-bottom: 1rem;
+}
+
+/* @COMMON Component END */
+
 /*@Header START */
 header{
     position: fixed;
@@ -232,7 +241,8 @@ nav{
 .signup-wrapper{
     width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .signup-form{
     text-align: center;
@@ -246,7 +256,7 @@ nav{
 .signup-text{
     text-align: left;
 }
-.signup-text-input{
+.form-input{
     margin-bottom: 1rem;
     height: 2rem;
     
@@ -380,7 +390,7 @@ label{
                  2px -2px 10px #777 ,
                 -2px -2px 10px #777;
 }
-.fa-angellist{
+.fa-thumbs-up{
     font-family: initial;
     color: rgb(0, 255, 47);
     text-shadow: 2px  2px 10px #777 ,

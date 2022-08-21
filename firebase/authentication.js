@@ -39,12 +39,16 @@ function login(user) {
   return new Promise((resolve, reject) => {
     const { email, password } = user;
   signInWithEmailAndPassword(auth, email, password)
-    .then((result) => {
+    .then(() => {
       // Signed in
-      resolve(true)
+      resolve()
     })
     .catch((error) => {
-      resolve(false)
+      const FBError = {
+        errorCode:error.code,
+        errorMessage:error.message
+      }
+      reject(FBError)
     });
   })
 }

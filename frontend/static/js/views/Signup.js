@@ -22,15 +22,17 @@ export default class extends AbstractView {
     }
     async renderHTML() {
         //async return HTML might be asynchronous
+        const compoTitle = "Signup"
         return `
         <div class="signup-wrapper">
+        <div class="compo-title">${compoTitle}</div>
             <form onsubmit="return false" class="signup-form">
                 <div class="signup-text">Username</div>
-                <input class="signup-text-input" required type="text" name="text" aria-label="username" value="">
+                <input class="form-input" required type="text" name="text" aria-label="username" value="">
                 <div class="signup-text">E-MAIL</div>
-                <input class="signup-text-input" required type="mail" name="text" aria-label="mail" value="">
+                <input class="form-input" required type="mail" name="text" aria-label="mail" value="">
                 <div class="signup-text">Password</div>
-                <input class="signup-text-input" required type="password" name="text" aria-label="password" value="">
+                <input class="form-input" required type="password" name="text" aria-label="password" value="">
                 <button class="signup-submit-button" aria-label="Signup">Signup</button>
             </form>
         </div>
@@ -55,10 +57,10 @@ export default class extends AbstractView {
         }
     }
     async signupUser(e) {
-        console.log("ENTER",e,this.userEndpoint)
+        console.log("ENTER",e,this.userEndpoint,this)
         e.preventDefault();
         this.submitButton.setAttribute("disabled", true)
-        this.inputValues = document.querySelectorAll(".signup-text-input")
+        this.inputValues = document.querySelectorAll(".form-input")
         const formCheck = this._checkForm(this.inputValues)
         const user = {
             username :this.inputValues[0].value,
@@ -73,7 +75,7 @@ export default class extends AbstractView {
                 console.log("USERDATA",userData)
                 user["uid"] = userData.UID
                 console.log("ENDPOINT_CHECK",this.userEndpoint)
-                fetch(scoreEndpoint, {
+                fetch(this.scoreEndpoint, {
                     method:"POST",
                     body: JSON.stringify({
                         UUID: user.uid,
@@ -114,7 +116,6 @@ export default class extends AbstractView {
                 this.mainNode,
                 color)
             await notify.initialEvent()
-                console.log("BEFORE_DISABLE")
                 this.submitButton.disabled = false
         }
         this.formError = []
