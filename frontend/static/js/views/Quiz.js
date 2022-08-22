@@ -7,7 +7,7 @@ import { getSessionItem, setSessionStorage } from "../store/index.js";
 
 let allQuestion = []
 let allTerm = []
-const frontURL = "localhost:1234"
+const frontURL = "https://localhost:1234"
 
 class SetQuiz{
     constructor(obj) {
@@ -38,7 +38,6 @@ export default class extends AbstractView {
     }
     async renderHTML() {
         //async return HTML might be asynchronous
-        console.log("RENDER HTML")
         return `
         <div class="quiz-dom">
         <div class="start-countdown">3</div>
@@ -104,7 +103,6 @@ export default class extends AbstractView {
         allQuestion = this.shaffleArray(allQuestion)
     }
     quizProgress() {
-        console.log("PROGRESS_START")
         let lebal = allQuestion[this.progress].label;
         let choiceOne = allQuestion[this.progress].choices[0];
         let choiceTwo = allQuestion[this.progress].choices[1];
@@ -122,6 +120,7 @@ export default class extends AbstractView {
               <button class="each-choice" id="${choiceFour}"><div class="order">4</div><div class="choice">${choiceFour}</div></button>
               </div>`;
         this.quizComponentDom.innerHTML = questionHTML;
+        console.log("ANSWER", allQuestion[this.progress].answer)
         let choices = document.querySelectorAll(".each-choice");
         for (let i = 0; i <= 3; i++) {
           choices[i].addEventListener(
@@ -135,7 +134,6 @@ export default class extends AbstractView {
               // stop hover
               this.questionWrapper = document.querySelector(".question-wrapper")
               this.questionWrapper.style.pointerEvents = "none"
-              
               if (allQuestion[this.progress].answer == e.target.id) {
                 this.correctNum += 1;
                 this.progress += 1;
@@ -253,8 +251,7 @@ export default class extends AbstractView {
                 this.correctNum +
                 "%0a" +
                 "&url=" +
-                "%0a" +
-                frontURL;
+                `${frontURL}`;
               window.open(shareURL);
             });
           }, 1000);
@@ -265,9 +262,7 @@ export default class extends AbstractView {
       const scorePath = "/api/score";
       const scoreEndpoint = url + scorePath
       const maxScore = getSessionItem("currentScore")
-      console.log(maxScore)
       if(maxScore && maxScore < this.correctNum) {
-        console.log("MAX")
         await fetch(scoreEndpoint, {
           method: "PATCH",
           body: JSON.stringify({

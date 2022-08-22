@@ -33,12 +33,6 @@ export default class extends AbstractView {
         this.formError = []
         this.windowIsOpen = false
         this.selectChosen
-        // this.formError = {
-        //     term : "",
-        //     description : "",
-        //     class : "",
-        //     tags : ""
-        // }
         this.tagsArray = [
             "General",
             "Git",
@@ -101,6 +95,7 @@ export default class extends AbstractView {
         selecterWindow.className = "select-window"
         selecterBox.addEventListener("click",() => {
             if(!this.windowIsOpen) {
+                selecterWindow.innerHTML = ""
                 for(let i = 0; i < this.tagsArray.length; i ++) {
                     let tagChild = document.createElement("div")
                     tagChild.innerHTML = `${this.tagsArray[i]}`

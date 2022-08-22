@@ -50,6 +50,15 @@ nav{
     padding: 0.5rem 1rem;
     border: solid gray;
     background: rgba(255,255,255,0.7);
+    transition: .5s;
+}
+.nav-menu:hover {
+    border: solid rgb(48, 48, 48);
+    color: gray;
+
+}
+.nav-menu:last-child{
+    margin-right: 1rem;
 }
 /*@Theme START */
 .theme-group{

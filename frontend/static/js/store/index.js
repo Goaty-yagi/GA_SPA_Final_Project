@@ -6,7 +6,6 @@ import Nav from "../views/Nav.js";
 
 let initialized = false;
 export default async function initialization(userLogin,uid) {
-    console.log("IN_INITIALIZE",userLogin,uid)
     if(uid) {
         await fetchScoreData(uid)
         // await getUserData(uid)
@@ -17,7 +16,6 @@ export default async function initialization(userLogin,uid) {
     nav.initialEvent(userLogin);
     
     initialized = true;
-    console.log("INITIALIZED",userLogin,uid)
   }
 }
 async function fetchScoreData(uid) {
@@ -29,7 +27,6 @@ async function fetchScoreData(uid) {
       return result.json();
     })
     .then((data) => {
-      console.log("FETCHED_SCORE",data);
       setSessionStorage("currentScore", data.score);
     });
 }

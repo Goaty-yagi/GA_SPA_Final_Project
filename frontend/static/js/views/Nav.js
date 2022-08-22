@@ -67,11 +67,11 @@ export default class extends AbstractView {
       } else {
         headerElement.children[1].innerHTML += `
         <div class="login nav-menu" target-url="/login">LOGIN</div>
-        <div class="signup nav-menu" target-url="/signup">SIGNUP</div>
         `
-        document.querySelector(".signup").addEventListener('click',() => {
-          console.log("clicked")
-        })
+        // <div class="signup nav-menu" target-url="/signup">SIGNUP</div>
+        // document.querySelector(".signup").addEventListener('click',() => {
+        //   console.log("clicked")
+        // })
         document.querySelector(".login").addEventListener('click',() => {
           console.log("clicked")
         })

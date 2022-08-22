@@ -2,20 +2,7 @@ import { userData, userLogin } from "../../../../firebase/authentication.js";
 import { getSessionItem } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 
-// const url = "http://localhost:5000";
-// const path = "/api/score";
-// const params = "/type=js";
-// const endpoint = url + path + params;
 
-// async function getScoreData() {
-//   return fetch(endpoint)
-//     .then((result) => {
-//       return result.json();
-//     })
-//     .then((data) => {
-//       return data;
-//     });
-// }
 export default class extends AbstractView {
   constructor() {
     super();
@@ -44,7 +31,6 @@ export default class extends AbstractView {
       this.rankWrapper.innerHTML += welcome
     }
     this.scoreData.forEach((elem, index) => {
-      console.log(elem.UUID === userData.UID)
       if(elem.UUID === userData.UID){
         userStyleClass = "rank-name rank-user"
       } else {
@@ -68,7 +54,6 @@ export default class extends AbstractView {
             </section>
             `;
     });
-    console.log("RANKING",this.rankingContainer)
     return this.rankingContainer
   }
   initialEvent() {

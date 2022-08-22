@@ -9,7 +9,6 @@ export default class extends AbstractView {
         this.formError = []
         this.mainNode
         this.setTitle("Login")
-        console.log(this)
     }
     async renderHTML() {
         //async return HTML might be asynchronous
@@ -53,7 +52,6 @@ export default class extends AbstractView {
             password: inputValues[1].value
         }
         const formCheck = this._checkForm(inputValues)
-        console.log(formCheck)
         if(formCheck) {
             login(user)
             .then(() => {

@@ -1,37 +1,30 @@
 import { auth } from "./config";
 import {
   createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-  sendEmailVerification,
   updateProfile,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  setPersistence,
-  browserSessionPersistence,
-  sendPasswordResetEmail,
-  GoogleAuthProvider,
-  signInWithPopup,
 } from "firebase/auth";
 import initialization, { removeSessionItem, setSessionStorage } from "../frontend/static/js/store";
-console.log("AUTH_START")
+
 let userData = {}
 let userLogin = false;
 
 async function createUser(user) {
   const { username, email, password, score} = user;
   await createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      updateProfile(auth.currentUser, {
+    .then(async () => {
+      await updateProfile(auth.currentUser, {
         displayName: username,
       })
+      .catch((e) => console.log(e))
       // .then(() => authChange())
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log("error-create", error);
-      return "ERROR_AT_ AUTH" + error.message;
+      return "ERROR_AT_AUTH" + error.message;
     });
 }
 
@@ -82,7 +75,6 @@ function setUser(user) {
   }
 }
 function getUserData() {
-  console.log("IN_USERDATA")
   return userData
 }
 // function getAllUsers() {
@@ -116,7 +108,7 @@ async function logout() {
 }
 
 function authChange() {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     setUser(user);
     if(user) {
       console.log("CHECK", user)
