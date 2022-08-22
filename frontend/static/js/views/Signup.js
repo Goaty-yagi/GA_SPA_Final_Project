@@ -68,9 +68,10 @@ export default class extends AbstractView {
             password: this.inputValues[2].value,
         }
         if(formCheck) {
-            await createUser(user)
+            createUser(user)
             .then((e) => {
-                console.log("CR",this.score,user)
+                console.log("CR",e)
+                debugger
                 const userData = getUserData()
                 console.log("USERDATA",userData)
                 user["uid"] = userData.UID
@@ -104,7 +105,8 @@ export default class extends AbstractView {
             })
             .then(() => history.go())
             .catch((e) => {
-                console.log("CATCH", e)
+                this.formError.push(e.errorCode)
+                this.errorHandler()
             })  
         } else {
             const title = 'ERROR OCCURRED'
@@ -118,6 +120,18 @@ export default class extends AbstractView {
             await notify.initialEvent()
                 this.submitButton.disabled = false
         }
+        this.formError = []
+    }
+    async errorHandler() {
+        const title = 'ERROR OCCURRED'
+        const color = "error"
+        const notify = new PopupNotification(
+            this.formError, 
+            title,
+            this.mainNode,
+            color)
+        await notify.initialEvent()
+            this.submitButton.disabled = false
         this.formError = []
     }
 }

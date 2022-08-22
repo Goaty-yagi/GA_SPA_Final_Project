@@ -12,20 +12,31 @@ let userData = {}
 let userLogin = false;
 
 async function createUser(user) {
-  const { username, email, password, score} = user;
-  await createUserWithEmailAndPassword(auth, email, password)
+  console.log("INCU")
+  return new Promise(async (resolve, reject) => {
+    const { username, email, password, score} = user;
+    await createUserWithEmailAndPassword(auth, email, password)
     .then(async () => {
       await updateProfile(auth.currentUser, {
         displayName: username,
+      },
+      resolve())
+      .catch((error) => {
+        const FBError = {
+          errorCode:error.code,
+          errorMessage:error.message
+        }
+        reject(FBError)
       })
-      .catch((e) => console.log(e))
-      // .then(() => authChange())
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      return "ERROR_AT_AUTH" + error.message;
-    });
+      const FBError = {
+        errorCode:error.code,
+        errorMessage:error.message
+      }
+      reject(FBError)
+    })
+  })
 }
 
 function login(user) {
