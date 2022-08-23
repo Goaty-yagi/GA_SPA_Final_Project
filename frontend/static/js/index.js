@@ -16,7 +16,7 @@ const routes = [
   { path: "/login", view: Login, auth: { userLogin: false } },
   { path: "/study", view: Study },
 ];
-let withParams = false
+
 // let authKeyArray = getAuthKeyArray()
 
 app.innerHTML = '<div class="lds-dual-ring"></div>';
@@ -40,46 +40,57 @@ app.innerHTML = '<div class="lds-dual-ring"></div>';
 //     return Array.from(set)
 // }
 
+function navigateTo(url) {
+   // DOM won't change.
+    // this is like set currentURL in the history then 
+    // go to the url
+    
+    history.pushState(null, null, url) 
+    router()
+
+}
+function setAuth(routeObj) {
+    const userLogin = getUserLogin();
+    console.log("setauth",userLogin,routeObj.auth.userLogin === userLogin)
+    let returnVal
+    for(let i = 0; i < Object.keys(routeObj.auth).length; i++) {
+        if (Object.keys(routeObj.auth)[i] === "userLogin"&&routeObj.auth.userLogin !== userLogin) {
+            returnVal = true
+            break
+        } else {
+            returnVal = false
+        }
+    }
+    console.log(returnVal)
+    return returnVal
+}
 // why async?? will be render page so takes time
-const router = async (url) => {
-
-  const CheckedUrl = parameterCheck(url)
-
-  const userLogin = getUserLogin();
+const router = async () => {
+    console.log(history.length)
 
    // Test each route for potential match
-  const potentialMatches = routes.map((route) => {
-    let isMatch;
-    if ("auth" in route && route.path === CheckedUrl) {
-      Object.keys(route.auth).forEach((key) => {
-        if (key === "userLogin") {
-          isMatch = route.auth.userLogin === userLogin;
+   console.log("LOCATION",location.pathname)
+   const potentialMatches = routes.map(route => {
+    const auth = "auth" in route && location.pathname === route.path
+     ? setAuth(route) : false 
+
+        return {
+            route: route,
+            isMatch : location.pathname === route.path,
+            auth: auth
         }
-      });
-    } else {
-      isMatch = CheckedUrl === route.path;
-    }
-    return {
-      route: route,
-      isMatch: isMatch,
-    };
-  });
+    })
 
   let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
-
-  if (!match) {
+    console.log("match",match)
+  if (!match||match.auth) {
     // this avoids browser reload
-    // if clicked, got to HOME
+    // if clicked, go to HOME
     match = {
       route: routes[0],
       isMatch: true,
     };
-  }
-  const updatedUrl = match.route.path;
-  if(withParams) {
-    history.pushState(null, null, url);
-  } else {
-    history.pushState(null, null, updatedUrl);
+    history.replaceState(null, null, "/")
   }
   // routing is done
 
@@ -94,21 +105,10 @@ function routingEvent() {
   document.body.addEventListener("click", (e) => {
     if (e.target.matches("[target-url]")) {
       e.preventDefault(); // prevent reload but stop routing
-      router(e.target.getAttribute("target-url"));
+      navigateTo(e.target.getAttribute("target-url"));
     }
   });
   router();
-}
-
-function parameterCheck(url) {
-    if(url) {
-        if (url.indexOf('?') !== -1) {
-            withParams = true
-            return url.split("?")[0]
-        } else {
-            return url
-        }
-    }
 }
 
 window.addEventListener("popstate", router);
