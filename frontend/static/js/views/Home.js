@@ -44,7 +44,6 @@ export default class extends AbstractView {
         `
     }
     async beforeInitialRender() {
-        console.log("IN")
         this.ranking = new Ranking();
         this.hideAppNode()
     }

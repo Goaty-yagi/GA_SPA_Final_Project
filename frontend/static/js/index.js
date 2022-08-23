@@ -1,5 +1,5 @@
 import { getUserLogin } from "../../../firebase/authentication.js";
-import initialization from "./store/index.js";
+import initialization, { getIsAuth } from "./store/index.js";
 import Dashboard from "./views/dashboard/Dashboard.js";
 import Home from "./views/Home.js";
 import Login from "./views/Login.js";
@@ -11,7 +11,7 @@ const app = document.querySelector("#app");
 const routes = [
   { path: "/", view: Home },
   { path: "/quiz", view: Quiz },
-  { path: "/dashboard", view: Dashboard, auth: { userLogin: true } },
+  { path: "/dashboard", view: Dashboard, auth: { userLogin: true, isAuth: true } },
   { path: "/signup", view: Signup, auth: { userLogin: false } },
   { path: "/login", view: Login, auth: { userLogin: false } },
   { path: "/study", view: Study },
@@ -44,19 +44,21 @@ function navigateTo(url) {
    // DOM won't change.
     // this is like set currentURL in the history then 
     // go to the url
-    
+
     history.pushState(null, null, url) 
     router()
 
 }
 function setAuth(routeObj) {
+    const isAuth = getIsAuth()
     const userLogin = getUserLogin();
     console.log("setauth",userLogin,routeObj.auth.userLogin === userLogin)
     let returnVal
     for(let i = 0; i < Object.keys(routeObj.auth).length; i++) {
         if (Object.keys(routeObj.auth)[i] === "userLogin"&&routeObj.auth.userLogin !== userLogin) {
             returnVal = true
-            break
+        }else if (Object.keys(routeObj.auth)[i] === "isAuth"&&routeObj.auth.isAuth !== isAuth){
+            returnVal = true
         } else {
             returnVal = false
         }
