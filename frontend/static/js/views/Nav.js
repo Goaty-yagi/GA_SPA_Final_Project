@@ -3,11 +3,11 @@ import AbstractView from "./AbstractView.js";
 import logo from "../../images/logo.png"
 import dark from "../../images/background-dark.png"
 import light from "../../images/background-light.png"
-import { logout, userData, userLogin } from "../../../../firebase/authentication.js";
+import { getUserLogin, logout, userData, userLogin } from "../../../../firebase/authentication.js";
 
 let clickedTheme = false
 // initialSetting()
-
+getUserLogin
 function theme() {
     console.log('clicked')
     clickedTheme = !clickedTheme
@@ -32,6 +32,7 @@ function theme() {
 export default class extends AbstractView {
     constructor() {
         super()
+        this.userLogin = getUserLogin()
     }
     async renderHTML(userLogin) {
       const headerElement = document.querySelector("#header")
@@ -50,8 +51,7 @@ export default class extends AbstractView {
         </div>
       </nav>
       `
-      if(userLogin) {
-        console.log("LOGEDIN", userLogin)
+      if(this.userLogin) {
         headerElement.children[1].innerHTML += `
         <div class="quiz-create nav-menu" target-url="/dashboard">DASHBOARD</div>
         <div class="logout nav-menu">LOGOUT</div>`

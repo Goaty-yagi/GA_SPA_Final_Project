@@ -1,8 +1,7 @@
 import AbstractView from "./AbstractView.js";
 import twitter from "../../images/twitter.png";
-import { userData, userLogin } from "../../../../firebase/authentication.js";
+import { getUserData, getUserLogin } from "../../../../firebase/authentication.js";
 import { getSessionItem, setSessionStorage } from "../store/index.js";
-
 
 
 let allQuestion = []
@@ -35,6 +34,8 @@ export default class extends AbstractView {
         this.apiData
         this.timer
         this.questionWrapper
+        this.userLogin = getUserLogin()
+        this.userData = getUserData()
     }
     async renderHTML() {
         //async return HTML might be asynchronous
@@ -224,7 +225,7 @@ export default class extends AbstractView {
               </div>
             `
             resultFooter.innerHTML = twitterHtml
-            if(userLogin) {
+            if(this.userLogin) {
               html = `
                 <div class="footer-section">
                     <div>Get More Score!</div>
@@ -266,7 +267,7 @@ export default class extends AbstractView {
         await fetch(scoreEndpoint, {
           method: "PATCH",
           body: JSON.stringify({
-            UUID: userData.UID,
+            UUID: this.userData.UID,
             score: this.correctNum
           }),
           headers: {

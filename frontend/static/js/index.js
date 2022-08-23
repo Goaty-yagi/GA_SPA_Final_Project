@@ -1,77 +1,95 @@
-
 import { getUserLogin } from "../../../firebase/authentication.js";
 import initialization from "./store/index.js";
 import Dashboard from "./views/dashboard/Dashboard.js";
-import Home from "./views/Home.js"
+import Home from "./views/Home.js";
 import Login from "./views/Login.js";
 import Quiz from "./views/Quiz.js";
 import Signup from "./views/Signup.js";
 import Study from "./views/Study.js";
 
-const app = document.querySelector("#app")
+const app = document.querySelector("#app");
+const routes = [
+  { path: "/", view: Home },
+  { path: "/quiz", view: Quiz },
+  { path: "/dashboard", view: Dashboard, auth: { userLogin: true } },
+  { path: "/signup", view: Signup, auth: { userLogin: false } },
+  { path: "/login", view: Login, auth: { userLogin: false } },
+  { path: "/study", view: Study },
+];
+// let authKeyArray = getAuthKeyArray()
 
-app.innerHTML = '<div class="lds-dual-ring"></div>'
-const navigateTo = (url) => {
-    // DOM won't change.
-    // this is like set currentURL in the history
-    history.pushState(null, null, url);
-    router()
-}
+app.innerHTML = '<div class="lds-dual-ring"></div>';
+
+// function getAuthKeyArray() {
+//     //automatically set authKeys
+//     const tempArray  = routes.map(route => {
+//         if("auth" in route) {
+//             console.log(route.auth)
+//             return Object.keys(route.auth)
+//         }
+//     })
+//     const set = new Set
+//     tempArray.forEach(each => {
+//         if(Array.isArray(each)){
+//             for(let i= 0; i < each.length; i++) {
+//                 set.add(each[i])
+//             }
+//         }
+//     })
+//     return Array.from(set)
+// }
 
 // why async?? will be render page so takes time
-const router = async () => {
-    // app.style.display = "flex"
-    console.log("router",getUserLogin())
-    const routes = [
-        { path: "/", view: Home},
-        { path: "/quiz", view: Quiz},
-        { path: "/dashboard", view: Dashboard},
-        { path: "/signup", view: Signup},
-        { path: "/login", view: Login},
-        { path: "/study", view: Study},
-    ];
-    // Test each route for potential match
-    const potentialMatches = routes.map(route => {
-        return {
-            route: route,
-            isMatch : location.pathname === route.path
+const router = async (url) => {
+  // Test each route for potential match
+  const userLogin = getUserLogin();
+  const potentialMatches = routes.map((route) => {
+    let isMatch;
+    if ("auth" in route && route.path === url) {
+      Object.keys(route.auth).forEach((key) => {
+        if (key === "userLogin") {
+          isMatch = route.auth.userLogin === userLogin;
         }
-    });
-    let match = potentialMatches.find(potentialMatch => potentialMatch.isMatch)
-    
-    console.log("MATCH",match)
-    if(!match) {
-        match = {
-            route: routes[0],
-            isMatch: true
-        }
+      });
+    } else {
+      isMatch = url === route.path;
     }
+    return {
+      route: route,
+      isMatch: isMatch,
+    };
+  });
+  let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
 
-    // routing is done
-    // start dom manipulation
-    const view = new match.route.view()//make a new instance
-    await view.beforeInitialRender()
-    app.innerHTML = await view.renderHTML()// renderHTML() is async so await here
-    view.initialEvent()
-}
+  if (!match) {
+    // this avoids browser reload
+    // if clicked, got to HOME
+    match = {
+      route: routes[0],
+      isMatch: true,
+    };
+  }
+  const updatedUrl = match.route.path;
+  history.pushState(null, null, updatedUrl);
+  // routing is done
+  // start dom manipulation
+  const view = new match.route.view(); //make a new instance
+  await view.beforeInitialRender();
+  app.innerHTML = await view.renderHTML(); // renderHTML() is async so await here
+  view.initialEvent();
+};
 function routingEvent() {
-    document.body.addEventListener("click", e => {
-        if(e.target.matches("[target-url]")) {
-            e.preventDefault() // prevent reload but stop routing
-            navigateTo(e.target.getAttribute("target-url"))
-        }
-    })
-    router()
+  document.body.addEventListener("click", (e) => {
+    if (e.target.matches("[target-url]")) {
+      e.preventDefault(); // prevent reload but stop routing
+      router(e.target.getAttribute("target-url"));
+    }
+  });
+  router();
 }
 
-window.addEventListener("popstate",router)
+window.addEventListener("popstate", router);
 // postate excute histrical data when browser back or forward
 // the data could be the data created with histry.pushState
 
-
-
-
-export {
-    routingEvent,
-    router, 
-}
+export { routingEvent, router };
