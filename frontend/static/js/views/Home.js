@@ -1,11 +1,14 @@
 
 import AbstractView from "./AbstractView.js";
+import Footer from "./Footer.js";
 import Ranking from "./Ranking.js";
 
 export default class extends AbstractView {
     constructor() {
         super()
+        this.app = document.querySelector("#app")
         this.ranking
+        this.footer
         this.setTitle("Home")
     }
 
@@ -39,17 +42,21 @@ export default class extends AbstractView {
             <p class="go-study" target-url="/study"> Go STUDY =></p>
             </div>
             </div>
+            <div class="rank-in-home"></div>
             </div>
         </main>
         `
     }
     async beforeInitialRender() {
+        this.footer = new Footer
         this.ranking = new Ranking();
         this.hideAppNode()
     }
     async initialEvent() {
         document.querySelector(".start-button").addEventListener("click",this.event)
-        document.querySelector(".second-hero").append(await this.ranking.renderHTML())
+        document.querySelector(".rank-in-home").append(await this.ranking.renderHTML())
+        this.app.innerHTML += await this.footer.renderHTML()
+        this.footer.initialEvent()
         this.showAppNode()
     }
     event() {

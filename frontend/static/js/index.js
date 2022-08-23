@@ -19,7 +19,6 @@ const routes = [
 
 // let authKeyArray = getAuthKeyArray()
 
-app.innerHTML = '<div class="lds-dual-ring"></div>';
 
 // function getAuthKeyArray() {
 //     //automatically set authKeys
@@ -40,6 +39,23 @@ app.innerHTML = '<div class="lds-dual-ring"></div>';
 //     return Array.from(set)
 // }
 
+function setDualRing() {
+    app.style.height = "80%"
+    app.style.display = "flex"
+    app.style.justifyContents = "center"
+    app.style.alignItems = "center"
+    app.innerHTML = '<div class="lds-dual-ring"></div>';
+}
+function cancelAppStyle() {
+    app.style.height = "100%"
+    app.style.display = ""
+    app.style.justifyContents = ""
+    app.style.alignItems = ""
+    
+}
+
+setDualRing()
+
 function navigateTo(url) {
    // DOM won't change.
     // this is like set currentURL in the history then 
@@ -50,9 +66,9 @@ function navigateTo(url) {
 
 }
 function setAuth(routeObj) {
-    const isAuth = getIsAuth()
+    const isAuth = getIsAuth() ? true: false
     const userLogin = getUserLogin();
-    console.log("setauth",userLogin,routeObj.auth.userLogin === userLogin)
+    console.log("setauth",routeObj.path,location.pathname,true == isAuth)
     let returnVal
     for(let i = 0; i < Object.keys(routeObj.auth).length; i++) {
         if (Object.keys(routeObj.auth)[i] === "userLogin"&&routeObj.auth.userLogin !== userLogin) {
@@ -97,6 +113,7 @@ const router = async () => {
   // routing is done
 
   // start dom manipulation
+  cancelAppStyle()
   const view = new match.route.view(); //make a new instance
   await view.beforeInitialRender();
   app.innerHTML = await view.renderHTML(); // renderHTML() is async so await here

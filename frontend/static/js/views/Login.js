@@ -6,6 +6,7 @@ import PopupNotification from "./PopupNotification.js";
 export default class extends AbstractView {
     constructor() {
         super()
+        this.app = document.querySelector("#app");
         this.formError = []
         this.mainNode
         this.setTitle("Login")

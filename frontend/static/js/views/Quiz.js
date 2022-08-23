@@ -246,7 +246,7 @@ export default class extends AbstractView {
               const shareURL =
                 "https://twitter.com/intent/tweet?text=" +
                 "%23" +
-                "RANKINQUIZ" +
+                "RankingQuizDojo" +
                 "%20%0a" +
                 "Your score is " +
                 this.correctNum +
