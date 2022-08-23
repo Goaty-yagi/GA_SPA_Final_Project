@@ -16,6 +16,7 @@ const routes = [
   { path: "/login", view: Login, auth: { userLogin: false } },
   { path: "/study", view: Study },
 ];
+let withParams = false
 // let authKeyArray = getAuthKeyArray()
 
 app.innerHTML = '<div class="lds-dual-ring"></div>';
@@ -41,24 +42,29 @@ app.innerHTML = '<div class="lds-dual-ring"></div>';
 
 // why async?? will be render page so takes time
 const router = async (url) => {
-  // Test each route for potential match
+
+  const CheckedUrl = parameterCheck(url)
+
   const userLogin = getUserLogin();
+
+   // Test each route for potential match
   const potentialMatches = routes.map((route) => {
     let isMatch;
-    if ("auth" in route && route.path === url) {
+    if ("auth" in route && route.path === CheckedUrl) {
       Object.keys(route.auth).forEach((key) => {
         if (key === "userLogin") {
           isMatch = route.auth.userLogin === userLogin;
         }
       });
     } else {
-      isMatch = url === route.path;
+      isMatch = CheckedUrl === route.path;
     }
     return {
       route: route,
       isMatch: isMatch,
     };
   });
+
   let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
 
   if (!match) {
@@ -70,14 +76,20 @@ const router = async (url) => {
     };
   }
   const updatedUrl = match.route.path;
-  history.pushState(null, null, updatedUrl);
+  if(withParams) {
+    history.pushState(null, null, url);
+  } else {
+    history.pushState(null, null, updatedUrl);
+  }
   // routing is done
+
   // start dom manipulation
   const view = new match.route.view(); //make a new instance
   await view.beforeInitialRender();
   app.innerHTML = await view.renderHTML(); // renderHTML() is async so await here
   view.initialEvent();
 };
+
 function routingEvent() {
   document.body.addEventListener("click", (e) => {
     if (e.target.matches("[target-url]")) {
@@ -86,6 +98,17 @@ function routingEvent() {
     }
   });
   router();
+}
+
+function parameterCheck(url) {
+    if(url) {
+        if (url.indexOf('?') !== -1) {
+            withParams = true
+            return url.split("?")[0]
+        } else {
+            return url
+        }
+    }
 }
 
 window.addEventListener("popstate", router);

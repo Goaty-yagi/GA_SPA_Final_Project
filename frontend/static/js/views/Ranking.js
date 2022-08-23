@@ -8,7 +8,7 @@ export default class extends AbstractView {
     super();
     this.scoreData;
     this.userData = getUserData()
-    this.userLogin = getUserLogin
+    this.userLogin = getUserLogin()
     this.rankingContainer = document.createElement("div")
     this.rankingContainer.className = "rank-section"
     this.rankWrapper = document.createElement("div")

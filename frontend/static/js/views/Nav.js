@@ -3,7 +3,8 @@ import AbstractView from "./AbstractView.js";
 import logo from "../../images/logo.png"
 import dark from "../../images/background-dark.png"
 import light from "../../images/background-light.png"
-import { getUserLogin, logout, userData, userLogin } from "../../../../firebase/authentication.js";
+import { getUserLogin, logout } from "../../../../firebase/authentication.js";
+import { getIsAuth } from "../store/index.js";
 
 let clickedTheme = false
 // initialSetting()
@@ -33,8 +34,9 @@ export default class extends AbstractView {
     constructor() {
         super()
         this.userLogin = getUserLogin()
+        this.isAuth = getIsAuth()
     }
-    async renderHTML(userLogin) {
+    async renderHTML() {
       const headerElement = document.querySelector("#header")
       headerElement.innerHTML = `<img target-url="/" class="logo" src="${logo}" alt="logo">`
       headerElement.innerHTML += `
@@ -52,12 +54,12 @@ export default class extends AbstractView {
       </nav>
       `
       if(this.userLogin) {
-        headerElement.children[1].innerHTML += `
+        if(this.isAuth){
+          headerElement.children[1].innerHTML += `
         <div class="quiz-create nav-menu" target-url="/dashboard">DASHBOARD</div>
-        <div class="logout nav-menu">LOGOUT</div>`
-        document.querySelector(".quiz-create").addEventListener('click',() => {
-          console.log("clicked")
-        })
+        `
+        }
+        headerElement.children[1].innerHTML += `<div class="logout nav-menu">LOGOUT</div>`
         document.querySelector(".logout").addEventListener('click',() => {
           console.log("GONNA LOGOUT")
           logout()
@@ -71,9 +73,6 @@ export default class extends AbstractView {
         // document.querySelector(".signup").addEventListener('click',() => {
         //   console.log("clicked")
         // })
-        document.querySelector(".login").addEventListener('click',() => {
-          console.log("clicked")
-        })
       }
     }
     async initialEvent(userLogin) {

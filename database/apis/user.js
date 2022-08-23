@@ -40,7 +40,7 @@ async function createUserTable(req, res) {
     const tableValues = Object.values(req.body)//order must be the same as SET below user, mail, UUID
     tableValues.push(id)
     await openDB();
-    const sql = `UPDATE ${tableName} SET user = ?, mail = ? WHERE UUID = ?`;
+    const sql = `UPDATE ${tableName} SET user = ?, is_authenticated = ? WHERE UUID = ?`;
     db.run(sql, tableValues, (err,result) => {
       if (err) {
         //** even if the order is not correct, error will not occur.
