@@ -1,4 +1,5 @@
 
+import { getUserLogin } from "../../../firebase/authentication.js";
 import initialization from "./store/index.js";
 import Dashboard from "./views/dashboard/Dashboard.js";
 import Home from "./views/Home.js"
@@ -20,6 +21,7 @@ const navigateTo = (url) => {
 // why async?? will be render page so takes time
 const router = async () => {
     // app.style.display = "flex"
+    console.log("router",getUserLogin())
     const routes = [
         { path: "/", view: Home},
         { path: "/quiz", view: Quiz},
@@ -45,7 +47,7 @@ const router = async () => {
         }
     }
 
-    // /routing is done
+    // routing is done
     // start dom manipulation
     const view = new match.route.view()//make a new instance
     await view.beforeInitialRender()

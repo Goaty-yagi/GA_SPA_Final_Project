@@ -88,6 +88,9 @@ function setUser(user) {
 function getUserData() {
   return userData
 }
+function getUserLogin() {
+  return userLogin
+}
 // function getAllUsers() {
 //   const listAllUsers = (nextPageToken) => {
 //     // List batch of users, 1000 at a time.
@@ -136,7 +139,5 @@ export {
   logout, 
   createUser,
   getUserData,
-  getAllUsers,
-  userData, 
-  userLogin, 
+  getUserLogin,
   };

@@ -6,7 +6,6 @@ import light from "../../images/background-light.png"
 import { logout, userData, userLogin } from "../../../../firebase/authentication.js";
 
 let clickedTheme = false
-console.log("IN_NAV",userData, userLogin)
 // initialSetting()
 
 function theme() {

@@ -1,4 +1,4 @@
-import { userData, userLogin } from "../../../../firebase/authentication.js";
+import { getUserData, getUserLogin} from "../../../../firebase/authentication.js";
 import { getSessionItem } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 
@@ -7,6 +7,8 @@ export default class extends AbstractView {
   constructor() {
     super();
     this.scoreData;
+    this.userData = getUserData()
+    this.userLogin = getUserLogin
     this.rankingContainer = document.createElement("div")
     this.rankingContainer.className = "rank-section"
     this.rankWrapper = document.createElement("div")
@@ -18,8 +20,8 @@ export default class extends AbstractView {
     this.scoreData = await this.fetchData()
     this.rankWrapper.innerHTML += "<h1>RANKING</h1>"
     let userStyleClass
-    if(userLogin) {
-      const username = userData.name
+    if(this.userLogin) {
+      const username = this.userData.name
       const currentScore = getSessionItem("currentScore")
       const welcome = `
       <div class="welcome-container">
@@ -31,7 +33,7 @@ export default class extends AbstractView {
       this.rankWrapper.innerHTML += welcome
     }
     this.scoreData.forEach((elem, index) => {
-      if(elem.UUID === userData.UID){
+      if(elem.UUID === this.userData.UID){
         userStyleClass = "rank-name rank-user"
       } else {
         userStyleClass = "rank-name"
