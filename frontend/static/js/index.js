@@ -6,7 +6,7 @@ import Login from "./views/Login.js";
 import Quiz from "./views/Quiz.js";
 import Signup from "./views/Signup.js";
 import Study from "./views/Study.js";
-console.log("INDEX")
+
 const app = document.querySelector("#app")
 
 app.innerHTML = '<div class="lds-dual-ring"></div>'
@@ -37,13 +37,13 @@ const router = async () => {
     });
     let match = potentialMatches.find(potentialMatch => potentialMatch.isMatch)
     
-    // console.log("MATCH",match)
-    // if(!match) {
-    //     match = {
-    //         route: routes[0],
-    //         isMatch: true
-    //     }
-    // }
+    console.log("MATCH",match)
+    if(!match) {
+        match = {
+            route: routes[0],
+            isMatch: true
+        }
+    }
 
     // /routing is done
     // start dom manipulation

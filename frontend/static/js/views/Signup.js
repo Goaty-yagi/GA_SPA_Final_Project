@@ -1,3 +1,4 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUser, getUserData } from "../../../../firebase/authentication.js";
 import { setSessionStorage } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
@@ -42,6 +43,11 @@ export default class extends AbstractView {
         this.submitButton = document.querySelector(".signup-submit-button")
         this.submitButton.addEventListener("click",(e) => this.signupUser(e,this.scoreEndpoint))
         this.mainNode = document.querySelector(".signup-wrapper")
+        this.beforeunload((e) => {
+            e.preventDefault()
+            e.returnValue = "";
+            return e
+        })
     }
     _checkForm(inputValues) {
 
@@ -71,7 +77,6 @@ export default class extends AbstractView {
             createUser(user)
             .then((e) => {
                 console.log("CR",e)
-                debugger
                 const userData = getUserData()
                 console.log("USERDATA",userData)
                 user["uid"] = userData.UID
@@ -133,5 +138,10 @@ export default class extends AbstractView {
         await notify.initialEvent()
             this.submitButton.disabled = false
         this.formError = []
+    }
+    confirmAlert() {
+        window.confirm(`
+        Do you really want to leave?
+        Your data will be brocken.`)
     }
 }
