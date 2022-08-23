@@ -1,6 +1,5 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUser, getUserData } from "../../../../firebase/authentication.js";
-import { setSessionStorage } from "../store/index.js";
+import initialization, { setSessionStorage } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 import PopupNotification from "./PopupNotification.js";
 // import { correctNum } from "./quiz.js";
@@ -20,6 +19,11 @@ export default class extends AbstractView {
         this.inputValues
         this.mainNode
         this.submitButton
+        this.callback = ((e) => {
+            e.preventDefault()
+            e.returnValue = "";
+            return e
+        })
     }
     async renderHTML() {
         //async return HTML might be asynchronous
@@ -43,11 +47,7 @@ export default class extends AbstractView {
         this.submitButton = document.querySelector(".signup-submit-button")
         this.submitButton.addEventListener("click",(e) => this.signupUser(e,this.scoreEndpoint))
         this.mainNode = document.querySelector(".signup-wrapper")
-        this.beforeunload((e) => {
-            e.preventDefault()
-            e.returnValue = "";
-            return e
-        })
+        this.beforeunload(this.callback)
     }
     _checkForm(inputValues) {
 
@@ -107,6 +107,7 @@ export default class extends AbstractView {
                 })
                 console.log("GONNAGET_SCORE")
                 setSessionStorage("currentScore", this.score)
+                window.removeEventListener("beforeunload", this.callback, true);
             })
             .then(() => history.go())
             .catch((e) => {
