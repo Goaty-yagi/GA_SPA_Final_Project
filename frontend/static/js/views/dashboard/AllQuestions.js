@@ -46,12 +46,11 @@ export default class extends AbstractView {
     this.questionId;
     this.inputValues;
     this.id;
-    this.setTitle("Study");
   }
   async renderHTML() {
     return `
         <section class="study-section">
-        <h1 class="study-title">All Questions</h1>
+        <h1 class="dashboard-title">All Questions</h1>
         <form class="study-form" onsubmit="return false" name="form">
           <main class="study-main">
             <div aria-label="select tags" class="checkbox-container">

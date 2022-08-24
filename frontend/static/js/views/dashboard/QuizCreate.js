@@ -4,7 +4,6 @@ import PopupNotification from "../PopupNotification.js";
 export default class extends AbstractView {
   constructor() {
     super();
-    this.setTitle("Create");
     this.createSection;
     this.questions;
     this.selecterWindowContainer;
@@ -35,8 +34,8 @@ export default class extends AbstractView {
   async renderHTML() {
     
     return `
+      <h1 class="dashboard-title">CREATE QUESTION</h1>
       <section class="create-section">
-        <h1 class="title">CREATE QUESTION</h1>
         <form class="create-form" onsubmit="return false" id="form">
           <div>TERM</div>
           <input class="text-input" type="text" name="text" aria-label="term" value="">
@@ -68,13 +67,11 @@ export default class extends AbstractView {
     this.createButton.addEventListener("click", () => {
       this.createEvent();
     });
-    // document.querySelector(".check").addEventListener("click",() => this.allQuestion())
     this._selectorEvent();
   }
 
   _selectorEvent() {
     const selecterBox = document.querySelector(".selecter-box");
-    // const this.selecterWindowContainer = document.querySelector(".selecter-window-container")
     const selecterWindow = document.createElement("div");
     selecterWindow.className = "select-window";
     selecterBox.addEventListener("click", () => {

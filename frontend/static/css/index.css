@@ -535,7 +535,8 @@ label{
 .study-section{
     display: flex;
     flex-direction: column;
-    align-items: center;    
+    align-items: center;   
+    width: 100%; 
 }
 .study-form{
     display: flex;
@@ -838,8 +839,21 @@ tag{
     color: white;
     border: solid orange;
 }
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 /* @ DashBoard END */
 /* @Create-quiz START */
+
+.dashboard-title {
+    font-family: cursive;
+    text-align: center;
+    border-bottom: 0.2rem solid darkred;
+    display: inline;
+    font-size: 2rem;
+}
 .create-section{
     display: flex;
     align-items: center;
@@ -847,8 +861,9 @@ tag{
     border: solid orange;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
-    background: rgba(255,255,255,0.7);
+    padding-top: 1rem;
+    width: 70%;
+    background: rgba(255,255,255,0.9);
 }
 .create-select-text{
     padding-bottom: 4rem;
@@ -877,9 +892,11 @@ tag{
 }
 .select-chosen{
     position: absolute;
+    display: flex;
+    justify-content: center;
     left: 0;
     margin: 0 0.5rem;
-    width: 200%;
+    width: 100%;
 }
 .chosen-tag{
     font-family: initial;
