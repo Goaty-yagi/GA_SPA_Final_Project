@@ -82,6 +82,7 @@ export default class extends AbstractView {
         selecterWindow.innerHTML = "";
         for (let i = 0; i < this.tagsArray.length; i++) {
           let tagChild = document.createElement("div");
+          tagChild.className = "each-tag-in-window"
           tagChild.innerHTML = `${this.tagsArray[i]}`;
           selecterWindow.appendChild(tagChild);
           tagChild.addEventListener("click", chosenEvent);

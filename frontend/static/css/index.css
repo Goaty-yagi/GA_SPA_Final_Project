@@ -876,8 +876,10 @@ tag{
     z-index: 1;
 }
 .select-chosen{
-    position: fixed;
-    width: 50%;
+    position: absolute;
+    left: 0;
+    margin: 0 0.5rem;
+    width: 200%;
 }
 .chosen-tag{
     font-family: initial;
@@ -893,8 +895,8 @@ tag{
     min-width: 4rem;
     color: white;
     font-weight: bold;
-
 }
+
 .create-button-container{
     width: 100%;
     text-align: center;
@@ -908,9 +910,21 @@ tag{
     padding: 0.3rem 0.5rem;
     font-size: 1.3rem;
     font-weight: bold;
-
+    transition: .5s;
 }
 
+.create-submit-button:hover {
+    color: black;
+}
+
+.each-tag-in-window {
+    transition: .5s;
+    padding: 0.2rem 0;
+
+}
+.each-tag-in-window:hover {
+    background: rgb(210, 210, 210);
+}
 /* @ CREATE QUIZ END */
 /* @ALL_QUESTION_START */
 .each-item{
