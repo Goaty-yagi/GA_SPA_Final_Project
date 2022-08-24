@@ -40,6 +40,7 @@ img{
     left: 0;
     width: 70px;
 }
+
 nav{
     display: flex;
     align-items: center;
@@ -122,7 +123,25 @@ nav{
     align-items: center;
     justify-content: center;
 }
+/* @ Login START */
+/* login style is mainly shared with signup style.  */
+.user-notification{
+    display: flex;
+    width: 50%;
+    border: solid black;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: rgba(255, 209, 209, 0.9);
+    margin-bottom: 2rem;
+}
+.login-notify-container {
+    
+}
+.login-notify-text{
+    margin-bottom: 1.5rem;
+}
 
+/* @ Login END */
 /* @ HOME START */
 #main{
     display: flex;
@@ -133,7 +152,7 @@ nav{
 }
 .main-container{
     text-align: center;
-    border: solid rgb(16, 16, 78);
+    border: 0.4rem solid rgb(16, 16, 78);
     background: rgba(255,255,255,0.7);
     width: 100%;
     padding: 1rem;
@@ -205,7 +224,7 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid blue;
+    border: solid black;
     background: rgba(255,255,255,0.7); 
 }
 .fa-pencil-alt{
@@ -225,17 +244,19 @@ nav{
     text-align: center;
     vertical-align: center;
     font-size: 2rem;
+    margin-bottom: 4rem;
 }
 .go-study{
+    font-family: initial;
+    font-weight: bold;
     position: absolute;
     margin: 0;
     bottom: 0;
-    padding: 0.2rem 2rem;
+    padding: 0.4rem 2rem;
     border: solid rgb(255, 98, 0);
     background: #777;
     color: white;
     transition: .5s;
-    
 }
 .go-study:hover {
     border: solid gray;
@@ -418,6 +439,7 @@ label{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
     border: solid rgb(16, 16, 78);
     background: rgba(255,255,255,0.7);
     width: 80%;
@@ -428,6 +450,7 @@ label{
 .score-text{
     position: relative;
     font-size: 2rem;
+    margin-bottom: 1rem;
 }
 .score-num{
     position: absolute;
@@ -435,7 +458,13 @@ label{
     font-size: 3rem;;
     color: rgb(2, 149, 78);
 }
+.result-footer-container{
+    position: relative;
+    width: 100%;
+}
 .result-footer{
+    position: absolute;
+    top: 0;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -447,17 +476,58 @@ label{
     align-items: center;
     
 }
-.social-img{
+.fa-twitter-square{
     position:initial;
+    width: 4rem;
+    height: 4rem;
+    font-size: 4.7rem;
+    color: rgb(29 161 242);
+    transition: .5s;
+}
+.fa-twitter-square:hover {
+    text-shadow: 0.5px  0.5px 2.5px #777 ,
+                -0.5px  0.5px 2.5px #777 ,
+                0.5px -0.5px 2.5px #777 ,
+                -0.5px -0.5px 2.5px #777;
 }
 .register-button{
+    font-family: initial;
+    width: 4rem;
+    height: 4rem;
     border: solid gray;
-    padding: 0.2rem 1rem;
-    background: rgb(213, 255, 213);
-    border: solid green;
+    border-radius: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:orange;
+    border: solid navy;
+    font-size: 0.8rem;
+    color: rgb(250, 250, 250);
     font-weight: bold;
-    margin-top: 1rem;
-
+    transition: .5s;
+}
+.register-button:hover {
+    color: black;
+}
+.try-again-button{
+    font-family: initial;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    border: solid #000;
+    margin-bottom: 3rem;
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem;
+    background: linear-gradient(#c9ffd6, #00bb38);
+    transition: .5s;
+    text-shadow: 0.5px  0.5px 2.5px #777 ,
+                -0.5px  0.5px 2.5px #777 ,
+                0.5px -0.5px 2.5px #777 ,
+                -0.5px -0.5px 2.5px #777;
+}
+.try-again-button:hover {
+    color: black;
 }
 /* @Quiz-END */
 
@@ -649,7 +719,7 @@ tag{
     right: 0; */
     /* margin-top: 2rem; */
     width: 200px;
-    border: solid blue;
+    border: solid black;
     background: rgba(255,255,255,0.7);
     padding: 1rem;
     margin-bottom: 2rem;
@@ -960,26 +1030,50 @@ footer{
     bottom:0;
     width: 100%;
     max-height: 200px;
-    border: solid black;
+    border: 0.2rem solid rgb(255, 255, 255);
     background: rgba(0,0,0,0.85) ;
     color: white;
-    padding: 1rem;
+    padding: 3rem;
+    box-sizing: border-box;
     margin: initial;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+.creater-title-container {
+    position: relative;
+    display: inline-block;
+    height: 50px;
+    width: 80%;
+    margin-bottom: 2rem;
+}
 .creater-title{
+    position: absolute;
     font-family: initial;
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    transition: .5s;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.creater-title:hover {
+    font-size: 2rem;
 }
 .footer-font-container{
     
 }
-.footer-font {
+.font-hover {
     font-size: 4rem;
     margin: 0 0.5rem;
+    transition: .5s;
+}
+.font-hover:hover {
+    text-shadow: 1px  1px 5px #777 ,
+                -1px  1px 5px #777 ,
+                 1px -1px 5px #777 ,
+                -1px -1px 5px #777;
+
 }
 /* @Footer_END */
 

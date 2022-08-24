@@ -24,7 +24,7 @@ export default class extends AbstractView {
     console.log("return")
     return `
         <section class="study-section">
-        <h1 class="study-title">Study TECH Terms</h1>
+        <h1 class="study-title">Search And Study TECH Terms</h1>
         <form class="study-form" onsubmit="return false" name="form">
             <main class="study-main">
             <div aria-label="select tags" class="checkbox-container">

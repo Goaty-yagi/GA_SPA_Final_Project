@@ -17,6 +17,16 @@ export default class extends AbstractView {
         return `
         <div class="signup-wrapper">
         <div class="compo-title">${compoTitle}</div>
+            <div class="user-notification">
+                <div class="login-notify-container">
+                    <div class="login-notify-text">To access Dashboard,
+                    login as authenticated user who allowed
+                    to do CRUD methods. otherwise enjoy with your own account:)
+                    </div>
+                    <div class="login-notify-email">E-main: nokehaauth-user@f5.si</div>
+                    <div class="login-notify-pass">Password: kokokoko</div>
+                </div>
+            </div>
             <form onsubmit="return false" class="signup-form">
                 <div class="signup-text">E-MAIL</div>
                 <input class="form-input" type="mail" name="text" aria-label="mail" value="">

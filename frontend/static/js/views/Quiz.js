@@ -193,6 +193,7 @@ export default class extends AbstractView {
             <div class="score-text">${message}
             <span class="score-num"></span>
             </div>
+            <div class="result-footer-container"></div>
             </div>
         `;
       new Promise((resolve, reject) => {
@@ -215,13 +216,14 @@ export default class extends AbstractView {
           //     // will be added some functionalities
           this.intervalId = setTimeout(() => {
             const resultContainer = document.querySelector(".relust-container");
+            const resultFooterContainer = document.querySelector(".result-footer-container")
             const resultFooter = document.createElement("div")
             resultFooter.className = "result-footer"
             let html
             const twitterHtml =`
               <div class="footer-section">
                   <div>Tweet your score</div>
-                  <img class="social-img" src="${twitter}">
+                  <i class="fab fa-twitter-square social-img"></i>
               </div>
             `
             resultFooter.innerHTML = twitterHtml
@@ -229,7 +231,7 @@ export default class extends AbstractView {
               html = `
                 <div class="footer-section">
                     <div>Get More Score!</div>
-                    <div class="register-button" target-url="/quiz">Try Again!</div>
+                    <div class="register-button" target-url="/study">Study?</div>
                 </div>
               `
             } else {
@@ -239,9 +241,13 @@ export default class extends AbstractView {
                       <div class="register-button" target-url="/signup?score=${this.correctNum}">Register</div>
                   </div>
                   `;
+
             }
+            const registerHtml = `<div class="try-again-button" target-url="/quiz">Try Again!</div>`
             resultFooter.innerHTML += html
-            resultContainer.append(resultFooter);
+            resultFooterContainer.append(resultFooter)
+            resultContainer.append(resultFooterContainer);
+            resultContainer.innerHTML += registerHtml
             document.querySelector(".social-img").addEventListener("click", () => {
               const shareURL =
                 "https://twitter.com/intent/tweet?text=" +
