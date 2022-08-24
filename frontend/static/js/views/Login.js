@@ -23,7 +23,7 @@ export default class extends AbstractView {
                     login as authenticated user who allowed
                     to do CRUD methods. otherwise enjoy with your own account:)
                     </div>
-                    <div class="login-notify-email">E-main: nokehaauth-user@f5.si</div>
+                    <div class="login-notify-email">E-main: nokehaauth_user@f5.si</div>
                     <div class="login-notify-pass">Password: kokokoko</div>
                 </div>
             </div>

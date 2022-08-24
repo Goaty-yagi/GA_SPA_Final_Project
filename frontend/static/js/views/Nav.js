@@ -1,4 +1,3 @@
-// import initialSetting from "../index.js";
 import AbstractView from "./AbstractView.js";
 import logo from "../../images/logo.png"
 import dark from "../../images/background-dark.png"
@@ -6,33 +5,11 @@ import light from "../../images/background-light.png"
 import { getUserLogin, logout } from "../../../../firebase/authentication.js";
 import { getIsAuth } from "../store/index.js";
 
-let clickedTheme = false
-// initialSetting()
-getUserLogin
-function theme() {
-    console.log('clicked')
-    clickedTheme = !clickedTheme
-    let body = document.querySelector("body")
-    let theme = document.querySelector(".theme")
-    let circle = document.querySelector(".circle-in-circle")
-    if(clickedTheme) {
-        document.querySelector(".circle").classList.add('clicked-circle')
-        body.classList.add('body-theme')
-        body.style.backgroundImage =  `url("${dark}")`;
-        theme.classList.add('theme-theme')
-        circle.classList.add('circle-theme')
-    } else {
-        document.querySelector(".circle").classList.remove('clicked-circle')
-        body.classList.remove('body-theme')
-        body.style.backgroundImage =  `url("${light}")`;
-        theme.classList.remove('theme-theme')
-        circle.classList.remove('circle-theme')
-    }
-}
 
 export default class extends AbstractView {
     constructor() {
         super()
+        this.clickedTheme = false
         this.userLogin = getUserLogin()
         this.isAuth = getIsAuth()
     }
@@ -69,21 +46,29 @@ export default class extends AbstractView {
         headerElement.children[1].innerHTML += `
         <div class="login nav-menu" target-url="/login">LOGIN</div>
         `
-        // <div class="signup nav-menu" target-url="/signup">SIGNUP</div>
-        // document.querySelector(".signup").addEventListener('click',() => {
-        //   console.log("clicked")
-        // })
       }
     }
     async initialEvent(userLogin) {
       await this.renderHTML(userLogin)
-      document.querySelector(".circle").addEventListener('click',theme)
-      document.querySelector(".logo").addEventListener('click',() => {
-          console.log("clicked")
-      })
-        
+      document.querySelector(".circle").addEventListener('click',this.theme)        
     }
-    event() {
-        
-    }
+    theme() {
+      this.clickedTheme = !this.clickedTheme
+      const body = document.querySelector("body")
+      const theme = document.querySelector(".theme")
+      const circle = document.querySelector(".circle-in-circle")
+      if(this.clickedTheme) {
+          document.querySelector(".circle").classList.add('clicked-circle')
+          body.classList.add('body-theme')
+          body.style.backgroundImage =  `url("${dark}")`;
+          theme.classList.add('theme-theme')
+          circle.classList.add('circle-theme')
+      } else {
+          document.querySelector(".circle").classList.remove('clicked-circle')
+          body.classList.remove('body-theme')
+          body.style.backgroundImage =  `url("${light}")`;
+          theme.classList.remove('theme-theme')
+          circle.classList.remove('circle-theme')
+      }
+  }
 }
