@@ -53,21 +53,21 @@ export default class extends AbstractView {
         <section class="study-section">
         <h1 class="study-title">All Questions</h1>
         <form class="study-form" onsubmit="return false" name="form">
-            <main class="study-main">
+          <main class="study-main">
             <div aria-label="select tags" class="checkbox-container">
             </div>
             <div class="search-container">
-                <div class="study-font-container">
+              <div class="study-font-container">
                 <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="select-text">
-                    <select  name="select" >
-                    <option class="select-class" value="">select class</option>
-                    </select>
-                    <input class="text-input" type="text" name="text" aria-label="search" value="" placeholder="type for searching">
-                </div>
-                </div>
-            </main>
+              </div>
+              <div class="select-text">
+                <select  name="select" >
+                  <option class="select-class" value="">select class</option>
+                </select>
+                  <input class="text-input" type="text" name="text" aria-label="search" value="" placeholder="type for searching">
+              </div>
+            </div>
+          </main>
         </form>
         <div class="num-items-container"></div>
         <div class="result-container"></div>
@@ -170,7 +170,6 @@ export default class extends AbstractView {
         });
       }
       this.currentData.text = value;
-      console.log("text-set", set);
       return Array.from(set);
     };
 
@@ -178,7 +177,6 @@ export default class extends AbstractView {
       if (value) {
         if (array.length) {
           gs = array;
-          console.log("value", value, "array-override-in-classsearch", gs);
         }
         for (let i = 0; i <= gs.length - 1; i++) {
           if (gs[i].class == value) {
@@ -194,7 +192,6 @@ export default class extends AbstractView {
     };
 
     const tagSearch = () => {
-      console.log("TAGS", gs);
       for (let i = 0; i <= gs.length - 1; i++) {
         Object.keys(gs[i]).forEach((elem) => {
           if (elem === "tags") {
@@ -254,7 +251,6 @@ export default class extends AbstractView {
                 this.currentData.text,
                 baseArrayForSearch
               );
-              console.log("after textcheck in center", baseArrayForSearch);
               // bag occur here
               // whenever class and tags selected, then put text.
               // when textSearch return empty array, baseArrayForSearch will have objects
@@ -337,26 +333,21 @@ export default class extends AbstractView {
           !this.currentData.class &&
           !this.currentData.tags.length
         ) {
-          console.log("only-text exist");
           if (e.target.value) {
             arrayForResult = textSearch(e.target.value);
           } else {
             this.remove(e.target);
           }
         } else {
-          console.log("many exist");
           arrayForResult = centerSearch(e);
         }
       } else {
-        console.log("white");
         arrayForResult = textSearch(e.target.value);
       }
     }
-    console.log("before-result", arrayForResult);
     this.result(arrayForResult);
   }
   checkCurrentItem = () => {
-    console.log("CURRENT", this.currentData);
     let counter = 0;
     Object.values(this.currentData).forEach((elem) => {
       if (Array.isArray(elem)) {
@@ -390,22 +381,27 @@ export default class extends AbstractView {
       const patchButton = `<button class="edit-question">EDIT</button>`;
       results.forEach((result, index) => {
         this.currentDom.push(result);
-        this.container.innerHTML += `<div aria-live="polite" class="each-item">
-                <div id=${result.UUID} class="delete-question-container">
-                    <i class="fas fa-times delete-question"></i>
-                </div>
-            </div>`;
+        this.container.innerHTML += `
+          <div aria-live="polite" class="each-item">
+            <div id=${result.UUID} class="delete-question-container">
+              <i class="fas fa-times delete-question"></i>
+            </div>
+          </div>`;
         let each = document.querySelectorAll(".each-item");
         this.keysArray.forEach((e) => {
           if (e !== "tags") {
             each[each.length - 1].innerHTML += `
-                <div class="category"><p class="title">${e}:</p>
-                <p class="value">${result[e]}</p></div>`;
+                <div class="category">
+                  <p class="title">${e}:</p>
+                  <p class="value">${result[e]}</p>
+                </div>`;
           } else {
             each[
               each.length - 1
-            ].innerHTML += `<div class="category"><p class="title">${e}:</p>
-                          <div class="tags"></div></div>`;
+            ].innerHTML += `<div class="category">
+                              <p class="title">${e}:</p>
+                              <div class="tags"></div>
+                            </div>`;
             this.tags = document.querySelectorAll(".tags");
             let tagsArray = this.tagsStringToArray(result);
             tagsArray.forEach((t) => {
@@ -420,12 +416,10 @@ export default class extends AbstractView {
         }
       });
     } else {
-      console.log("all-REMOVE");
       this.remove();
     }
     this.checkCurrentItem();
     this.deleteQuestion();
-    console.log("result-end");
   }
 
   remove(target) {
@@ -434,7 +428,7 @@ export default class extends AbstractView {
       this.container.innerHTML = "";
       this.currentDom = [];
       this.num.innerHTML = "";
-      console.log("ALL removed")
+      console.log("ALL removed");
     };
     if (!target) {
       allRemove();
@@ -484,7 +478,8 @@ export default class extends AbstractView {
     return stringTag.tags.split(",");
   }
   setResultNum(length) {
-    return `<div aria-live="polite" class="num">${length} terms found</div>`;
+    return `
+      <div aria-live="polite" class="num">${length} terms found</div>`;
   }
 
   // @Patch Start
@@ -505,14 +500,14 @@ export default class extends AbstractView {
     });
 
     this.patchElement.innerHTML = `
-    <div class="patch-container">
-    <div aria-live="polite" class="edit-item">
-        <div class="delete-question-container">
-            <i class="fas fa-times delete-question"></i>
+      <div class="patch-container">
+        <div aria-live="polite" class="edit-item">
+          <div class="delete-question-container">
+              <i class="fas fa-times delete-question"></i>
+          </div>
         </div>
-    </div>
-      <h1 class="title">EDIT QUESTION</h1>
-      <form class="create-form" onsubmit="return false" id="form">
+        <h1 class="title">EDIT QUESTION</h1>
+        <form class="create-form" onsubmit="return false" id="form">
           <div>TERM</div>
           <input class="patch-input" type="text" name="term" aria-label="term" value=${term}>
           <div>Description</div>
@@ -520,17 +515,17 @@ export default class extends AbstractView {
           <div>CLASS</div>
           <input class="patch-input" type="number" min="1" max="8" name="class" aria-label="class" value="${classNum}">
           <div class="create-select-text">
-              <div>TAGS</div>
-              <div class="selecter-box">Choose tags <i class="fas fa-angle-down"></i></div>
-              <div class="selecter-window-container"></div>
-              <div class="select-chosen">
-              </div>
+            <div>TAGS</div>
+            <div class="selecter-box">Choose tags <i class="fas fa-angle-down"></i></div>
+            <div class="selecter-window-container"></div>
+            <div class="select-chosen">
+            </div>
           </div>
           <div class="create-button-container">
-          <button class="create-submit-button"  aria-label="submit">EDIT</button>
+            <button class="create-submit-button"  aria-label="submit">EDIT</button>
           </div>
-      </form>
-    </div>
+        </form>
+      </div>
     `;
     this.mainNode.append(this.patchElement);
     document
@@ -595,7 +590,6 @@ export default class extends AbstractView {
   _checkForm(inputValues) {
     for (let i = 0; i < inputValues.length; i++) {
       if (!inputValues[i].value) {
-        console.log(inputValues[i].ariaLabel);
         this.formError.push(`${inputValues[i].name} is empty.`);
       }
     }
@@ -614,12 +608,10 @@ export default class extends AbstractView {
   }
   async patchQuestion() {
     this.inputValues = document.querySelectorAll(".patch-input");
-    console.log("PATCH_QUESTION", this.inputValues);
     const formCheck = this._checkForm(this.inputValues);
     const url = "http://localhost:5000";
     const path = "/api/quiz/js";
     const endpoint = url + path;
-    console.log("FC", formCheck);
     if (formCheck) {
       this.editButton.setAttribute("disabled", true);
 
@@ -642,7 +634,6 @@ export default class extends AbstractView {
       })
         .then(() => {
           this.allReset();
-          console.log("THEN");
           const notify = new PopupNotification(
             [],
             "UPLOADED",
@@ -674,7 +665,6 @@ export default class extends AbstractView {
     this.formError = [];
   }
   allReset() {
-    console.log("C", this.allChecks, "T", this.text.value, "O", this.options);
     for (let i = 0; i < this.allChecks.length; i++) {
       this.allChecks[i].checked = false;
     }
@@ -688,21 +678,7 @@ export default class extends AbstractView {
     };
     this.fetchQuizData();
   }
-  // updateCurrentDom() {
-  //   const currentDom = document.querySelectorAll(".each-item")
-  //   for(let i = 0; i < currentDom.length; i ++) {
-  //     if(this.id === currentDom[i].children[0].id) {
-  //       for(let k = 0; k < currentDom[i].children.length; k ++) {
-  //         if(currentDom[i].children[k].className === "category") {
-  //           this.inputValues
-  //           console.log(currentDom[i].children[k])
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
   deleteQuestion() {
-    console.log("SET_DELETE_QUESTION");
     const url = "http://localhost:5000";
     const path = "/api/quiz/js:id=";
     const endpoint = url + path;

@@ -19,7 +19,6 @@ const routes = [
 
 // let authKeyArray = getAuthKeyArray()
 
-
 // function getAuthKeyArray() {
 //     //automatically set authKeys
 //     const tempArray  = routes.map(route => {
@@ -40,80 +39,83 @@ const routes = [
 // }
 
 function setDualRing() {
-    app.style.height = "80%"
-    app.style.display = "flex"
-    app.style.justifyContents = "center"
-    app.style.alignItems = "center"
-    app.innerHTML = '<div class="lds-dual-ring"></div>';
+  app.style.height = "80%";
+  app.style.display = "flex";
+  app.style.justifyContents = "center";
+  app.style.alignItems = "center";
+  app.innerHTML = '<div class="lds-dual-ring"></div>';
 }
 function cancelAppStyle() {
-    app.style.height = "100%"
-    app.style.display = ""
-    app.style.justifyContents = ""
-    app.style.alignItems = ""
-    
+  app.style.height = "100%";
+  app.style.display = "";
+  app.style.justifyContents = "";
+  app.style.alignItems = "";
 }
 
-setDualRing()
+setDualRing();
 
 function navigateTo(url) {
-   // DOM won't change.
-    // this is like set currentURL in the history then 
-    // go to the url
+  // DOM won't change.
+  // this is like set currentURL in the history then
+  // go to the url
 
-    history.pushState(null, null, url) 
-    router()
-
+  history.pushState(null, null, url);
+  router();
 }
+
 function setAuth(routeObj) {
-    const isAuth = getIsAuth() ? true: false
-    const userLogin = getUserLogin();
-    console.log("setauth",routeObj.path,location.pathname,true == isAuth)
-    let returnVal
-    for(let i = 0; i < Object.keys(routeObj.auth).length; i++) {
-        if (Object.keys(routeObj.auth)[i] === "userLogin"&&routeObj.auth.userLogin !== userLogin) {
-            returnVal = true
-        }else if (Object.keys(routeObj.auth)[i] === "isAuth"&&routeObj.auth.isAuth !== isAuth){
-            returnVal = true
-        } else {
-            returnVal = false
-        }
+  const isAuth = getIsAuth() ? true : false;// Because DB return 1 or 0
+  const userLogin = getUserLogin();
+  let returnVal;
+  for (let i = 0; i < Object.keys(routeObj.auth).length; i++) {
+    if (
+      Object.keys(routeObj.auth)[i] === "userLogin" &&
+      routeObj.auth.userLogin !== userLogin
+    ) {
+      returnVal = true;
+    } else if (
+      Object.keys(routeObj.auth)[i] === "isAuth" &&
+      routeObj.auth.isAuth !== isAuth
+    ) {
+      returnVal = true;
+    } else {
+      returnVal = false;
     }
-    console.log(returnVal)
-    return returnVal
+  }
+  return returnVal;
 }
+
 // why async?? will be render page so takes time
 const router = async () => {
-    console.log(history.length)
+  
+  // Test each route for potential match
+  const potentialMatches = routes.map((route) => {
+    const auth =
+      "auth" in route && location.pathname === route.path
+        ? setAuth(route)
+        : false;
 
-   // Test each route for potential match
-   console.log("LOCATION",location.pathname)
-   const potentialMatches = routes.map(route => {
-    const auth = "auth" in route && location.pathname === route.path
-     ? setAuth(route) : false 
-
-        return {
-            route: route,
-            isMatch : location.pathname === route.path,
-            auth: auth
-        }
-    })
+    return {
+      route: route,
+      isMatch: location.pathname === route.path,
+      auth: auth,
+    };
+  });
 
   let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
-    console.log("match",match)
-  if (!match||match.auth) {
-    // this avoids browser reload
-    // if clicked, go to HOME
+  if (!match || match.auth) {
+    // This avoids browser reload.
+    // If clicked, go to HOME.
     match = {
       route: routes[0],
       isMatch: true,
     };
-    history.replaceState(null, null, "/")
+    history.replaceState(null, null, "/");
   }
-  // routing is done
+  // Routing is done
 
-  // start dom manipulation
-  cancelAppStyle()
+  // Start dom manipulation
+  cancelAppStyle();
   const view = new match.route.view(); //make a new instance
   await view.beforeInitialRender();
   app.innerHTML = await view.renderHTML(); // renderHTML() is async so await here

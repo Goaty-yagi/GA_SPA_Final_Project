@@ -68,12 +68,12 @@ export default class {
       window.removeEventListener("beforeunload", callback, true);
     });
   }
-  
+
   mutationObserver(callback) {
     // happens when app dom child is changed.
     // this controls manual url change regarding to
     // target-url in HTML tab
-    console.log("mutation");
+    
     const observer = new MutationObserver((mutations) => {
       callback();
       observer.disconnect();

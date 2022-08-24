@@ -6,13 +6,12 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import initialization, { removeSessionItem, setSessionStorage } from "../frontend/static/js/store";
+import initialization, { removeSessionItem } from "../frontend/static/js/store";
 
 let userData = {}
 let userLogin = false;
 
 async function createUser(user) {
-  console.log("INCU")
   return new Promise(async (resolve, reject) => {
     const { username, email, password, score} = user;
     await createUserWithEmailAndPassword(auth, email, password)
@@ -91,41 +90,17 @@ function getUserData() {
 function getUserLogin() {
   return userLogin
 }
-// function getAllUsers() {
-//   const listAllUsers = (nextPageToken) => {
-//     // List batch of users, 1000 at a time.
-//     auth
-//       .listUsers(1000, nextPageToken)
-//       .then((listUsersResult) => {
-//         listUsersResult.users.forEach((userRecord) => {
-//           console.log('user', userRecord.toJSON());
-//         });
-//         if (listUsersResult.pageToken) {
-//           // List next batch of users.
-//           listAllUsers(listUsersResult.pageToken);
-//         }
-//       })
-//       .catch((error) => {
-//         console.log('Error listing users:', error);
-//       });
-//   };
-//   // Start listing users from the beginning, 1000 at a time.
-//   listAllUsers();
-// }
+
 
 async function logout() {
   await signOut(auth);
   removeSessionItem("currentScore")
-  removeSessionItem("isAuth")
-  // statusChange()
-  console.log("signout");
 }
 
 function authChange() {
   onAuthStateChanged(auth, async (user) => {
     setUser(user);
     if(user) {
-      console.log("CHECK", user)
       initialization(userLogin,user.uid)
     } else {
       initialization(userLogin)

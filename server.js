@@ -1,157 +1,108 @@
 const express = require("express");
 const path = require("path");
-const cors = require("cors")
+const cors = require("cors");
 
-const { 
-  createUserTable, 
-  getUserList, 
-  patchUserData, 
+const {
+  createUserTable,
+  getUserList,
+  patchUserData,
   deleteUser,
-  getUserById
+  getUserById,
 } = require("./database/apis/user");
-const { createJsQuizTable, getJsQuizList, deleteJsQuiz, patchJsQuizData } = require("./database/apis/quizzes/js");
-const { getScoreList, createScoreTable, deleteScore, patchScoreData, getScoreOrderList, getScoreById } = require("./database/apis/score");
+const {
+  createJsQuizTable,
+  getJsQuizList,
+  deleteJsQuiz,
+  patchJsQuizData,
+} = require("./database/apis/quizzes/js");
+const {
+  getScoreList,
+  createScoreTable,
+  deleteScore,
+  patchScoreData,
+  getScoreOrderList,
+  getScoreById,
+} = require("./database/apis/score");
 const { deleteTable } = require("./database/database");
 
 const port = process.env.PORT || 5000;
 const app = express();
 
-
-// middleware 
+// Middleware
 app.use(express.json());
 
-// read static file
-app.use(cors())
-//accept delete and patch
-// app.use(allowMethods)
+app.use(cors());
+
+// Read static file.
 app.use(
   "/static",
-  express.static(path.resolve(__dirname, "frontend", "static")),
+  express.static(path.resolve(__dirname, "frontend", "static"))
 );
-
-// API
-// app.get("/api", (req, res) => {
-//   console.log("API2", req.url);
-//   getALLData(req, res);
-// });
-
-// app.post("/api", async (req, res) => {
-//   createTable(req, res)
-//   // insertDataIntoTable(req.body, res);
-// });
-
-// app.patch("/api/:id", (req, res) => {
-//   console.log("patch");
-//   patchData(req, res);
-// });
-
-// app.delete("/api/:id", (req, res) => {
-//   console.log("delete");
-//   deleteData(req, res);
-// });
-
 
 //@ USER API
 app.get("/api/user", (req, res) => {
-  console.log("API-=user");
   // deleteTable("users", res)
-  getUserList(req, res)
+  getUserList(req, res);
 });
 
 app.post("/api/user", (req, res) => {
-  console.log("API2-=user");
-  createUserTable(req, res)
+  createUserTable(req, res);
 });
 
 app.delete("/api/user", (req, res) => {
-  console.log("delete");
   deleteUser(req, res);
 });
 
 app.patch("/api/user", (req, res) => {
-  console.log("patch for user");
   // deleteTable("user")
-  patchUserData(req, res)
+  patchUserData(req, res);
 });
 
 app.get("/api/user-id/:id", (req, res) => {
-  console.log("GET_USER_BY ID");
-  getUserById(req, res)
-  // deleteTable("users", res)
-  // getUserList(req, res)
+  getUserById(req, res);
 });
 
 
 //@Js_quiz API
 
 app.get("/api/quiz/js", (req, res) => {
-  console.log("jsquiz");
   // deleteTable("jsQuiz", res)
-  getJsQuizList(req, res)
+  getJsQuizList(req, res);
 });
 
 app.post("/api/quiz/js", (req, res) => {
-  createJsQuizTable(req, res)
+  createJsQuizTable(req, res);
 });
 
 app.delete("/api/quiz/js:id", (req, res) => {
-  console.log("delete_IN_QUIZ");
-  deleteJsQuiz(req, res)
+  deleteJsQuiz(req, res);
 });
 
 app.patch("/api/quiz/js", (req, res) => {
-  patchJsQuizData(req, res)
+  patchJsQuizData(req, res);
 });
 
 //@Score API
 
 app.get("/api/score/:type", (req, res) => {
-  console.log("SCORE");
-  // deleteTable("scores", res)
-  // getScoreList(req, res)
-  getScoreOrderList(req, res)
+  getScoreOrderList(req, res);
 });
 
 app.post("/api/score", (req, res) => {
-  console.log("SCORE");
-  // deleteTable("user")
-  createScoreTable(req, res)
+  createScoreTable(req, res);
 });
 
 app.delete("/api/score", (req, res) => {
-  console.log("delete");
-  deleteScore(req, res)
+  deleteScore(req, res);
 });
 
 app.patch("/api/score", (req, res) => {
-  console.log("SCORE_PATCH")
-  // deleteTable("user")
-  patchScoreData(req, res)
+  patchScoreData(req, res);
 });
 
 app.get("/api/score-id/:id", (req, res) => {
-  console.log("SCORE_ID");
-  // deleteTable("scores", res)
-  // getScoreList(req, res)
-  getScoreById(req, res)
+  getScoreById(req, res);
 });
 
-
-// firebase
-// app.post("/firebase", async (req, res) => {
-//   createUser(req, res);
-// });
-
-// app.post("/login", async (req, res) => {
-//   console.log("login")
-//   login(req, res)
-// });
-
-
-// HTTP render
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.resolve("frontend", "index.html")); //like FS
-//   console.log("API", req.url);
-// });
 
 app.listen(port, () => console.log("server is listenning"));
