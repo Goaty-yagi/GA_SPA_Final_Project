@@ -900,13 +900,14 @@ tag{
 }
 .chosen-tag{
     font-family: initial;
-    display: inline-block;
+    display: flex;
+    align-items: center;
     border: solid orange;
     border-radius: 50vh;
     background: navy;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    padding: 0 0.3rem;
+    padding: 0.1rem 0.5rem;
     text-align: center;
     vertical-align: center;
     min-width: 4rem;
@@ -935,13 +936,36 @@ tag{
 }
 
 .each-tag-in-window {
+    margin-left: 0.5rem;
     transition: .5s;
     padding: 0.2rem 0;
+    padding-left: 0.5rem;
 
 }
 .each-tag-in-window:hover {
     background: rgb(210, 210, 210);
 }
+
+.delete-tag-container {
+    border: solid rgb(240, 240, 240);
+    border-radius: 50vh;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+.delete-tag-container .delete-tag:hover {
+    color: gray;
+
+}
+
+.delete-tag {
+    color: rgb(240, 240, 240);
+    transition: .5s;
+}
+
 /* @ CREATE QUIZ END */
 /* @ALL_QUESTION_START */
 .each-item{
@@ -1011,7 +1035,7 @@ tag{
     right: 0;
     top: 0;
     margin: auto;
-    border: solid rgb(0, 123, 16);
+    border: 0.2rem solid rgb(2, 1, 70);
     width: 40%;
     margin: 1rem;
     text-align: center;
@@ -1022,7 +1046,7 @@ tag{
     z-index:3
 }
 .success-title{
-    color:  rgb(0, 123, 16);
+    color:  rgb(0, 41, 6);
     font-weight: bold;
     font-size: 1.4rem;
 }

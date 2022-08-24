@@ -65,7 +65,7 @@ export default class extends AbstractView {
     this.createSection = document.querySelector(".create-section");
     this.createButton = document.querySelector(".create-submit-button");
     this.createButton.addEventListener("click", () => {
-      this.createEvent();
+      this.createQuestion();
     });
     this._selectorEvent();
   }
@@ -79,7 +79,7 @@ export default class extends AbstractView {
         selecterWindow.innerHTML = "";
         for (let i = 0; i < this.tagsArray.length; i++) {
           let tagChild = document.createElement("div");
-          tagChild.className = "each-tag-in-window"
+          tagChild.className = `${this.tagsArray[i]} each-tag-in-window`
           tagChild.innerHTML = `${this.tagsArray[i]}`;
           selecterWindow.appendChild(tagChild);
           tagChild.addEventListener("click", chosenEvent);
@@ -93,8 +93,9 @@ export default class extends AbstractView {
     });
 
     const chosenEvent = (e) => {
-      const currentChosenTagsLength = this.chosenTags.length;
-      const chosenTag = e.target.innerHTML;
+      
+      console.log(e.target.classList[0])
+      const chosenTag = e.target.classList[0];
       this.selectChosen = document.querySelector(".select-chosen");
       if (this.chosenTags.includes(chosenTag)) {
         //delete
@@ -103,7 +104,8 @@ export default class extends AbstractView {
           return tag !== chosenTag;
         });
         for (let i = 0; i < this.selectChosen.children.length; i++) {
-          if (this.selectChosen.children[i].innerHTML === chosenTag) {
+          console.log(this.selectChosen.children[i].getAttribute("name"))
+          if (this.selectChosen.children[i].getAttribute("name") === chosenTag) {
             const child = document.querySelector(`.${chosenTag}`);
             this.selectChosen.removeChild(child);
           }
@@ -112,9 +114,18 @@ export default class extends AbstractView {
         }
       } else {
         this.chosenTags.push(chosenTag);
-        this.selectChosen.innerHTML += `<div class="chosen-tag ${chosenTag}">${chosenTag}</div>`;
+        this.selectChosen.innerHTML += `
+          <div class="chosen-tag ${chosenTag}" name="${chosenTag}">${chosenTag}
+            <div class="delete-tag-container">
+              <i class="${chosenTag} fas fa-times delete-tag"></i>
+            </div>
+          </div>`;
         this.windowIsOpen = false;
         this.selecterWindowContainer.innerHTML = "";
+        const deleteElemens = document.querySelectorAll(".delete-tag")
+        for (let i = 0; i < deleteElemens.length; i ++) {
+          deleteElemens[i].addEventListener("click", (e) => chosenEvent(e))
+        }
       }
     };
   }
@@ -135,7 +146,7 @@ export default class extends AbstractView {
     }
   }
 
-  async createEvent() {
+  async createQuestion() {
     const inputValues = document.querySelectorAll(".text-input");
     const formCheck = this._checkForm(inputValues);
     const url = "http://localhost:5000";
