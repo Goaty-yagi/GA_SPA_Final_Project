@@ -899,6 +899,7 @@ tag{
     width: 100%;
 }
 .chosen-tag{
+    position: relative;
     font-family: initial;
     display: flex;
     align-items: center;
@@ -946,7 +947,13 @@ tag{
     background: rgb(210, 210, 210);
 }
 
+.tag-name{
+    margin-right: 1.2rem;
+}
+
 .delete-tag-container {
+    position: absolute;
+    right: 0;
     border: solid rgb(240, 240, 240);
     border-radius: 50vh;
     width: 1rem;
@@ -954,7 +961,7 @@ tag{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 0.5rem;
+    margin-right: 0.3rem;
 }
 .delete-tag-container .delete-tag:hover {
     color: gray;

@@ -694,8 +694,9 @@ export default class extends AbstractView {
         });
         const removeItemFromBrowser = deleteQuestionContainer[i].parentElement;
         this.container.removeChild(removeItemFromBrowser);
+        console.log("RM",this.container.children.length)
         this.num.innerHTML = this.setResultNum(
-          this.container.childNodes.length
+          this.container.children.length
         );
         await fetch(endpoint + uuid, {
           method: "DELETE",

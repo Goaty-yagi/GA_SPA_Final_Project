@@ -106,7 +106,8 @@ export default class extends AbstractView {
         for (let i = 0; i < this.selectChosen.children.length; i++) {
           console.log(this.selectChosen.children[i].getAttribute("name"))
           if (this.selectChosen.children[i].getAttribute("name") === chosenTag) {
-            const child = document.querySelector(`.${chosenTag}`);
+            const child = document.querySelector(`[name = ${chosenTag}]`);
+            console.log("child", child)
             this.selectChosen.removeChild(child);
           }
           this.windowIsOpen = false;
@@ -115,7 +116,8 @@ export default class extends AbstractView {
       } else {
         this.chosenTags.push(chosenTag);
         this.selectChosen.innerHTML += `
-          <div class="chosen-tag ${chosenTag}" name="${chosenTag}">${chosenTag}
+          <div class="chosen-tag ${chosenTag}" name="${chosenTag}">
+            <div class="tag-name">${chosenTag}</div>
             <div class="delete-tag-container">
               <i class="${chosenTag} fas fa-times delete-tag"></i>
             </div>
