@@ -17,21 +17,48 @@ function openDB() {
   });
 }
 
-function createTable() {
-  openDB();
-  run(`CREATE TABLE ${tableName}("id","term","description")`);
-  closeDB(db);
+// 1, table-name, row items which num is not specific
+async function createTable(req, res) {
+  const tableName = req.body[Object.keys(req.body).find(key => key === "tableName" )]
+  delete req.body.tableName
+  let tableItems ="("
+  Object.keys(req.body).forEach((k, index) => {
+    if(Object.keys(req.body).length === index +1) {
+      tableItems +=  `"${k}"` + ")"
+    } else {
+      tableItems += `"${k}"` + ","
+    } 
+  })
+  db = await openDB();
+  console.log("check",tableName, tableItems)
+  await db.run(`CREATE TABLE IF NOT EXISTS ${tableName} ${tableItems}`);
+  // closeDB(db);
+  console.log("GO_INSERT")
+  insertDataIntoTable(req, res, tableName, tableItems, db)
 }
 
-function insertDataIntoTable(body, res) {
-  openDB().then((db) => {
-    const sql = `INSERT INTO ${tableName}(id,term,description) VALUES(?,?,?)`;
-    db.run(sql, [uuidv4(), body.term, body.description], (err, result) => {
-      if (err) return console.error(err.message);
+function insertDataIntoTable(req, res, tableName, tableItems, db) {
+  console.log("ININSERT", tableItems.length)
+    const VALUES = () => {
+      let val = "VALUES("
+      for(let i = 0; i <= Object.keys(req.body).length -1; i++) {
+        if(i === Object.keys(req.body).length -1) {
+          val += "?)"
+        } else {
+          val += "?,"
+        }
+      }
+      return val
+    }
+    console.log("val", VALUES())
+    const sql = `INSERT INTO ${tableName} ${tableItems} ${VALUES()}`;
+    const tableValues = Object.values(req.body)
+    console.log(tableValues)
+    db.run(sql, [tableValues], (err, result) => {
+      if (err) return console.log(err.message);
       res.status(201).send("Created");
       closeDB(db);
     });
-  });
 }
 
 async function patchData(req, res) {
@@ -52,6 +79,13 @@ async function patchData(req, res) {
   closeDB(db);
 }
 // delete table
+async function deleteTable(table, res) {
+  db = await openDB();
+  await db.run(`DROP TABLE ${table}`,(err,result) => {
+    if(err) return res.send(err.message)
+    return res.send(result )
+  })
+}
 // db.run("DROP TABLE term")
 
 //delete object
@@ -93,4 +127,8 @@ module.exports = {
   insertDataIntoTable,
   patchData,
   deleteData,
+  deleteTable,
+  openDB,
+  closeDB
+
 };
