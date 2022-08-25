@@ -1,7 +1,7 @@
 import {
   getUserData,
   getUserLogin,
-} from "../../../../firebase/authentication.js";
+} from "../../../firebase/authentication.js";
 import { getSessionItem } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 

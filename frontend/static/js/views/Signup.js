@@ -1,7 +1,7 @@
 import {
   createUser,
   getUserData,
-} from "../../../../firebase/authentication.js";
+} from "../../../firebase/authentication.js";
 import { setSessionStorage } from "../store/index.js";
 import AbstractView from "./AbstractView.js";
 import PopupNotification from "./PopupNotification.js";

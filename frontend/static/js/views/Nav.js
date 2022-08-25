@@ -2,7 +2,7 @@ import AbstractView from "./AbstractView.js";
 import logo from "../../images/logo.png";
 import dark from "../../images/background-dark.png";
 import light from "../../images/background-light.png";
-import { getUserLogin, logout } from "../../../../firebase/authentication.js";
+import { getUserLogin, logout } from "../../../firebase/authentication.js";
 import { getIsAuth } from "../store/index.js";
 
 export default class extends AbstractView {
