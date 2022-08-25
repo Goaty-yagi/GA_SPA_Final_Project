@@ -110,9 +110,7 @@ export default class extends AbstractView {
         console.log("ERR", e);
       });
   }
-  reset() {
-    this.keysArray = [];
-  }
+
   getSelectOption() {
     let set = new Set();
     for (let i = 0; i <= this.apiData.length - 1; i++) {
@@ -130,6 +128,7 @@ export default class extends AbstractView {
     });
     return Array.from(set);
   }
+
   getClassOption() {
     let set = new Set();
     for (let i = 0; i <= this.apiData.length - 1; i++) {
@@ -140,6 +139,7 @@ export default class extends AbstractView {
       select.innerHTML += `<option class="option" id=${elem} value=${elem}>${elem}</option>`;
     });
   }
+
   firstSearch(e) {
     let arrayForResult = [];
     let set = new Set();
@@ -346,6 +346,7 @@ export default class extends AbstractView {
     }
     this.result(arrayForResult);
   }
+
   checkCurrentItem = () => {
     let counter = 0;
     Object.values(this.currentData).forEach((elem) => {
@@ -473,9 +474,11 @@ export default class extends AbstractView {
       this.checkCurrentItem();
     }
   }
+
   tagsStringToArray(stringTag) {
     return stringTag.tags.split(",");
   }
+
   setResultNum(length) {
     return `
       <div aria-live="polite" class="num">${length} terms found</div>`;
@@ -483,6 +486,7 @@ export default class extends AbstractView {
 
   // @Patch Start
   patchHandler(e) {
+    this.disableScroll()
     this.id = e.target.offsetParent.firstElementChild.id; //from delete
     const question = this.apiData.find((data) => {
       return data.UUID === this.id;
@@ -539,6 +543,7 @@ export default class extends AbstractView {
     this.editButton.addEventListener("click", () => this.patchQuestion());
     this._selectorEvent();
   }
+
   _selectorEvent() {
     this.selecterWindowContainer = document.querySelector(
       ".selecter-window-container"
@@ -587,6 +592,7 @@ export default class extends AbstractView {
       }
     };
   }
+  
   _checkForm(inputValues) {
     for (let i = 0; i < inputValues.length; i++) {
       if (!inputValues[i].value) {
@@ -605,7 +611,9 @@ export default class extends AbstractView {
 
   closeEditModal() {
     this.mainNode.removeChild(this.patchElement);
+    this.enableScroll()
   }
+
   async patchQuestion() {
     this.inputValues = document.querySelectorAll(".patch-input");
     const formCheck = this._checkForm(this.inputValues);
@@ -664,6 +672,7 @@ export default class extends AbstractView {
     }
     this.formError = [];
   }
+
   allReset() {
     for (let i = 0; i < this.allChecks.length; i++) {
       this.allChecks[i].checked = false;
@@ -678,6 +687,7 @@ export default class extends AbstractView {
     };
     this.fetchQuizData();
   }
+
   deleteQuestion() {
     const url = "http://localhost:5000";
     const path = "/api/quiz/js:id=";
@@ -694,7 +704,6 @@ export default class extends AbstractView {
         });
         const removeItemFromBrowser = deleteQuestionContainer[i].parentElement;
         this.container.removeChild(removeItemFromBrowser);
-        console.log("RM",this.container.children.length)
         this.num.innerHTML = this.setResultNum(
           this.container.children.length
         );
@@ -703,5 +712,22 @@ export default class extends AbstractView {
         });
       });
     }
+  }
+
+  disableScroll() {
+    // Get the current page scroll position.
+
+    const scrollTop = window.pageYOffset;
+    const scrollLeft = window.pageXOffset;
+
+    // if any scroll is attempted,
+    // set this to the previous value.
+    window.onscroll = function() {
+        window.scrollTo(scrollLeft, scrollTop);
+    };
+  }
+
+  enableScroll() {
+      window.onscroll = function() {};
   }
 }

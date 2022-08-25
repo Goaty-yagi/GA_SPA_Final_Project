@@ -93,8 +93,6 @@ export default class extends AbstractView {
     });
 
     const chosenEvent = (e) => {
-      
-      console.log(e.target.classList[0])
       const chosenTag = e.target.classList[0];
       this.selectChosen = document.querySelector(".select-chosen");
       if (this.chosenTags.includes(chosenTag)) {
@@ -104,10 +102,8 @@ export default class extends AbstractView {
           return tag !== chosenTag;
         });
         for (let i = 0; i < this.selectChosen.children.length; i++) {
-          console.log(this.selectChosen.children[i].getAttribute("name"))
           if (this.selectChosen.children[i].getAttribute("name") === chosenTag) {
             const child = document.querySelector(`[name = ${chosenTag}]`);
-            console.log("child", child)
             this.selectChosen.removeChild(child);
           }
           this.windowIsOpen = false;
