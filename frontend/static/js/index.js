@@ -1,4 +1,4 @@
-import { getUserLogin } from "../../../firebase/authentication.js";
+import { getUserLogin } from "../../firebase/authentication.js";
 import initialization, { getIsAuth } from "./store/index.js";
 import Dashboard from "./views/dashboard/Dashboard.js";
 import Home from "./views/Home.js";

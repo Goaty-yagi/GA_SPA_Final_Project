@@ -2,7 +2,7 @@ import AbstractView from "./AbstractView.js";
 import {
   getUserData,
   getUserLogin,
-} from "../../../../firebase/authentication.js";
+} from "../../../firebase/authentication.js";
 import { getSessionItem, setSessionStorage } from "../store/index.js";
 
 let allQuestion = [];
@@ -200,13 +200,12 @@ export default class extends AbstractView {
     clearInterval(this.intervalId);
     const message = "Your Score Is ...";
     const resultHTML = `
-            <div class="relust-container">
-            <div class="score-text">${message}
-            <span class="score-num"></span>
-            </div>
-            <div class="result-footer-container"></div>
-            </div>
-        `;
+      <div class="relust-container">
+        <div class="score-text">${message}<span class="score-num"></span>
+        </div>
+        <div class="result-footer-container"></div>
+      </div>
+    `;
     new Promise((resolve, reject) => {
       this.intervalId = setTimeout(() => {
         this.timer.innerHTML = "";
@@ -234,26 +233,26 @@ export default class extends AbstractView {
           resultFooter.className = "result-footer";
           let html;
           const twitterHtml = `
-              <div class="footer-section">
-                  <div>Tweet your score</div>
-                  <i class="fab fa-twitter-square social-img"></i>
-              </div>
-            `;
+            <div class="footer-section">
+                <div>Tweet your score</div>
+                <i class="fab fa-twitter-square social-img"></i>
+            </div>
+          `;
           resultFooter.innerHTML = twitterHtml;
           if (this.userLogin) {
             html = `
-                <div class="footer-section">
-                    <div>Get More Score!</div>
-                    <div class="register-button" target-url="/study">Study?</div>
-                </div>
-              `;
+              <div class="footer-section">
+                <div>Get More Score!</div>
+                <div class="register-button" target-url="/study">Study?</div>
+              </div>
+            `;
           } else {
             html = `
-                  <div class="footer-section">
-                      <div>Register? your score sould be in the Ranking!</div>
-                      <div class="register-button" target-url="/signup?score=${this.correctNum}">Register</div>
-                  </div>
-                  `;
+              <div class="footer-section">
+                <div>Register? your score sould be in the Ranking!</div>
+                <div class="register-button" target-url="/signup?score=${this.correctNum}">Register</div>
+          </div>
+            `;
           }
           const registerHtml = `<div class="try-again-button" target-url="/quiz">Try Again!</div>`;
           resultFooter.innerHTML += html;

@@ -6,7 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import initialization, { removeSessionItem } from "../frontend/static/js/store";
+import initialization, { removeSessionItem } from "../static/js/store";
 
 let userData = {}
 let userLogin = false;

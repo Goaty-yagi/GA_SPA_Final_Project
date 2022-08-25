@@ -1,4 +1,4 @@
-import { login } from "../../../../firebase/authentication.js";
+import { login } from "../../../firebase/authentication.js";
 import AbstractView from "./AbstractView.js";
 import PopupNotification from "./PopupNotification.js";
 
