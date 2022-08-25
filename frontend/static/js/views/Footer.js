@@ -10,15 +10,17 @@ export default class extends AbstractView {
 
   async renderHTML() {
     return `
-      <div class="creater-section">
-        <div class="creater-title-container">
-          <div class="creater-title">Who Built App?</div>
+      <footer>
+        <div class="creater-section">
+          <div class="creater-title-container">
+            <div class="creater-title">Who Built App?</div>
+          </div>
+          <div class="footer-font-container">
+            <i class="fab fa-github-square font-hover"></i>
+            <i class="fab fa-linkedin font-hover"></i>
+          </div>
         </div>
-        <div class="footer-font-container">
-          <i class="fab fa-github-square font-hover"></i>
-          <i class="fab fa-linkedin font-hover"></i>
-        </div>
-      </div>
+      </footer>
     `;
   }
 

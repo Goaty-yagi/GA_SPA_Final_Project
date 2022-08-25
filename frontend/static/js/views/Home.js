@@ -60,7 +60,7 @@ export default class extends AbstractView {
     document
       .querySelector(".rank-in-home")
       .append(await this.ranking.renderHTML());
-    document.querySelector("footer").innerHTML += await this.footer.renderHTML();
+    this.app.innerHTML += await this.footer.renderHTML();
     this.footer.initialEvent();
     this.showAppNode();
   }

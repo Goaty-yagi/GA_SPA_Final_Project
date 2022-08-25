@@ -1295,12 +1295,3 @@ footer{
         flex-basis: 0%;
     }
 }
-@media(max-height: 900px){
-    footer {
-        min-height: 50vh;
-    }
-    .creater-section {
-        height: 20%;
-        padding: 0.5rem;
-    }
-}
